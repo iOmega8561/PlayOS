@@ -20,7 +20,7 @@ struct LoginView: View {
             Image(appModel.backgroundImage)
                 .resizable()
                 .scaledToFill()
-                .frame(height: proxy.size.height)
+                .frame(width: proxy.size.width, height: proxy.size.height)
                 .blur(radius: 25, opaque: true)
                 .opacity(0.8)
             
@@ -31,7 +31,7 @@ struct LoginView: View {
                     .scaledToFit()
                     .frame(width: 200)
                     .clipShape(Circle())
-                    .shadow(radius: 3.0)
+                    .shadow(radius: 5.0)
                 
                 HStack {
                     Text("PlayOS")

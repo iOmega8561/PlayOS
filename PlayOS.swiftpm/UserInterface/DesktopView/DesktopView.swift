@@ -13,6 +13,8 @@ struct DesktopView: View {
     
     @EnvironmentObject private var appModel: AppModel
     
+    @State private var menuIsPresented: Bool = false
+    
     var body: some View {
         
         GeometryReader { proxy in
@@ -20,9 +22,10 @@ struct DesktopView: View {
             Image(appModel.backgroundImage)
                 .resizable()
                 .scaledToFill()
-                .frame(height: proxy.size.height)
+                .frame(width: proxy.size.width, height: proxy.size.height)
+                .onTapGesture { menuIsPresented = false }
             
-            VStack {
+            VStack(alignment: .leading) {
                 
                 ZStack {
                     // TO-DO
@@ -30,15 +33,17 @@ struct DesktopView: View {
                 .frame(width: proxy.size.width, height: proxy.size.height - 60)
                 
                 HStack {
-                    
-                    Button("Menu", systemImage: "cursorarrow.rays") {
-                        // TO-DO
-                    }
-                    .fontWeight(.bold)
-                    .buttonStyle(.borderedProminent)
-                    .padding(.leading)
-                    
-                    Spacer()
+                    Toggle("Menu", systemImage: "cursorarrow.rays", isOn: $menuIsPresented)
+                        .toggleStyle(.button)
+                        .fontWeight(.bold)
+                        .buttonStyle(.borderedProminent)
+                        .padding(.leading)
+                        .overlay {
+                            if menuIsPresented {
+                                StartMenu()
+                                    .offset(x: 75, y: -245)
+                            }
+                        }
                     
                     Spacer()
                     
@@ -47,10 +52,10 @@ struct DesktopView: View {
                         .background(.thickMaterial)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                         .padding(.trailing)
-                    
                 }
                 .frame(width: proxy.size.width, height: 60)
                 .background(.ultraThinMaterial)
+                .onTapGesture { menuIsPresented = false }
             }
             .frame(width: proxy.size.width, height: proxy.size.height)
         }
