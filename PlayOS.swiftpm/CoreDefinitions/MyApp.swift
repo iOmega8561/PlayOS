@@ -17,7 +17,7 @@ struct MyApp: App {
     var body: some Scene {
         
         WindowGroup {
-            
+
             ZStack {
                 Color.black
                 
@@ -29,13 +29,14 @@ struct MyApp: App {
                     
                 case .login: LoginView()
                     
-                default: EmptyView()
+                case .desktop: DesktopView()
                 }
             }
             .ignoresSafeArea()
             .foregroundStyle(.white)
             .environment(\.setMode, setMode)
             .environmentObject(appModel)
+            
         }
     }
     

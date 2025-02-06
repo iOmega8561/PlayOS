@@ -28,23 +28,19 @@ struct PoweringView: View {
     
     var body: some View {
         
-        if let player {
-            VideoPlayer(player: player)
-                .blur(radius: 20.0, opaque: true)
-                .onAppear {
-                    player.isMuted = true
-                    player.actionAtItemEnd = .none
-                    player.play()
-                }
-            
-            if isPoweringOff {
-                Color.red
-                    .blendMode(.multiply)
-                    .opacity(0.9)
-            }
-        }
-        
         GeometryReader { proxy in
+        
+           VideoPlayer(player: player)
+               .blur(radius: 20.0, opaque: true)
+               .onAppear { player?.play() }
+               .allowsHitTesting(false)
+               .disabled(true)
+           
+           if isPoweringOff {
+               Color.red
+                   .blendMode(.multiply)
+                   .opacity(0.9)
+           }
             
             VStack {
                 

@@ -15,39 +15,46 @@ struct LoginView: View {
     
     var body: some View {
         
-        Image(appModel.backgroundImage)
-            .blur(radius: 25, opaque: true)
-            .opacity(0.8)
-        
-        VStack {
+        GeometryReader { proxy in
             
-            Image(appModel.profilePicture)
+            Image(appModel.backgroundImage)
                 .resizable()
-                .scaledToFit()
-                .frame(width: 200)
-                .clipShape(Circle())
-                .shadow(radius: 3.0)
+                .scaledToFill()
+                .frame(height: proxy.size.height)
+                .blur(radius: 25, opaque: true)
+                .opacity(0.8)
             
-            HStack {
-                Text("PlayOS")
-                    .fontWeight(.bold)
-                    .fontWidth(.expanded)
+            VStack {
                 
-                Text("User")
-            }
-            .font(.title)
-            
-            HStack {
-                Button("Shutdown") {
-                    setMode(.poweringOff)
-                }
+                Image(appModel.profilePicture)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 200)
+                    .clipShape(Circle())
+                    .shadow(radius: 3.0)
                 
-                Button("Log In") {
-                    setMode(.desktop)
+                HStack {
+                    Text("PlayOS")
+                        .fontWeight(.bold)
+                        .fontWidth(.expanded)
+                    
+                    Text("User")
                 }
+                .font(.title)
+                
+                HStack {
+                    Button("Shutdown") {
+                        setMode(.poweringOff)
+                    }
+                    
+                    Button("Log In") {
+                        setMode(.desktop)
+                    }
+                }
+                .buttonStyle(.borderedProminent)
+                .fontWeight(.bold)
             }
-            .buttonStyle(.borderedProminent)
-            .fontWeight(.bold)
+            .frame(width: proxy.size.width, height: proxy.size.height)
         }
     }
 }
