@@ -19,33 +19,23 @@ struct MyApp: App {
         WindowGroup {
             
             ZStack {
-                
                 Color.black
                 
                 switch currentMode {
-                    
-                case .stopped:
-                    
-                    StoppedView()
-                        .environment(\.setMode, setMode)
+                case .stopped: StoppedView()
                     
                 case .poweringOn, .poweringOff:
-                    
                     PoweringView(isPoweringOff: currentMode == .poweringOff)
-                        .environment(\.setMode, setMode)
                     
-                case .login:
-                    
-                    LoginView()
-                        .environmentObject(appModel)
-                        .environment(\.setMode, setMode)
+                case .login: LoginView()
                     
                 default: EmptyView()
                 }
-                
             }
             .ignoresSafeArea()
             .foregroundStyle(.white)
+            .environment(\.setMode, setMode)
+            .environmentObject(appModel)
         }
     }
     

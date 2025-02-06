@@ -15,10 +15,9 @@ struct PoweringView: View {
     
     @State private var progress: Double = 0.0
     
-    @State private var player: AVPlayer? = {
-        
+    private let player: AVPlayer? = {
         guard let url = Bundle.main.url(
-            forResource: "linux_boot_short",
+            forResource: "fake_boot",
             withExtension: "mp4"
         ) else { return nil }
         
@@ -41,6 +40,7 @@ struct PoweringView: View {
             if isPoweringOff {
                 Color.red
                     .blendMode(.multiply)
+                    .opacity(0.9)
             }
         }
         
@@ -84,7 +84,9 @@ struct PoweringView: View {
                 try? await Task.sleep(for: .seconds(1))
             }
             
-            try? await Task.sleep(for: .seconds(1)); setMode(isPoweringOff ? .stopped:.login)
+            try? await Task.sleep(for: .seconds(1))
+            
+            setMode(isPoweringOff ? .stopped:.login)
         }
     }
 }

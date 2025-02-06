@@ -37,20 +37,17 @@ struct LoginView: View {
             }
             .font(.title)
             
-            
             HStack {
                 Button("Shutdown") {
                     setMode(.poweringOff)
                 }
-                .buttonStyle(.borderedProminent)
-                .fontWeight(.bold)
                 
                 Button("Log In") {
                     setMode(.desktop)
                 }
-                .buttonStyle(.borderedProminent)
-                .fontWeight(.bold)
             }
+            .buttonStyle(.borderedProminent)
+            .fontWeight(.bold)
         }
     }
 }
