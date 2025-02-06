@@ -15,14 +15,19 @@ struct StoppedView: View {
         
         VStack(spacing: 120) {
             
-            HStack {
-                Text("Welcome to")
+            VStack {
+                HStack {
+                    Text("Welcome to")
+                    
+                    Text("PlayOS")
+                        .fontWeight(.bold)
+                        .fontWidth(.expanded)
+                }
+                .font(.largeTitle)
                 
-                Text("PlayOS")
-                    .fontWeight(.bold)
-                    .fontWidth(.expanded)
+                Text("Press the power button to start the system up!")
+                    .font(.headline)
             }
-            .font(.largeTitle)
             
             Button { setMode(.poweringOn) } label: {
                 VStack {
@@ -38,17 +43,6 @@ struct StoppedView: View {
                         .frame(width: 100, height: 100)
                 }
             }
-            
-            Label("Press the power button to boot the system up!", systemImage: "info.circle")
-                .labelStyle(.titleAndIcon)
-                .imageScale(.large)
-                .font(.headline)
-                .padding(4)
-                .overlay {
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(style: .init(lineWidth: 3.0))
-                        .fill(Color.secondary)
-                }
         }
     }
 }
