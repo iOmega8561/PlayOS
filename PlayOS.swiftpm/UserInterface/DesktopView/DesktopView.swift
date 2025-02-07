@@ -28,7 +28,17 @@ struct DesktopView: View {
             VStack(alignment: .leading) {
                 
                 ZStack {
-                    WindowManager()
+                    
+                    // TO-DO
+                    
+                    ForEach(appModel.windows.indices, id: \.self) { window in
+                        
+                        Window(window: $appModel.windows[window])
+                            .frame(width: 550, height: 430)
+                            .background(.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .offset(appModel.windows[window].offset)
+                    }
                 }
                 .frame(width: proxy.size.width, height: proxy.size.height - 60)
                 

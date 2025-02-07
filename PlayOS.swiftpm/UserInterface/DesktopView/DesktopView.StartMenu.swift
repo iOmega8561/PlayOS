@@ -34,10 +34,10 @@ extension DesktopView {
                 
                 ForEach(Application.allCases, id: \.self) { app in
                     Button {
-                        appModel.windows.append(app.makeWindow())
+                        appModel.windows.append(.init(application: app))
                         
                     } label: {
-                        Text(app.name)
+                        Text(app.title)
                             .fontWeight(.bold)
                             .frame(width: 205, height: 30)
                             .contentShape(RoundedRectangle(cornerRadius: 7))

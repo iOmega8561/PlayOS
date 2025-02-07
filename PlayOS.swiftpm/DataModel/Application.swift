@@ -11,19 +11,15 @@ enum Application: CaseIterable {
     
     case test
     
-    var view: some View {
+    var content: some View {
         switch self {
         case .test: Color.black
         }
     }
     
-    var name: String {
+    var title: String {
         switch self {
         case .test: "Test"
         }
-    }
-    
-    func makeWindow() -> Window {
-        return .init(application: self)
     }
 }
