@@ -24,6 +24,7 @@ extension DesktopView {
                 VStack(spacing: 0) {
                     
                     HStack(alignment: .center) {
+                        
                         Button {
                             appModel.windows.removeAll(
                                 where: { $0.id == window.id }
@@ -38,11 +39,12 @@ extension DesktopView {
                         
                         Text(window.application.title)
                             .font(.headline)
+                            .fontWeight(.bold)
                         
                         Spacer()
                     }
                     .contentShape(Rectangle())
-                    .frame(width: proxy.size.width, height: 35)
+                    .frame(width: proxy.size.width, height: 40)
                     .gesture(
                         DragGesture()
                             .onChanged { gesture in
@@ -52,7 +54,7 @@ extension DesktopView {
                     )
                                 
                     window.application.content
-                        .frame(width: proxy.size.width, height: proxy.size.height - 35)
+                        .frame(width: proxy.size.width, height: proxy.size.height - 40)
                 }
             }
         }

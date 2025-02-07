@@ -58,7 +58,7 @@ struct DesktopView: View {
                         .padding(.leading)
                         .overlay {
                             if menuIsPresented {
-                                StartMenu()
+                                StartMenu(isPresented: $menuIsPresented)
                                     .offset(x: 75, y: -245)
                                     .onTapGesture { }
                             }

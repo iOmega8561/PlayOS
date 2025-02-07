@@ -15,6 +15,8 @@ extension DesktopView {
         
         @EnvironmentObject private var appModel: AppModel
         
+        @Binding var isPresented: Bool
+        
         var body: some View {
             
             VStack(alignment: .center) {
@@ -35,14 +37,25 @@ extension DesktopView {
                 ForEach(Application.allCases, id: \.self) { app in
                     Button {
                         appModel.windows.append(.init(application: app))
-                        
+                        isPresented = false
                     } label: {
-                        Text(app.title)
-                            .fontWeight(.bold)
-                            .frame(width: 205, height: 30)
-                            .contentShape(RoundedRectangle(cornerRadius: 7))
-                            .background(.thickMaterial)
-                            .clipShape(RoundedRectangle(cornerRadius: 7))
+                        
+                        HStack {
+                            Image(systemName: app.sfSymbol)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(height: 20)
+                            
+                            Text(app.title)
+                            
+                            Spacer()
+                        }
+                        .padding(.horizontal)
+                        .fontWeight(.bold)
+                        .frame(width: 205, height: 40)
+                        .contentShape(RoundedRectangle(cornerRadius: 7))
+                        .background(.thickMaterial)
+                        .clipShape(RoundedRectangle(cornerRadius: 7))
                     }
                     .buttonStyle(.plain)
                 }

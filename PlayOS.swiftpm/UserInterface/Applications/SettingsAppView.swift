@@ -16,6 +16,7 @@ struct SettingsAppView: View {
     var body: some View {
         
         ScrollView {
+            
             Group {
                 VStack(spacing: 5) {
                     HStack {
@@ -53,7 +54,7 @@ struct SettingsAppView: View {
                     Divider()
                 }
                 
-                HStack(spacing: 10) {
+                HStack(spacing: 25) {
                     ForEach(1..<5) { index in
                         Button {
                             appModel.profilePicture = "ProfilePics/\(index)"
@@ -67,7 +68,7 @@ struct SettingsAppView: View {
                     }
                 }
             }
-            .padding(.horizontal)
+            .padding()
         }
         .contentShape(Rectangle())
         .background(.thinMaterial)

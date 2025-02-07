@@ -26,4 +26,11 @@ enum Application: CaseIterable {
         case .settings: "Settings"
         }
     }
+    
+    var sfSymbol: String {
+        switch self {
+        case .test: "wrench.and.screwdriver"
+        case .settings: "gearshape"
+        }
+    }
 }
