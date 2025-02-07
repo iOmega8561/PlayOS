@@ -13,4 +13,5 @@ import SwiftUI
     
     @Published var backgroundImage: String = "Backgrounds/1"
     
+    @Published var windows: [Window] = []
 }

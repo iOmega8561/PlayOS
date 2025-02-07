@@ -13,9 +13,11 @@ extension DesktopView {
         
         @Environment(\.setMode) private var setMode
         
+        @EnvironmentObject private var appModel: AppModel
+        
         var body: some View {
             
-            VStack(alignment: .leading) {
+            VStack(alignment: .center) {
                 
                 HStack {
                     Text("PlayOS")
@@ -29,6 +31,21 @@ extension DesktopView {
                 Divider()
                 
                 Spacer()
+                
+                ForEach(Application.allCases, id: \.self) { app in
+                    Button {
+                        appModel.windows.append(app.makeWindow())
+                        
+                    } label: {
+                        Text(app.name)
+                            .fontWeight(.bold)
+                            .frame(width: 205, height: 30)
+                            .contentShape(RoundedRectangle(cornerRadius: 7))
+                            .background(.thickMaterial)
+                            .clipShape(RoundedRectangle(cornerRadius: 7))
+                    }
+                    .buttonStyle(.plain)
+                }
                 
                 Divider()
                 
@@ -44,7 +61,7 @@ extension DesktopView {
                 .buttonStyle(.borderedProminent)
                 .fontWeight(.bold)
             }
-            .frame(width: 230, height: 400)
+            .frame(width: 210, height: 400)
             .padding(10)
             .background(.thinMaterial)
             .clipShape(RoundedRectangle(cornerRadius: 10))

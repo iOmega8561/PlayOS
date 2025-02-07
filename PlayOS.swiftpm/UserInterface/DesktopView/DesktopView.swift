@@ -28,7 +28,7 @@ struct DesktopView: View {
             VStack(alignment: .leading) {
                 
                 ZStack {
-                    // TO-DO
+                    WindowManager()
                 }
                 .frame(width: proxy.size.width, height: proxy.size.height - 60)
                 
@@ -42,6 +42,7 @@ struct DesktopView: View {
                             if menuIsPresented {
                                 StartMenu()
                                     .offset(x: 75, y: -245)
+                                    .onTapGesture { }
                             }
                         }
                     
