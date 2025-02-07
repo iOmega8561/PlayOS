@@ -37,9 +37,20 @@ extension DesktopView {
                                 window.isMinimized = true
                             } label: { Circle().fill(Color.yellow) }
                                 .frame(width: 20, height: 20)
+                            
+                            Toggle(isOn: $window.isExpanded) {
+                                Circle()
+                                    .fill(Color.green.opacity(window.isExpanded ? 0.5:1))
+                            }
+                            .toggleStyle(.button)
+                            .frame(width: 20, height: 20)
+                            .animation(nil, value: window.isExpanded)
+                            
+                            Spacer()
                         }
+                        .padding(.leading)
                         .buttonStyle(.plain)
-                        .frame(width: 80)
+                        .frame(width: 160)
                         
                         Spacer()
                         
@@ -49,7 +60,7 @@ extension DesktopView {
                         
                         Spacer()
                         
-                        Spacer().frame(width: 80)
+                        Spacer().frame(width: 160)
                     }
                     .contentShape(Rectangle())
                     .frame(width: proxy.size.width, height: 40)
@@ -65,6 +76,10 @@ extension DesktopView {
                         .frame(width: proxy.size.width, height: proxy.size.height - 40)
                 }
             }
+            .frame(width: window.isExpanded ? 950:650,
+                   height: window.isExpanded ? 700:500)
+            .background(.background)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
         }
     }
 }

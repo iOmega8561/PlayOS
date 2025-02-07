@@ -32,13 +32,9 @@ struct DesktopView: View {
                     // TO-DO
                     
                     ForEach(appModel.windows.indices, id: \.self) { windowIdx in
-                        
                         if !appModel.windows[windowIdx].isMinimized {
                             
                             Window(window: $appModel.windows[windowIdx])
-                                .frame(width: 650, height: 500)
-                                .background(.background)
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
                                 .offset(appModel.windows[windowIdx].offset)
                                 .onTapGesture {
                                     appModel.windows.move(
