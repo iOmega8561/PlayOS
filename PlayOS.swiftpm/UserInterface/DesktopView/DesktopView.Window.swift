@@ -25,15 +25,21 @@ extension DesktopView {
                     
                     HStack(alignment: .center) {
                         
-                        Button {
-                            appModel.windows.removeAll(
-                                where: { $0.id == window.id }
-                            )
+                        HStack(alignment: .center, spacing: 10) {
+                            Button {
+                                appModel.windows.removeAll(
+                                    where: { $0.id == window.id }
+                                )
+                            } label: { Circle().fill(Color.red) }
+                                .frame(width: 20, height: 20)
                             
-                        } label: { Circle().fill(Color.red) }
-                            .buttonStyle(.plain)
-                            .frame(width: 20, height: 20)
-                            .padding(.leading)
+                            Button {
+                                window.isMinimized = true
+                            } label: { Circle().fill(Color.yellow) }
+                                .frame(width: 20, height: 20)
+                        }
+                        .buttonStyle(.plain)
+                        .frame(width: 80)
                         
                         Spacer()
                         
@@ -42,6 +48,8 @@ extension DesktopView {
                             .fontWeight(.bold)
                         
                         Spacer()
+                        
+                        Spacer().frame(width: 80)
                     }
                     .contentShape(Rectangle())
                     .frame(width: proxy.size.width, height: 40)

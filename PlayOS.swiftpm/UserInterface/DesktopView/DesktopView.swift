@@ -33,18 +33,21 @@ struct DesktopView: View {
                     
                     ForEach(appModel.windows.indices, id: \.self) { windowIdx in
                         
-                        Window(window: $appModel.windows[windowIdx])
-                            .frame(width: 550, height: 430)
-                            .background(.background)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                            .offset(appModel.windows[windowIdx].offset)
-                            .onTapGesture {
-                                appModel.windows.move(
-                                    fromOffsets: IndexSet(integer: windowIdx),
-                                    toOffset: appModel.windows.count
-                                )
-                                menuIsPresented = false
-                            }
+                        if !appModel.windows[windowIdx].isMinimized {
+                            
+                            Window(window: $appModel.windows[windowIdx])
+                                .frame(width: 550, height: 430)
+                                .background(.background)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .offset(appModel.windows[windowIdx].offset)
+                                .onTapGesture {
+                                    appModel.windows.move(
+                                        fromOffsets: IndexSet(integer: windowIdx),
+                                        toOffset: appModel.windows.count
+                                    )
+                                    menuIsPresented = false
+                                }
+                        }
                     }
                 }
                 .frame(width: proxy.size.width, height: proxy.size.height - 60)
@@ -55,7 +58,7 @@ struct DesktopView: View {
                         .toggleStyle(.button)
                         .fontWeight(.bold)
                         .buttonStyle(.borderedProminent)
-                        .padding(.leading)
+                        .padding(.horizontal)
                         .overlay {
                             if menuIsPresented {
                                 StartMenu(isPresented: $menuIsPresented)
@@ -63,6 +66,8 @@ struct DesktopView: View {
                                     .onTapGesture { }
                             }
                         }
+                    
+                    TaskBar()
                     
                     Spacer()
                     
