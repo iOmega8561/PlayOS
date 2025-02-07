@@ -67,7 +67,7 @@ struct DesktopView: View {
                     
                     Spacer()
                     
-                    Text(Date.now.formatted())
+                    Text(Date.now.formatted(date: .abbreviated, time: .shortened))
                         .padding(10)
                         .background(.thickMaterial)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
