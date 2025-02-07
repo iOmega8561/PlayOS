@@ -35,7 +35,7 @@ struct DesktopView: View {
                         
                         Window(window: $appModel.windows[windowIdx])
                             .frame(width: 550, height: 430)
-                            .background(.white)
+                            .background(.background)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                             .offset(appModel.windows[windowIdx].offset)
                             .onTapGesture {

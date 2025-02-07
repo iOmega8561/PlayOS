@@ -11,15 +11,19 @@ enum Application: CaseIterable {
     
     case test
     
-    var content: some View {
+    case settings
+    
+    @ViewBuilder @MainActor var content: some View {
         switch self {
         case .test: Color.black
+        case .settings: SettingsAppView()
         }
     }
     
     var title: String {
         switch self {
         case .test: "Test"
+        case .settings: "Settings"
         }
     }
 }

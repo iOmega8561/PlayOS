@@ -38,7 +38,6 @@ extension DesktopView {
                         
                         Text(window.application.title)
                             .font(.headline)
-                            .foregroundStyle(.black)
                         
                         Spacer()
                     }
