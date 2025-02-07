@@ -41,6 +41,7 @@ struct LoginView: View {
                     Text("User")
                 }
                 .font(.title)
+                .foregroundStyle(.white)
                 
                 HStack {
                     Button("Shutdown") {

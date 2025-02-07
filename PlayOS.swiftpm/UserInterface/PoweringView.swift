@@ -43,7 +43,6 @@ struct PoweringView: View {
            }
             
             VStack {
-                
                 HStack {
                     Text("PlayOS")
                         .fontWeight(.bold)
@@ -52,6 +51,7 @@ struct PoweringView: View {
                     Text(isPoweringOff ? "is shutting down...":"is booting up...")
                 }
                 .font(.largeTitle)
+                .foregroundStyle(.white)
                 
                 if !isPoweringOff {
                     RoundedRectangle(cornerRadius: 10)
@@ -61,7 +61,6 @@ struct PoweringView: View {
                             RoundedRectangle(cornerRadius: 10)
                                 .fill(Color.accentColor)
                                 .frame(width: proxy.size.width * 0.4 * progress)
-                            
                         }
                         .frame(width: proxy.size.width * 0.4, height: 20)
                         .padding()
@@ -72,16 +71,13 @@ struct PoweringView: View {
         .task(priority: .userInitiated) { @MainActor in
             
             while self.progress < 1.0 {
-                
                 withAnimation(.default) {
                     progress = min((0.1 + progress * 1.2), 1.0)
                 }
-                
                 try? await Task.sleep(for: .seconds(1))
             }
             
             try? await Task.sleep(for: .seconds(1))
-            
             setMode(isPoweringOff ? .stopped:.login)
         }
     }

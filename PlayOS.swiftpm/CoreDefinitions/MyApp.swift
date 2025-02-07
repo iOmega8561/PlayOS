@@ -33,7 +33,6 @@ struct MyApp: App {
                 }
             }
             .ignoresSafeArea()
-            .foregroundStyle(.white)
             .environment(\.setMode, setMode)
             .environmentObject(appModel)
             

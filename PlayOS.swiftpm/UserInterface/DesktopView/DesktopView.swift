@@ -31,16 +31,24 @@ struct DesktopView: View {
                     
                     // TO-DO
                     
-                    ForEach(appModel.windows.indices, id: \.self) { window in
+                    ForEach(appModel.windows.indices, id: \.self) { windowIdx in
                         
-                        Window(window: $appModel.windows[window])
+                        Window(window: $appModel.windows[windowIdx])
                             .frame(width: 550, height: 430)
                             .background(.white)
                             .clipShape(RoundedRectangle(cornerRadius: 10))
-                            .offset(appModel.windows[window].offset)
+                            .offset(appModel.windows[windowIdx].offset)
+                            .onTapGesture {
+                                appModel.windows.move(
+                                    fromOffsets: IndexSet(integer: windowIdx),
+                                    toOffset: appModel.windows.count
+                                )
+                                menuIsPresented = false
+                            }
                     }
                 }
                 .frame(width: proxy.size.width, height: proxy.size.height - 60)
+                .onTapGesture { menuIsPresented = false }
                 
                 HStack {
                     Toggle("Menu", systemImage: "cursorarrow.rays", isOn: $menuIsPresented)

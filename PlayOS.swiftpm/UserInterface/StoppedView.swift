@@ -44,5 +44,6 @@ struct StoppedView: View {
                 }
             }
         }
+        .foregroundStyle(.white)
     }
 }
