@@ -10,14 +10,13 @@ import SwiftUI
 struct SettingsAppView: View {
     
     @EnvironmentObject private var appModel: AppModel
-    
-    private let gridItemLayout = [GridItem(.flexible()), GridItem(.flexible())]
-    
+        
     var body: some View {
         
         ScrollView {
             
-            Group {
+            VStack(spacing: 20) {
+                
                 VStack(spacing: 5) {
                     HStack {
                         Text("Wallpaper")
@@ -29,19 +28,7 @@ struct SettingsAppView: View {
                     Divider()
                 }
                 
-                LazyVGrid(columns: gridItemLayout, spacing: 10) {
-                    ForEach(1..<5) { index in
-                        Button {
-                            appModel.backgroundImage = "Backgrounds/\(index)"
-                        } label: {
-                            Image("Backgrounds/\(index)")
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 120, height: 120)
-                        }
-                        .buttonStyle(.plain)
-                    }
-                }
+                Setting(imgPath: "Backgrounds", setting: $appModel.backgroundImage)
                 
                 VStack(spacing: 5) {
                     HStack {
@@ -54,19 +41,7 @@ struct SettingsAppView: View {
                     Divider()
                 }
                 
-                HStack(spacing: 25) {
-                    ForEach(1..<5) { index in
-                        Button {
-                            appModel.profilePicture = "ProfilePics/\(index)"
-                        } label: {
-                            Image("ProfilePics/\(index)")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 100, height: 100)
-                        }
-                        .buttonStyle(.plain)
-                    }
-                }
+                Setting(imgPath: "ProfilePics", setting: $appModel.profilePicture)
             }
             .padding()
         }

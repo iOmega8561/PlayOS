@@ -38,13 +38,15 @@ extension DesktopView {
                             } label: { Circle().fill(Color.yellow) }
                                 .frame(width: 20, height: 20)
                             
-                            Toggle(isOn: $window.isExpanded) {
-                                Circle()
-                                    .fill(Color.green.opacity(window.isExpanded ? 0.5:1))
+                            if window.isResizable {
+                                
+                                Toggle(isOn: $window.isExpanded) {
+                                    Circle()
+                                        .fill(Color.green.opacity(window.isExpanded ? 0.5:1))
+                                }
+                                .toggleStyle(.button)
+                                .frame(width: 20, height: 20)
                             }
-                            .toggleStyle(.button)
-                            .frame(width: 20, height: 20)
-                            .animation(nil, value: window.isExpanded)
                             
                             Spacer()
                         }
