@@ -36,7 +36,7 @@ struct DesktopView: View {
                         if !appModel.windows[windowIdx].isMinimized {
                             
                             Window(window: $appModel.windows[windowIdx])
-                                .frame(width: 550, height: 430)
+                                .frame(width: 650, height: 500)
                                 .background(.background)
                                 .clipShape(RoundedRectangle(cornerRadius: 10))
                                 .offset(appModel.windows[windowIdx].offset)

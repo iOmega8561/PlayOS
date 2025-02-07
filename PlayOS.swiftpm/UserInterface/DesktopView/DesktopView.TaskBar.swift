@@ -41,7 +41,7 @@ extension DesktopView {
                                 }
                                 .padding(.horizontal)
                                 .fontWeight(.bold)
-                                .frame(width: 150, height: 40)
+                                .frame(height: 40)
                                 .contentShape(RoundedRectangle(cornerRadius: 7))
                                 .background(.thickMaterial)
                                 .clipShape(RoundedRectangle(cornerRadius: 7))
