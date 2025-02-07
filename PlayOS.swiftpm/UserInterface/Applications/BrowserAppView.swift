@@ -10,6 +10,7 @@ import SwiftUI
 struct BrowserAppView: View {
 
     @State private var urlString: String = "https://apple.com"
+    
     @State private var currentURL: URL? = URL(string: "https://apple.com")
 
     var body: some View {
