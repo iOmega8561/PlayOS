@@ -42,11 +42,10 @@ struct CalculatorAppView: View {
                 Spacer()
                 Text(display)
                     .font(.system(size: 64))
-                    .foregroundColor(.black)
                     .lineLimit(1)
                     .padding()
             }
-            .background(Color(UIColor.systemGroupedBackground))
+            .background(.thinMaterial)
             .clipShape(RoundedRectangle(cornerRadius: 10))
             
             VStack(spacing: 12) {
