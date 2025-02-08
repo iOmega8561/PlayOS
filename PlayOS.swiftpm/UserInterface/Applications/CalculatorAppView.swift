@@ -18,7 +18,7 @@ struct CalculatorAppView: View {
             Button(action: action) {
                 Text(label)
                     .font(.system(size: 48))
-                    .frame(width: 100)
+                    .frame(width: 75)
                     .foregroundColor(.white)
                     .background(backgroundColor)
                     .clipShape(Circle())
@@ -50,28 +50,28 @@ struct CalculatorAppView: View {
             
             VStack(spacing: 12) {
 
-                HStack(spacing: 12) {
+                HStack(spacing: 6) {
                     CalculatorButton(label: "7", backgroundColor: .gray) { buttonTapped("7") }
                     CalculatorButton(label: "8", backgroundColor: .gray) { buttonTapped("8") }
                     CalculatorButton(label: "9", backgroundColor: .gray) { buttonTapped("9") }
                     CalculatorButton(label: "/", backgroundColor: .orange) { operatorTapped("/") }
                 }
 
-                HStack(spacing: 12) {
+                HStack(spacing: 6) {
                     CalculatorButton(label: "4", backgroundColor: .gray) { buttonTapped("4") }
                     CalculatorButton(label: "5", backgroundColor: .gray) { buttonTapped("5") }
                     CalculatorButton(label: "6", backgroundColor: .gray) { buttonTapped("6") }
                     CalculatorButton(label: "*", backgroundColor: .orange) { operatorTapped("*") }
                 }
 
-                HStack(spacing: 12) {
+                HStack(spacing: 6) {
                     CalculatorButton(label: "1", backgroundColor: .gray) { buttonTapped("1") }
                     CalculatorButton(label: "2", backgroundColor: .gray) { buttonTapped("2") }
                     CalculatorButton(label: "3", backgroundColor: .gray) { buttonTapped("3") }
                     CalculatorButton(label: "-", backgroundColor: .orange) { operatorTapped("-") }
                 }
 
-                HStack(spacing: 12) {
+                HStack(spacing: 6) {
                     CalculatorButton(label: "0", backgroundColor: .gray) { buttonTapped("0") }
                     CalculatorButton(label: "C", backgroundColor: .red) { clear() }
                     CalculatorButton(label: "=", backgroundColor: .blue) { calculateResult() }

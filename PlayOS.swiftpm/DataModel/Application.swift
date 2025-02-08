@@ -44,4 +44,12 @@ enum Application: CaseIterable {
         case .settings: "gearshape"
         }
     }
+     
+    var preferredSize: WindowSize {
+        switch self {
+        case .browser: .large
+        case .calculator: .small
+        default: .medium
+        }
+    }
 }

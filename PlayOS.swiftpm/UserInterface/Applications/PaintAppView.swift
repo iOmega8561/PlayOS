@@ -25,7 +25,7 @@ struct PaintAppView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            // MARK: - Color Picker Bar
+
             HStack {
                 ForEach(palette, id: \.self) { color in
                     Circle()
@@ -33,7 +33,7 @@ struct PaintAppView: View {
                         .frame(width: 44, height: 44)
                         .overlay(
                             Circle()
-                                .stroke(Color.white, lineWidth: color == selectedColor ? 4 : 0)
+                                .stroke(Color.accentColor, lineWidth: color == selectedColor ? 4 : 0)
                         )
                         .onTapGesture {
                             selectedColor = color

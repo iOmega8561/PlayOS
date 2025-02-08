@@ -31,12 +31,12 @@ extension DesktopView {
                                     where: { $0.id == window.id }
                                 )
                             } label: { Circle().fill(Color.red) }
-                                .frame(width: 20, height: 20)
+                                .frame(width: 25, height: 25)
                             
                             Button {
                                 window.isMinimized = true
                             } label: { Circle().fill(Color.yellow) }
-                                .frame(width: 20, height: 20)
+                                .frame(width: 25, height: 25)
                             
                             if window.isResizable {
                                 
@@ -45,14 +45,14 @@ extension DesktopView {
                                         .fill(Color.green.opacity(window.isExpanded ? 0.5:1))
                                 }
                                 .toggleStyle(.button)
-                                .frame(width: 20, height: 20)
+                                .frame(width: 25, height: 25)
                             }
                             
                             Spacer()
                         }
-                        .padding(.leading)
                         .buttonStyle(.plain)
-                        .frame(width: 160)
+                        .frame(width: 100)
+                        .padding(.leading)
                         
                         Spacer()
                         
@@ -62,7 +62,7 @@ extension DesktopView {
                         
                         Spacer()
                         
-                        Spacer().frame(width: 160)
+                        Spacer().frame(width: 100)
                     }
                     .contentShape(Rectangle())
                     .frame(width: proxy.size.width, height: 40)
@@ -78,8 +78,8 @@ extension DesktopView {
                         .frame(width: proxy.size.width, height: proxy.size.height - 40)
                 }
             }
-            .frame(width: window.isExpanded ? 950:650,
-                   height: window.isExpanded ? 700:500)
+            .frame(width: window.isExpanded ? 950:window.application.preferredSize.width,
+                   height: window.isExpanded ? 700:window.application.preferredSize.height)
             .background(.background)
             .clipShape(RoundedRectangle(cornerRadius: 10))
         }
