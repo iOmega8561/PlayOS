@@ -16,7 +16,7 @@ enum WindowSize: Equatable, Hashable {
     
     var width: CGFloat {
         switch self {
-        case .small: 400
+        case .small: 350
         case .medium: 650
         case .large: 950
         case .custom(let size, _): size.width
