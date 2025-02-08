@@ -17,24 +17,25 @@ struct DesktopView: View {
     
     var body: some View {
         
-        GeometryReader { proxy in
+        GeometryReader { containerGeometry in
             
             Image(appModel.backgroundImage)
                 .resizable()
                 .scaledToFill()
-                .frame(width: proxy.size.width, height: proxy.size.height)
+                .frame(width: containerGeometry.size.width,
+                       height: containerGeometry.size.height)
                 .onTapGesture { menuIsPresented = false }
             
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 0) {
                 
-                ZStack {
-                    
-                    // TO-DO
-                    
-                    ForEach(appModel.windows.indices, id: \.self) { windowIdx in
-                        if !appModel.windows[windowIdx].isMinimized {
-                            
-                            Window(window: $appModel.windows[windowIdx])
+                GeometryReader { desktopGeometry in
+                    ZStack {
+                        
+                        ForEach(appModel.windows.indices, id: \.self) { windowIdx in
+                            if !appModel.windows[windowIdx].isMinimized {
+                                
+                                Window(desktopGeometry: desktopGeometry,
+                                       window: $appModel.windows[windowIdx])
                                 .offset(appModel.windows[windowIdx].offset)
                                 .onTapGesture {
                                     appModel.windows.move(
@@ -43,11 +44,15 @@ struct DesktopView: View {
                                     )
                                     menuIsPresented = false
                                 }
+                            }
                         }
                     }
+                    .frame(width: desktopGeometry.size.width,
+                           height: desktopGeometry.size.height)
+                    .onTapGesture { menuIsPresented = false }
                 }
-                .frame(width: proxy.size.width, height: proxy.size.height - 60)
-                .onTapGesture { menuIsPresented = false }
+                .frame(width: containerGeometry.size.width,
+                       height: containerGeometry.size.height - 60)
                 
                 HStack {
                     Toggle("Menu", systemImage: "cursorarrow.rays", isOn: $menuIsPresented)
@@ -73,11 +78,12 @@ struct DesktopView: View {
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                         .padding(.trailing)
                 }
-                .frame(width: proxy.size.width, height: 60)
+                .frame(width: containerGeometry.size.width, height: 60)
                 .background(.ultraThinMaterial)
                 .onTapGesture { menuIsPresented = false }
             }
-            .frame(width: proxy.size.width, height: proxy.size.height)
+            .frame(width: containerGeometry.size.width,
+                   height: containerGeometry.size.height)
         }
     }
 }

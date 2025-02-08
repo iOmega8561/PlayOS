@@ -17,7 +17,6 @@ struct MyApp: App {
     var body: some Scene {
         
         WindowGroup {
-
             ZStack {
                 Color.black
                 
@@ -35,7 +34,6 @@ struct MyApp: App {
             .ignoresSafeArea()
             .environment(\.setMode, setMode)
             .environmentObject(appModel)
-            
         }
     }
     

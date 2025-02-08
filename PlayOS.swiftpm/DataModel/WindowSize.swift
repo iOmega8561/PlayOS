@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum WindowSize {
+enum WindowSize: Equatable, Hashable {
     
     case small(fixed: Bool)
     case medium(fixed: Bool)
