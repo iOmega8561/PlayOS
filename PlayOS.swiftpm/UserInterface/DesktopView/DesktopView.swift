@@ -22,8 +22,6 @@ struct DesktopView: View {
             Image(appModel.backgroundImage)
                 .resizable()
                 .scaledToFill()
-                .frame(width: containerGeometry.size.width,
-                       height: containerGeometry.size.height)
                 .onTapGesture { menuIsPresented = false }
             
             VStack(alignment: .leading, spacing: 0) {

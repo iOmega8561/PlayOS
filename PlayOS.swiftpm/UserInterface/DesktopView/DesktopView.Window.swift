@@ -23,7 +23,7 @@ extension DesktopView {
    
             VStack(spacing: 0) {
                 
-                HStack(alignment: .center) {
+                HStack(alignment: .bottom) {
                     
                     HStack(alignment: .center, spacing: 10) {
                         Button {
@@ -41,13 +41,13 @@ extension DesktopView {
                         if window.isResizable {
                             
                             Button {
-                                if case .large = window.currentSize {
-                                    window.resize()
+                                if window.isExpanded {
+                                    window.expand()
                                     
-                                } else { window.resize(to: .large(fixed: false)) }
+                                } else { window.expand(in: desktopGeometry) }
                             } label: {
                                 Circle()
-                                    .fill(.green.opacity(window.currentSize == .large(fixed: false) ? 0.5:1))
+                                    .fill(.green.opacity(window.isExpanded ? 0.5:1))
                             }
                             .frame(width: 25, height: 25)
                         }
@@ -73,6 +73,9 @@ extension DesktopView {
                 .gesture(
                     DragGesture()
                         .onChanged { gesture in
+                            
+                            guard !window.isExpanded else { return }
+                            
                             window.move(
                                 computing: gesture.translation,
                                 in: desktopGeometry

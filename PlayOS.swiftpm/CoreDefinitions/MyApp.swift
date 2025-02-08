@@ -32,6 +32,8 @@ struct MyApp: App {
                 }
             }
             .ignoresSafeArea()
+            .statusBarHidden(true)
+            .toolbar(.hidden)
             .environment(\.setMode, setMode)
             .environmentObject(appModel)
         }

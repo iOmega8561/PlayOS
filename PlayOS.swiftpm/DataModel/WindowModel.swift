@@ -12,14 +12,26 @@ struct WindowModel: Identifiable, Hashable {
     let id: UUID = UUID()
     let application: Application
     var isMinimized: Bool = false
-    var isExpanded: Bool = false
     
     var isResizable: Bool {
         !application.preferredSize.isFixed
     }
     
+    private(set) var isExpanded: Bool = false
     private(set) var offset: CGSize = .zero
     private(set) var currentSize: WindowSize
+    
+    mutating func expand(in container: GeometryProxy? = nil) {
+        if let container {
+            resize(to: .custom(size: container.size, fixed: false))
+            offset = .zero
+            isExpanded = true
+            
+        } else {
+            resize()
+            isExpanded = false
+        }
+    }
     
     mutating func resize(to newSize: WindowSize? = nil) {
         guard isResizable else {
