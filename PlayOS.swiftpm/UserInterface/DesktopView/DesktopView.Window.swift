@@ -38,7 +38,7 @@ extension DesktopView {
                             } label: { Circle().fill(Color.yellow) }
                                 .frame(width: 25, height: 25)
                             
-                            if window.isResizable {
+                            if !window.application.preferredSize.isFixed {
                                 
                                 Toggle(isOn: $window.isExpanded) {
                                     Circle()

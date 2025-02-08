@@ -9,17 +9,17 @@ import Foundation
 
 enum WindowSize {
     
-    case small
-    case medium
-    case large
-    case custom(size: CGSize)
+    case small(fixed: Bool)
+    case medium(fixed: Bool)
+    case large(fixed: Bool)
+    case custom(size: CGSize, fixed: Bool)
     
     var width: CGFloat {
         switch self {
         case .small: 400
         case .medium: 650
         case .large: 950
-        case .custom(let size): size.width
+        case .custom(let size, _): size.width
         }
     }
     
@@ -28,7 +28,16 @@ enum WindowSize {
         case .small: 450
         case .medium: 500
         case .large: 700
-        case .custom(let size): size.height
+        case .custom(let size, _): size.height
+        }
+    }
+    
+    var isFixed: Bool {
+        switch self {
+        case .small(let fixed),
+             .medium(let fixed),
+             .large(let fixed),
+             .custom(_, let fixed): fixed
         }
     }
 }
