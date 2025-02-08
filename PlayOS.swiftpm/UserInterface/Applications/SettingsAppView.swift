@@ -28,7 +28,7 @@ struct SettingsAppView: View {
                     Divider()
                 }
                 
-                Setting(imgPath: "Backgrounds", setting: $appModel.backgroundImage)
+                Setting(settingKey: $appModel.backgroundImage)
                 
                 VStack(spacing: 5) {
                     HStack {
@@ -41,7 +41,7 @@ struct SettingsAppView: View {
                     Divider()
                 }
                 
-                Setting(imgPath: "ProfilePics", setting: $appModel.profilePicture)
+                Setting(settingKey: $appModel.profilePicture)
             }
             .padding()
         }

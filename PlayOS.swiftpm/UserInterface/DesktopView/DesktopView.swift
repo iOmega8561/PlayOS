@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct DesktopView: View {
-    
-    @Environment(\.setMode) private var setMode
-    
+        
     @EnvironmentObject private var appModel: AppModel
     
     @State private var menuIsPresented: Bool = false
@@ -19,7 +17,7 @@ struct DesktopView: View {
         
         GeometryReader { containerGeometry in
             
-            Image(appModel.backgroundImage)
+            Image(appModel.backgroundImage.description)
                 .resizable()
                 .scaledToFill()
                 .onTapGesture { menuIsPresented = false }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-@dynamicMemberLookup enum Application: CaseIterable {
+@dynamicMemberLookup enum Application: CaseIterable, Hashable {
     
     struct MetaData {
         let title: String

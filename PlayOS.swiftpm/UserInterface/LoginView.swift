@@ -17,7 +17,7 @@ struct LoginView: View {
         
         GeometryReader { proxy in
             
-            Image(appModel.backgroundImage)
+            Image(appModel.backgroundImage.description)
                 .resizable()
                 .scaledToFill()
                 .frame(width: proxy.size.width, height: proxy.size.height)
@@ -26,7 +26,7 @@ struct LoginView: View {
             
             VStack {
                 
-                Image(appModel.profilePicture)
+                Image(appModel.profilePicture.description)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 200)

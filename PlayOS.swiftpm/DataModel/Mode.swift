@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum Mode: Equatable {
+enum Mode: Hashable {
     
     struct Key: EnvironmentKey {
         nonisolated(unsafe) static let defaultValue: (Mode) -> Void = { _ in }

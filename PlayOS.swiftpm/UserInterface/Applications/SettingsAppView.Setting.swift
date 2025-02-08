@@ -9,27 +9,25 @@ import SwiftUI
 
 extension SettingsAppView {
     
-    struct Setting: View {
+    struct Setting<ValueType: Hashable>: View {
         
-        let imgPath: String
-        
-        @Binding var setting: String
+        @Binding var settingKey: SettingKey<ValueType>
         
         var body: some View {
             
             ScrollView(.horizontal) {
                 
                 HStack {
-                    ForEach(1..<5) { index in
+                    ForEach(settingKey.possibleValues, id: \.self) { value in
                         
-                        Button { setting = imgPath + "/\(index)" } label: {
+                        Button { settingKey.value = value } label: {
                             
-                            Image(imgPath + "/\(index)")
+                            Image(settingKey.description(for: value))
                                 .resizable()
                                 .scaledToFit()
                                 .overlay(alignment: .topTrailing) {
                                     
-                                    if setting == imgPath + "/\(index)" {
+                                    if settingKey.value == value {
                                         
                                         Group {
                                             Circle()
@@ -48,7 +46,7 @@ extension SettingsAppView {
                                 }
                                 .overlay {
                                     
-                                    if setting == imgPath + "/\(index)" {
+                                    if settingKey.value == value {
                                         
                                         RoundedRectangle(cornerRadius: 12)
                                             .stroke(Color.accentColor, lineWidth: 5)
