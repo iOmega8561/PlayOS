@@ -11,7 +11,6 @@ struct WindowModel: Identifiable, Hashable {
     
     let id: UUID = UUID()
     let application: Application
-    var offset: CGSize = .zero
     var isMinimized: Bool = false
     var isExpanded: Bool = false
     
@@ -19,12 +18,42 @@ struct WindowModel: Identifiable, Hashable {
         !application.preferredSize.isFixed
     }
     
+    private(set) var offset: CGSize = .zero
     private(set) var currentSize: WindowSize
     
     mutating func resize(to newSize: WindowSize? = nil) {
-        guard isResizable else { return }
+        guard isResizable else {
+            return
+        }
         
         currentSize = newSize ?? application.preferredSize
+    }
+    
+    mutating func move(computing translation: CGSize, in container: GeometryProxy) {
+        
+        let initialOrigin: CGPoint = .init(
+            x: container.size.width / 2 - currentSize.width / 2,
+            y: container.size.height / 2 - currentSize.height / 2
+        )
+        let currentOrigin: CGPoint = .init(
+            x: initialOrigin.x + offset.width,
+            y: initialOrigin.y + offset.height
+        )
+        let proposedOrigin: CGPoint = .init(
+            x: currentOrigin.x + translation.width,
+            y: currentOrigin.y + translation.height
+        )
+        
+        let minX: CGFloat = -currentSize.width / 2
+        let maxX = container.size.width - currentSize.width / 2
+        let minY: CGFloat = 0
+        let maxY = container.size.height - currentSize.height / 2
+        
+        let clampedOriginX = min(max(proposedOrigin.x, minX), maxX)
+        let clampedOriginY = min(max(proposedOrigin.y, minY), maxY)
+        
+        offset = .init(width: clampedOriginX - initialOrigin.x,
+                       height: clampedOriginY - initialOrigin.y)
     }
     
     init(application: Application) {

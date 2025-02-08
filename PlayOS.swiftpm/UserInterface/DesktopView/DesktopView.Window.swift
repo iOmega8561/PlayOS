@@ -11,13 +11,13 @@ extension DesktopView {
     
     struct Window: View {
         
-        @EnvironmentObject private var appModel: AppModel
-        
-        @State private var dragOffset: CGSize = .zero
-        
         let desktopGeometry: GeometryProxy
         
         @Binding var window: WindowModel
+        
+        @EnvironmentObject private var appModel: AppModel
+        
+        @State private var dragOffset: CGSize = .zero
         
         var body: some View {
    
@@ -41,13 +41,13 @@ extension DesktopView {
                         if window.isResizable {
                             
                             Button {
-                                switch window.currentSize {
-                                case .large: window.resize()
-                                default: window.resize(to: .large(fixed: false))
-                                }
+                                if case .large = window.currentSize {
+                                    window.resize()
+                                    
+                                } else { window.resize(to: .large(fixed: false)) }
                             } label: {
                                 Circle()
-                                    .fill(Color.green.opacity(window.currentSize == .large(fixed: false) ? 0.5:1))
+                                    .fill(.green.opacity(window.currentSize == .large(fixed: false) ? 0.5:1))
                             }
                             .frame(width: 25, height: 25)
                         }
@@ -73,8 +73,10 @@ extension DesktopView {
                 .gesture(
                     DragGesture()
                         .onChanged { gesture in
-                            window.offset.width += gesture.translation.width
-                            window.offset.height += gesture.translation.height
+                            window.move(
+                                computing: gesture.translation,
+                                in: desktopGeometry
+                            )
                         }
                 )
                 
