@@ -21,24 +21,21 @@ struct WindowModel: Identifiable, Hashable {
     private(set) var offset: CGSize = .zero
     private(set) var currentSize: WindowSize
     
-    mutating func expand(in container: GeometryProxy? = nil) {
-        if let container {
-            resize(to: .custom(size: container.size, fixed: false))
-            offset = .zero
-            isExpanded = true
-            
-        } else {
-            resize()
-            isExpanded = false
-        }
-    }
-    
     mutating func resize(to newSize: WindowSize? = nil) {
         guard isResizable else {
             return
         }
         
         currentSize = newSize ?? application.preferredSize
+    }
+    
+    mutating func expand(in container: GeometryProxy? = nil) {
+        if let container {
+            resize(to: .custom(size: container.size, fixed: false))
+            offset = .zero
+            isExpanded = true
+            
+        } else { resize(); isExpanded = false }
     }
     
     mutating func move(computing translation: CGSize, in container: GeometryProxy) {
