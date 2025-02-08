@@ -38,7 +38,7 @@ extension DesktopView {
                         } label: { Circle().fill(Color.yellow) }
                             .frame(width: 25, height: 25)
                         
-                        if !window.application.preferredSize.isFixed {
+                        if window.isResizable {
                             
                             Button {
                                 switch window.currentSize {
