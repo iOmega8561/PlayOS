@@ -82,6 +82,7 @@ extension DesktopView {
                    height: window.isExpanded ? 700:window.application.preferredSize.height)
             .background(.background)
             .clipShape(RoundedRectangle(cornerRadius: 10))
+            .shadow(radius: 3.0)
         }
     }
 }

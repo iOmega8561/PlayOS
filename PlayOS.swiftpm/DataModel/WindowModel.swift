@@ -13,11 +13,4 @@ struct WindowModel: Identifiable, Hashable {
     var offset: CGSize = .zero
     var isMinimized: Bool = false
     var isExpanded: Bool = false
-    
-    var isResizable: Bool {
-        switch application {
-        case .settings: false
-        default: true
-        }
-    }
 }
