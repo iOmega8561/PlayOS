@@ -18,7 +18,7 @@ enum WindowSize: Hashable {
         switch self {
         case .small: 350
         case .medium: 650
-        case .large: 950
+        case .large: 750
         case .custom(let size, _): size.width
         }
     }
@@ -27,7 +27,7 @@ enum WindowSize: Hashable {
         switch self {
         case .small: 450
         case .medium: 500
-        case .large: 700
+        case .large: 600
         case .custom(let size, _): size.height
         }
     }

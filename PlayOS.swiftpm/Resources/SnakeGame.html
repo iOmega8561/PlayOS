@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<!--
+MIT License
+
+Copyright (c) 2025 Your Name
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SnakeGame</title>
+  <style>
+    body {
+      background-color: #000;
+      margin: 0;
+      /* Arrange content in a column */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      touch-action: none; /* Prevent default touch gestures */
+    }
+    /* Toggle handedness button container */
+    #toggleContainer {
+      margin-bottom: 10px;
+    }
+    #toggleButton {
+      font-size: 16px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      background-color: #333;
+      color: #fff;
+    }
+    /* Game container holds the controls and arena */
+    .game-container {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+      width: auto;
+    }
+    canvas {
+      background-color: #111;
+      border: 2px solid #fff;
+    }
+    /* D-pad control panel arranged in a grid */
+    .controls {
+      display: grid;
+      grid-template-columns: 60px 60px 60px;
+      grid-template-rows: auto auto auto;
+      gap: 5px;
+    }
+    .controls button {
+      font-size: 24px;
+      width: 60px;
+      height: 60px;
+      border-radius: 10px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+    }
+    /* Disabled buttons appear differently */
+    .controls button:disabled {
+      background-color: #555;
+      opacity: 0.5;
+    }
+    /* Empty cells for grid layout */
+    .empty {
+      visibility: hidden;
+    }
+  </style>
+</head>
+<body>
+  <!-- Toggle handedness button -->
+  <div id="toggleContainer">
+    <button id="toggleButton">Switch to Right-Handed</button>
+  </div>
+  
+  <div class="game-container" id="gameContainer">
+    <!-- On-screen arrow controls container -->
+    <div class="controls" id="controlsContainer">
+      <div class="empty"></div>
+      <button id="upButton">↑</button>
+      <div class="empty"></div>
+      <button id="leftButton">←</button>
+      <div class="empty"></div>
+      <button id="rightButton">→</button>
+      <div class="empty"></div>
+      <button id="downButton">↓</button>
+      <div class="empty"></div>
+    </div>
+
+    <!-- Game arena -->
+    <canvas id="gameCanvas" width="400" height="400"></canvas>
+  </div>
+
+  <script>
+    // ========= Game Variables and Setup =========
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+    const box = 20; // Size of one grid cell
+
+    let snake = [{ x: 9 * box, y: 10 * box }];  // Start with one segment
+    let direction = ""; // No movement until input
+    let food = {
+      x: Math.floor(Math.random() * 19 + 1) * box,
+      y: Math.floor(Math.random() * 19 + 1) * box
+    };
+
+    // Flag to control whether the game is running
+    let gameRunning = true;
+
+    // We'll update the snake’s movement every 100ms.
+    const updateInterval = 100;
+    let lastUpdateTime = 0;
+
+    // ========= Layout & Handedness =========
+    const toggleButton = document.getElementById("toggleButton");
+    const controlsContainer = document.getElementById("controlsContainer");
+    // For left-handed, controls are placed on the left of the canvas.
+    // For right-handed, controls are placed on the right.
+    function updateLayout() {
+      if (isLeftHanded) {
+        controlsContainer.style.order = 0;
+        canvas.style.order = 1;
+      } else {
+        controlsContainer.style.order = 1;
+        canvas.style.order = 0;
+      }
+    }
+    function updateToggleButton() {
+      toggleButton.textContent = isLeftHanded
+        ? "Switch to Right-Handed"
+        : "Switch to Left-Handed";
+    }
+    // Handedness flag (true = left-handed controls, false = right-handed)
+    let isLeftHanded = true;
+    toggleButton.addEventListener("click", () => {
+      isLeftHanded = !isLeftHanded;
+      updateLayout();
+      updateToggleButton();
+    });
+    // Initialize layout
+    updateLayout();
+    updateToggleButton();
+
+    // ========= Touch and Keyboard Controls =========
+    let touchStartX = 0;
+    let touchStartY = 0;
+    const swipeThreshold = 30; // Minimum swipe distance in pixels
+
+    canvas.addEventListener("touchstart", (event) => {
+      const touch = event.touches[0];
+      touchStartX = touch.clientX;
+      touchStartY = touch.clientY;
+    }, false);
+
+    canvas.addEventListener("touchend", (event) => {
+      const touch = event.changedTouches[0];
+      const dx = touch.clientX - touchStartX;
+      const dy = touch.clientY - touchStartY;
+      if (Math.abs(dx) < swipeThreshold && Math.abs(dy) < swipeThreshold) return;
+      
+      if (Math.abs(dx) > Math.abs(dy)) {
+        // Horizontal swipe.
+        if (dx > 0 && direction !== "LEFT") direction = "RIGHT";
+        else if (dx < 0 && direction !== "RIGHT") direction = "LEFT";
+      } else {
+        // Vertical swipe.
+        if (dy > 0 && direction !== "UP") direction = "DOWN";
+        else if (dy < 0 && direction !== "DOWN") direction = "UP";
+      }
+      updateControlState();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      const key = event.keyCode;
+      if (key === 37 && direction !== "RIGHT") { direction = "LEFT"; }
+      else if (key === 38 && direction !== "DOWN") { direction = "UP"; }
+      else if (key === 39 && direction !== "LEFT") { direction = "RIGHT"; }
+      else if (key === 40 && direction !== "UP") { direction = "DOWN"; }
+      updateControlState();
+    });
+
+    // ========= On-Screen Arrow Controls =========
+    const upButton = document.getElementById("upButton");
+    const downButton = document.getElementById("downButton");
+    const leftButton = document.getElementById("leftButton");
+    const rightButton = document.getElementById("rightButton");
+
+    upButton.addEventListener("click", () => {
+      if (direction !== "DOWN") { direction = "UP"; updateControlState(); }
+    });
+    downButton.addEventListener("click", () => {
+      if (direction !== "UP") { direction = "DOWN"; updateControlState(); }
+    });
+    leftButton.addEventListener("click", () => {
+      if (direction !== "RIGHT") { direction = "LEFT"; updateControlState(); }
+    });
+    rightButton.addEventListener("click", () => {
+      if (direction !== "LEFT") { direction = "RIGHT"; updateControlState(); }
+    });
+
+    // Disable the arrow button that would reverse the snake’s current direction.
+    function updateControlState() {
+      upButton.disabled = false;
+      downButton.disabled = false;
+      leftButton.disabled = false;
+      rightButton.disabled = false;
+      
+      if (direction === "UP") {
+        downButton.disabled = true;
+      } else if (direction === "DOWN") {
+        upButton.disabled = true;
+      } else if (direction === "LEFT") {
+        rightButton.disabled = true;
+      } else if (direction === "RIGHT") {
+        leftButton.disabled = true;
+      }
+    }
+
+    // ========= Game Logic: Update and Render =========
+    // Update the game state (move the snake, handle collisions, etc.)
+    function updateGame() {
+      if (!gameRunning) return;
+      
+      let snakeX = snake[0].x;
+      let snakeY = snake[0].y;
+      if (direction === "LEFT")  snakeX -= box;
+      else if (direction === "UP")    snakeY -= box;
+      else if (direction === "RIGHT") snakeX += box;
+      else if (direction === "DOWN")  snakeY += box;
+      
+      // Wrap-around behavior.
+      if (snakeX < 0) snakeX = canvas.width - box;
+      else if (snakeX >= canvas.width) snakeX = 0;
+      if (snakeY < 0) snakeY = canvas.height - box;
+      else if (snakeY >= canvas.height) snakeY = 0;
+      
+      // Check if the snake eats the food.
+      if (snakeX === food.x && snakeY === food.y) {
+        food = {
+          x: Math.floor(Math.random() * 19 + 1) * box,
+          y: Math.floor(Math.random() * 19 + 1) * box
+        };
+      } else {
+        snake.pop();
+      }
+      
+      const newHead = { x: snakeX, y: snakeY };
+      if (collision(newHead, snake)) {
+        gameOver();
+        return;
+      }
+      snake.unshift(newHead);
+    }
+
+    // Render the game state.
+    function renderGame() {
+      ctx.fillStyle = "#111";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      snake.forEach((segment, index) => {
+        ctx.fillStyle = (index === 0) ? "#0f0" : "#fff";
+        ctx.fillRect(segment.x, segment.y, box, box);
+      });
+      
+      ctx.fillStyle = "#f00";
+      ctx.fillRect(food.x, food.y, box, box);
+    }
+
+    // Check for collision with self.
+    function collision(newHead, snakeArray) {
+      return snakeArray.some(segment => newHead.x === segment.x && newHead.y === segment.y);
+    }
+
+    // ========= Game Over and Restart =========
+    function gameOver() {
+      gameRunning = false;
+      // Render a translucent overlay and game over text.
+      ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#fff";
+      ctx.font = "40px Arial";
+      ctx.textAlign = "center";
+      ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2);
+      // Restart after 2 seconds.
+      setTimeout(resetGame, 2000);
+    }
+
+    function resetGame() {
+      snake = [{ x: 9 * box, y: 10 * box }];
+      direction = "";
+      food = {
+        x: Math.floor(Math.random() * 19 + 1) * box,
+        y: Math.floor(Math.random() * 19 + 1) * box
+      };
+      updateControlState();
+      gameRunning = true;
+    }
+
+    // ========= Game Loop Using requestAnimationFrame =========
+    function gameLoop(timestamp) {
+      if (!lastUpdateTime) lastUpdateTime = timestamp;
+      const delta = timestamp - lastUpdateTime;
+      if (delta >= updateInterval) {
+        updateGame();
+        lastUpdateTime = timestamp;
+      }
+      renderGame();
+      requestAnimationFrame(gameLoop);
+    }
+
+    requestAnimationFrame(gameLoop);
+  </script>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<!--
+MIT License
+
+Copyright (c) 2025 Your Name
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interactive Coding Challenges</title>
+  <style>
+    body {
+      background-color: #f4f4f4;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+    }
+    #challengeSelect {
+      font-size: 16px;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+    #challengeDescription {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 4px;
+    }
+    #codeEditor {
+      width: 97%;
+      height: 200px;
+      font-family: Consolas, monospace;
+      font-size: 14px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical;
+      display: block;
+      margin-bottom: 10px;
+    }
+    #runButton {
+      font-size: 16px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      background-color: #007BFF;
+      color: #fff;
+      cursor: pointer;
+      margin-bottom: 15px;
+    }
+    #runButton:hover {
+      background-color: #0056b3;
+    }
+    #output {
+      background-color: #222;
+      color: #0f0;
+      padding: 10px;
+      border-radius: 4px;
+      font-family: Consolas, monospace;
+      white-space: pre-wrap;
+      min-height: 100px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Interactive Coding Challenges</h1>
+  
+  <label for="challengeSelect"><strong>Select a Challenge:</strong></label>
+  <select id="challengeSelect">
+    <option value="reverseString">Reverse a String</option>
+    <option value="factorial">Factorial Calculation</option>
+    <option value="isPrime">Check if a Number is Prime</option>
+    <option value="fibonacci">Fibonacci Number</option>
+    <option value="maxInArray">Max in an Array</option>
+  </select>
+  
+  <div id="challengeDescription"></div>
+  
+  <textarea id="codeEditor"></textarea>
+  <br>
+  <button id="runButton">Run Code</button>
+  
+  <h2>Output:</h2>
+  <pre id="output"></pre>
+  
+  <script>
+    // Define the five challenges
+    const challenges = {
+      reverseString: {
+        title: "Reverse a String",
+        description: "Write a function <code>reverseString(str)</code> that returns the reversed string. For example, <code>reverseString('hello')</code> should return <code>'olleh'</code>.",
+        stub:
+`function reverseString(str) {
+  // Your code here
+  // Example solution: return str.split('').reverse().join('');
+  return str.split('').reverse().join('');
+}
+
+console.log(reverseString("hello"));`
+      },
+      factorial: {
+        title: "Factorial Calculation",
+        description: "Write a function <code>factorial(n)</code> that returns the factorial of <code>n</code>. For example, <code>factorial(5)</code> should return <code>120</code>.",
+        stub:
+`function factorial(n) {
+  // Your code here
+  // Example solution:
+  if (n <= 1) return 1;
+  return n * factorial(n - 1);
+}
+
+console.log(factorial(5));`
+      },
+      isPrime: {
+        title: "Check if a Number is Prime",
+        description: "Write a function <code>isPrime(n)</code> that returns <code>true</code> if <code>n</code> is a prime number, and <code>false</code> otherwise. For example, <code>isPrime(7)</code> should return <code>true</code>.",
+        stub:
+`function isPrime(n) {
+  // Your code here
+  // Example solution:
+  if (n < 2) return false;
+  for (let i = 2; i <= Math.sqrt(n); i++) {
+    if (n % i === 0) return false;
+  }
+  return true;
+}
+
+console.log(isPrime(7));`
+      },
+      fibonacci: {
+        title: "Fibonacci Number",
+        description: "Write a function <code>fibonacci(n)</code> that returns the nth Fibonacci number. For example, <code>fibonacci(10)</code> should return <code>55</code>.",
+        stub:
+`function fibonacci(n) {
+  // Your code here
+  // Example solution:
+  if (n <= 1) return n;
+  return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+console.log(fibonacci(10));`
+      },
+      maxInArray: {
+        title: "Max in an Array",
+        description: "Write a function <code>maxInArray(arr)</code> that returns the largest number in the array <code>arr</code>. For example, <code>maxInArray([1, 5, 3, 9, 2])</code> should return <code>9</code>.",
+        stub:
+`function maxInArray(arr) {
+  // Your code here
+  // Example solution:
+  return Math.max(...arr);
+}
+
+console.log(maxInArray([1, 5, 3, 9, 2]));`
+      }
+    };
+
+    const challengeSelect = document.getElementById("challengeSelect");
+    const challengeDescription = document.getElementById("challengeDescription");
+    const codeEditor = document.getElementById("codeEditor");
+    const runButton = document.getElementById("runButton");
+    const outputEl = document.getElementById("output");
+
+    // Function to load a challenge based on selection.
+    function loadChallenge(challengeKey) {
+      const challenge = challenges[challengeKey];
+      if (!challenge) return;
+      challengeDescription.innerHTML = `<h2>${challenge.title}</h2><p>${challenge.description}</p>`;
+      codeEditor.value = challenge.stub;
+      outputEl.textContent = "";
+    }
+
+    // Load the initial challenge.
+    loadChallenge(challengeSelect.value);
+
+    // When the user changes the selection, load the appropriate challenge.
+    challengeSelect.addEventListener("change", () => {
+      loadChallenge(challengeSelect.value);
+    });
+
+    // Override console.log to also write to our output area.
+    (function() {
+      const originalLog = console.log;
+      console.log = function(...args) {
+        originalLog.apply(console, args);
+        args.forEach(arg => {
+          if (typeof arg !== "string") {
+            arg = JSON.stringify(arg, null, 2);
+          }
+          outputEl.textContent += arg + "\n";
+        });
+      };
+    })();
+
+    // Run the code when the Run Code button is clicked.
+    runButton.addEventListener("click", () => {
+      outputEl.textContent = ""; // Clear previous output
+      try {
+        // Use eval() to run the code. In production, consider sandboxing.
+        eval(codeEditor.value);
+      } catch (err) {
+        console.log("Error: " + err);
+      }
+    });
+  </script>
+</body>
+</html>
