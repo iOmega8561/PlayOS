@@ -11,10 +11,8 @@ extension DesktopView {
     
     struct StartMenu: View {
                 
-        @EnvironmentObject private var appModel: AppModel
-        
-        @Binding var isPresented: Bool
-        
+        @EnvironmentObject private var playOSModel: PlayOSModel
+                
         var body: some View {
             
             VStack(alignment: .center) {
@@ -34,8 +32,8 @@ extension DesktopView {
                 
                 ForEach(Application.allCases, id: \.self) { app in
                     Button {
-                        appModel.windowModels.append(.init(application: app))
-                        isPresented = false
+                        playOSModel.windowModels.append(.init(application: app))
+                        playOSModel.menuIsPresented = false
                     } label: {
                         
                         HStack {
@@ -62,11 +60,11 @@ extension DesktopView {
                 
                 HStack {
                     Button("Shutdown") {
-                        appModel.setMode(.poweringOff)
+                        playOSModel.setPhase(.poweringOff)
                     }
                     
                     Button("Log Out") {
-                        appModel.setMode(.login)
+                        playOSModel.setPhase(.login)
                     }
                 }
                 .buttonStyle(.borderedProminent)

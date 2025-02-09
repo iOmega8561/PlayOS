@@ -1,5 +1,5 @@
 //
-//  AppModel.swift
+//  PlayOSModel.swift
 //  PlayOS
 //
 //  Created by Giuseppe Rocco on 06/02/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-@MainActor class AppModel: ObservableObject {
+@MainActor final class PlayOSModel: ObservableObject {
     
     @Published var profilePicture: SettingKey<Int> = .init(
         namespace: "ProfilePics",
@@ -23,9 +23,11 @@ import SwiftUI
     
     @Published var windowModels: [WindowModel] = []
     
-    @Published private(set) var currentMode: Mode = .stopped
+    @Published var menuIsPresented: Bool = false
     
-    func setMode(_ mode: Mode) {
-        withAnimation(.easeInOut) { currentMode = mode }
+    @Published private(set) var currentPhase: PlayOSPhase = .stopped
+    
+    func setPhase(_ mode: PlayOSPhase) {
+        withAnimation(.easeInOut) { currentPhase = mode }
     }
 }

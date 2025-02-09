@@ -17,7 +17,7 @@ struct SettingsAppView: StatefulAppView {
         
     }
     
-    @EnvironmentObject private var appModel: AppModel
+    @EnvironmentObject private var playOSModel: PlayOSModel
         
     var body: some View {
         
@@ -36,7 +36,7 @@ struct SettingsAppView: StatefulAppView {
                     Divider()
                 }
                 
-                Setting(settingKey: $appModel.backgroundImage)
+                Setting(settingKey: $playOSModel.backgroundImage)
                 
                 VStack(spacing: 5) {
                     HStack {
@@ -49,7 +49,7 @@ struct SettingsAppView: StatefulAppView {
                     Divider()
                 }
                 
-                Setting(settingKey: $appModel.profilePicture)
+                Setting(settingKey: $playOSModel.profilePicture)
             }
             .padding()
         }

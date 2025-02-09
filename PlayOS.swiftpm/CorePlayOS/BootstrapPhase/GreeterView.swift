@@ -1,5 +1,5 @@
 //
-//  LoginView.swift
+//  GreeterView.swift
 //  PlayOS
 //
 //  Created by Giuseppe Rocco on 06/02/25.
@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-struct LoginView: View {
+struct GreeterView: View {
         
-    @EnvironmentObject private var appModel: AppModel
+    @EnvironmentObject private var playOSModel: PlayOSModel
     
     var body: some View {
         
         GeometryReader { proxy in
             
-            Image(appModel.backgroundImage.description)
+            Image(playOSModel.backgroundImage.description)
                 .resizable()
                 .scaledToFill()
                 .frame(width: proxy.size.width, height: proxy.size.height)
@@ -24,7 +24,7 @@ struct LoginView: View {
             
             VStack {
                 
-                Image(appModel.profilePicture.description)
+                Image(playOSModel.profilePicture.description)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 200)
@@ -43,11 +43,11 @@ struct LoginView: View {
                 
                 HStack {
                     Button("Shutdown") {
-                        appModel.setMode(.poweringOff)
+                        playOSModel.setPhase(.poweringOff)
                     }
                     
                     Button("Log In") {
-                        appModel.setMode(.desktop)
+                        playOSModel.setPhase(.desktop)
                     }
                 }
                 .buttonStyle(.borderedProminent)

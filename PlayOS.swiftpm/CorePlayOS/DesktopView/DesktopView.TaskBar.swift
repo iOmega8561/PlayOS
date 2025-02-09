@@ -11,7 +11,7 @@ extension DesktopView {
     
     struct TaskBar: View {
         
-        @EnvironmentObject private var appModel: AppModel
+        @EnvironmentObject private var playOSModel: PlayOSModel
         
         var body: some View {
             
@@ -19,13 +19,13 @@ extension DesktopView {
                 
                 HStack(alignment: .center) {
                     
-                    ForEach(appModel.windowModels) { windowModel in
+                    ForEach(playOSModel.windowModels) { windowModel in
                         
-                        let index = appModel.windowModels.firstIndex(of: windowModel)
+                        let index = playOSModel.windowModels.firstIndex(of: windowModel)
                         
                         if let index, windowModel.isMinimized {
                             
-                            Button { appModel.windowModels[index].isMinimized = false } label: {
+                            Button { playOSModel.windowModels[index].isMinimized = false } label: {
                                 
                                 HStack {
                                     Image(systemName: windowModel.application.sfSymbol)

@@ -1,5 +1,5 @@
 //
-//  MyApp.swift
+//  PlayOSApp.swift
 //  PlayOS
 //
 //  Created by Giuseppe Rocco on 06/02/25.
@@ -8,9 +8,9 @@
 import SwiftUI
 
 @main
-struct MyApp: App {
+struct PlayOSApp: App {
         
-    @StateObject private var appModel: AppModel = .init()
+    @StateObject private var playOSModel: PlayOSModel = .init()
     
     var body: some Scene {
         
@@ -18,22 +18,22 @@ struct MyApp: App {
             ZStack {
                 Color.black
                 
-                switch appModel.currentMode {
+                switch playOSModel.currentPhase {
                 case .stopped: StoppedView()
                     
                 case .poweringOn, .poweringOff:
                     PoweringView(
-                        isPoweringOff: appModel.currentMode == .poweringOff
+                        isPoweringOff: playOSModel.currentPhase == .poweringOff
                     )
                     
-                case .login: LoginView()
+                case .login: GreeterView()
                 case .desktop: DesktopView()
                 }
             }
             .ignoresSafeArea()
             .statusBarHidden(true)
             .toolbar(.hidden)
-            .environmentObject(appModel)
+            .environmentObject(playOSModel)
         }
     }
 }

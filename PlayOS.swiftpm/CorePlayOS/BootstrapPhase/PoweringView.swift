@@ -11,7 +11,7 @@ import AVKit
 
 struct PoweringView: View {
         
-    @EnvironmentObject private var appModel: AppModel
+    @EnvironmentObject private var playOSModel: PlayOSModel
     
     @State private var progress: Double = 0.0
     
@@ -78,7 +78,7 @@ struct PoweringView: View {
             }
             
             try? await Task.sleep(for: .seconds(1))
-            appModel.setMode(isPoweringOff ? .stopped:.login)
+            playOSModel.setPhase(isPoweringOff ? .stopped:.login)
         }
     }
 }
