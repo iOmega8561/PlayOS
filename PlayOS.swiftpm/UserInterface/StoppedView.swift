@@ -9,7 +9,7 @@ import SwiftUI
 
 struct StoppedView: View {
     
-    @Environment(\.setMode) private var setMode
+    @EnvironmentObject private var appModel: AppModel
     
     var body: some View {
         
@@ -29,7 +29,7 @@ struct StoppedView: View {
                     .font(.headline)
             }
             
-            Button { setMode(.poweringOn) } label: {
+            Button { appModel.setMode(.poweringOn) } label: {
                 VStack {
                     RoundedRectangle(cornerRadius: 10.0)
                         .fill(Color.red)

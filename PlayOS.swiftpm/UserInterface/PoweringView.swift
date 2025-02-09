@@ -10,8 +10,8 @@ import SwiftUI
 import AVKit
 
 struct PoweringView: View {
-    
-    @Environment(\.setMode) private var setMode
+        
+    @EnvironmentObject private var appModel: AppModel
     
     @State private var progress: Double = 0.0
     
@@ -78,7 +78,7 @@ struct PoweringView: View {
             }
             
             try? await Task.sleep(for: .seconds(1))
-            setMode(isPoweringOff ? .stopped:.login)
+            appModel.setMode(isPoweringOff ? .stopped:.login)
         }
     }
 }

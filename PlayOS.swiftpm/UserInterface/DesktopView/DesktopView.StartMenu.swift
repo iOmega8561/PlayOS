@@ -10,9 +10,7 @@ import SwiftUI
 extension DesktopView {
     
     struct StartMenu: View {
-        
-        @Environment(\.setMode) private var setMode
-        
+                
         @EnvironmentObject private var appModel: AppModel
         
         @Binding var isPresented: Bool
@@ -64,11 +62,11 @@ extension DesktopView {
                 
                 HStack {
                     Button("Shutdown") {
-                        setMode(.poweringOff)
+                        appModel.setMode(.poweringOff)
                     }
                     
                     Button("Log Out") {
-                        setMode(.login)
+                        appModel.setMode(.login)
                     }
                 }
                 .buttonStyle(.borderedProminent)

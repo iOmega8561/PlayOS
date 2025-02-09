@@ -9,9 +9,7 @@ import SwiftUI
 
 @main
 struct MyApp: App {
-    
-    @State private var currentMode: Mode = .stopped
-    
+        
     @StateObject private var appModel: AppModel = .init()
     
     var body: some Scene {
@@ -20,26 +18,22 @@ struct MyApp: App {
             ZStack {
                 Color.black
                 
-                switch currentMode {
+                switch appModel.currentMode {
                 case .stopped: StoppedView()
                     
                 case .poweringOn, .poweringOff:
-                    PoweringView(isPoweringOff: currentMode == .poweringOff)
+                    PoweringView(
+                        isPoweringOff: appModel.currentMode == .poweringOff
+                    )
                     
                 case .login: LoginView()
-                    
                 case .desktop: DesktopView()
                 }
             }
             .ignoresSafeArea()
             .statusBarHidden(true)
             .toolbar(.hidden)
-            .environment(\.setMode, setMode)
             .environmentObject(appModel)
         }
-    }
-    
-    private func setMode(_ mode: Mode) {
-        withAnimation(.default) { currentMode = mode }
     }
 }

@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct LoginView: View {
-    
-    @Environment(\.setMode) private var setMode
-    
+        
     @EnvironmentObject private var appModel: AppModel
     
     var body: some View {
@@ -45,11 +43,11 @@ struct LoginView: View {
                 
                 HStack {
                     Button("Shutdown") {
-                        setMode(.poweringOff)
+                        appModel.setMode(.poweringOff)
                     }
                     
                     Button("Log In") {
-                        setMode(.desktop)
+                        appModel.setMode(.desktop)
                     }
                 }
                 .buttonStyle(.borderedProminent)

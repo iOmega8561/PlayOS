@@ -22,4 +22,10 @@ import SwiftUI
     )
     
     @Published var windowModels: [WindowModel] = []
+    
+    @Published private(set) var currentMode: Mode = .stopped
+    
+    func setMode(_ mode: Mode) {
+        withAnimation(.easeInOut) { currentMode = mode }
+    }
 }
