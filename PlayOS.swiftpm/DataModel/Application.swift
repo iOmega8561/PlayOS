@@ -7,18 +7,13 @@
 
 import SwiftUI
 
-@dynamicMemberLookup enum Application: CaseIterable, Hashable {
+@dynamicMemberLookup
+enum Application: CaseIterable, Hashable {
     
     struct MetaData {
         let title: String
         let sfSymbol: String
         let preferredSize: WindowSize
-        
-        fileprivate init(title: String, sfSymbol: String, preferredSize: WindowSize) {
-            self.title = title
-            self.sfSymbol = sfSymbol
-            self.preferredSize = preferredSize
-        }
     }
     
     case calculator

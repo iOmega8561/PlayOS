@@ -27,16 +27,21 @@ struct DesktopView: View {
                 GeometryReader { desktopGeometry in
                     ZStack {
                         
-                        ForEach(appModel.windows.indices, id: \.self) { windowIdx in
-                            if !appModel.windows[windowIdx].isMinimized {
+                        ForEach(appModel.windowModels) { windowModel in
+                            
+                            let index = appModel.windowModels.firstIndex(of: windowModel)
+                            
+                            if let index, !windowModel.isMinimized {
                                 
-                                Window(desktopGeometry: desktopGeometry,
-                                       window: $appModel.windows[windowIdx])
-                                .offset(appModel.windows[windowIdx].offset)
+                                Window(
+                                    desktopGeometry: desktopGeometry,
+                                    windowModel: $appModel.windowModels[index]
+                                )
+                                .offset(windowModel.offset)
                                 .onTapGesture {
-                                    appModel.windows.move(
-                                        fromOffsets: IndexSet(integer: windowIdx),
-                                        toOffset: appModel.windows.count
+                                    appModel.windowModels.move(
+                                        fromOffsets: IndexSet(integer: index),
+                                        toOffset: appModel.windowModels.count
                                     )
                                     menuIsPresented = false
                                 }

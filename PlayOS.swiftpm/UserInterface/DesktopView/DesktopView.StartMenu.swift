@@ -36,7 +36,7 @@ extension DesktopView {
                 
                 ForEach(Application.allCases, id: \.self) { app in
                     Button {
-                        appModel.windows.append(.init(application: app))
+                        appModel.windowModels.append(.init(application: app))
                         isPresented = false
                     } label: {
                         

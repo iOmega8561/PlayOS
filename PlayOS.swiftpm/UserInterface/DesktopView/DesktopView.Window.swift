@@ -13,7 +13,7 @@ extension DesktopView {
         
         let desktopGeometry: GeometryProxy
         
-        @Binding var window: WindowModel
+        @Binding var windowModel: WindowModel
         
         @EnvironmentObject private var appModel: AppModel
         
@@ -27,27 +27,27 @@ extension DesktopView {
                     
                     HStack(alignment: .center, spacing: 10) {
                         Button {
-                            appModel.windows.removeAll(
-                                where: { $0.id == window.id }
+                            appModel.windowModels.removeAll(
+                                where: { $0.id == windowModel.id }
                             )
                         } label: { Circle().fill(Color.red) }
                             .frame(width: 25, height: 25)
                         
                         Button {
-                            window.isMinimized = true
+                            windowModel.isMinimized = true
                         } label: { Circle().fill(Color.yellow) }
                             .frame(width: 25, height: 25)
                         
-                        if window.isResizable {
+                        if windowModel.isResizable {
                             
                             Button {
-                                if window.isExpanded {
-                                    window.expand()
+                                if windowModel.isExpanded {
+                                    windowModel.expand()
                                     
-                                } else { window.expand(in: desktopGeometry) }
+                                } else { windowModel.expand(in: desktopGeometry) }
                             } label: {
                                 Circle()
-                                    .fill(.green.opacity(window.isExpanded ? 0.5:1))
+                                    .fill(.green.opacity(windowModel.isExpanded ? 0.5:1))
                             }
                             .frame(width: 25, height: 25)
                         }
@@ -60,7 +60,7 @@ extension DesktopView {
                     
                     Spacer()
                     
-                    Text(window.application.title)
+                    Text(windowModel.application.title)
                         .font(.headline)
                         .fontWeight(.bold)
                     
@@ -69,23 +69,20 @@ extension DesktopView {
                     Spacer().frame(width: 100)
                 }
                 .contentShape(Rectangle())
-                .frame(width: window.currentSize.width, height: 40)
+                .frame(width: windowModel.currentSize.width, height: 40)
                 .gesture(
                     DragGesture()
                         .onChanged { gesture in
-                            
-                            guard !window.isExpanded else { return }
-                            
-                            window.move(
+                            windowModel.move(
                                 computing: gesture.translation,
                                 in: desktopGeometry
                             )
                         }
                 )
                 
-                window.application.content
-                    .frame(width: window.currentSize.width,
-                           height: window.currentSize.height - 40)
+                windowModel.application.content
+                    .frame(width: windowModel.currentSize.width,
+                           height: windowModel.currentSize.height - 40)
             }
             .background(.background)
             .clipShape(RoundedRectangle(cornerRadius: 10))

@@ -21,5 +21,5 @@ import SwiftUI
         possibleValues: [1, 2, 3, 4]
     )
     
-    @Published var windows: [WindowModel] = []
+    @Published var windowModels: [WindowModel] = []
 }

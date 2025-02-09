@@ -19,23 +19,21 @@ extension DesktopView {
                 
                 HStack(alignment: .center) {
                     
-                    ForEach(appModel.windows.indices, id: \.self) { windowIdx in
+                    ForEach(appModel.windowModels) { windowModel in
                         
-                        if appModel.windows[windowIdx].isMinimized {
+                        let index = appModel.windowModels.firstIndex(of: windowModel)
+                        
+                        if let index, windowModel.isMinimized {
                             
-                            let app = appModel.windows[windowIdx].application
-                            
-                            Button {
-                                appModel.windows[windowIdx].isMinimized = false
-                            } label: {
+                            Button { appModel.windowModels[index].isMinimized = false } label: {
                                 
                                 HStack {
-                                    Image(systemName: app.sfSymbol)
+                                    Image(systemName: windowModel.application.sfSymbol)
                                         .resizable()
                                         .scaledToFit()
                                         .frame(height: 20)
                                     
-                                    Text(app.title)
+                                    Text(windowModel.application.title)
                                     
                                     Spacer()
                                 }

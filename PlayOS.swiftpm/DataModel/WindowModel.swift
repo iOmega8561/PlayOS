@@ -40,6 +40,8 @@ struct WindowModel: Identifiable, Hashable {
     
     mutating func move(computing translation: CGSize, in container: GeometryProxy) {
         
+        guard !isExpanded else { return }
+        
         let initialOrigin: CGPoint = .init(
             x: container.size.width / 2 - currentSize.width / 2,
             y: container.size.height / 2 - currentSize.height / 2
