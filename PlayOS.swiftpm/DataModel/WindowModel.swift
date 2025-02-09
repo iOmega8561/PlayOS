@@ -9,8 +9,17 @@ import SwiftUI
 
 struct WindowModel: Identifiable, Hashable {
     
+    static func == (lhs: WindowModel, rhs: WindowModel) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
     let id: UUID = UUID()
     let application: Application
+    var stateObject: (any StatefulAppModel)?
     var isMinimized: Bool = false
     
     var isResizable: Bool {

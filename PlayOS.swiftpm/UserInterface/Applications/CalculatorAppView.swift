@@ -7,7 +7,15 @@
 
 import SwiftUI
 
-struct CalculatorAppView: View {
+struct CalculatorAppView: StatefulAppView {
+    
+    final class Model: StatefulAppModel {
+        init() {}
+    }
+    
+    init(windowModel: WindowModel, appModel: Model) {
+        
+    }
     
     private struct CalculatorButton: View {
         let label: String

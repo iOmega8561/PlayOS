@@ -7,6 +7,33 @@
 
 import SwiftUI
 
+/*struct AppWrapper: View {
+    
+    @Binding private var windowModel: WindowModel
+    
+    private let stateObject: AnyObject
+    
+    private let contentType: any StatefulAppView
+    
+    var body: some View {
+        
+        AnyView(contentType.init(
+            windowModel: windowModel,
+            appModel: stateObject as! App.Model
+        ))
+        
+    }
+    
+    init<App: StatefulAppView>(windowModel: Binding<WindowModel>, contentType: App.Type) {
+        
+        _windowModel = windowModel
+        
+        self.stateObject = NSObject()
+        
+        self.contentType = contentType
+    }
+}*/
+
 extension DesktopView {
     
     struct Window: View {
@@ -80,7 +107,7 @@ extension DesktopView {
                         }
                 )
                 
-                windowModel.application.content
+                ApplicationContainer(windowModel: $windowModel)
                     .frame(width: windowModel.currentSize.width,
                            height: windowModel.currentSize.height - 40)
             }

@@ -7,7 +7,15 @@
 
 import SwiftUI
 
-struct SettingsAppView: View {
+struct SettingsAppView: StatefulAppView {
+    
+    final class Model: StatefulAppModel {
+        init() {}
+    }
+    
+    init(windowModel: WindowModel, appModel: Model) {
+        
+    }
     
     @EnvironmentObject private var appModel: AppModel
         

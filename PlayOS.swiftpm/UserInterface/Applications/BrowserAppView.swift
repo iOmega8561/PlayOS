@@ -7,8 +7,16 @@
 
 import SwiftUI
 
-struct BrowserAppView: View {
+struct BrowserAppView: StatefulAppView {
 
+    final class Model: StatefulAppModel {
+        init() {}
+    }
+    
+    init(windowModel: WindowModel, appModel: Model) {
+        
+    }
+    
     @State private var urlString: String = "https://apple.com"
     
     @State private var currentURL: URL? = URL(string: "https://apple.com")

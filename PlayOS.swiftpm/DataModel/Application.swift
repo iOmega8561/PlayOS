@@ -14,6 +14,7 @@ enum Application: CaseIterable, Hashable {
         let title: String
         let sfSymbol: String
         let preferredSize: WindowSize
+        let contentType: any StatefulAppView.Type
     }
     
     case calculator
@@ -21,40 +22,35 @@ enum Application: CaseIterable, Hashable {
     case paint
     case settings
     
-    @ViewBuilder @MainActor var content: some View {
-        switch self {
-        case .calculator: CalculatorAppView()
-        case .browser: BrowserAppView()
-        case .paint: PaintAppView()
-        case .settings: SettingsAppView()
-        }
-    }
-    
     private var metaData: MetaData {
         switch self {
-            case .calculator: .init(
-                title: "Calculator",
-                sfSymbol: "number",
-                preferredSize: .small(fixed: true)
-            )
-            
-            case .browser: .init(
-                title: "Web Browser",
-                sfSymbol: "safari",
-                preferredSize: .large(fixed: false)
-            )
-            
-            case .paint: .init(
-                title: "Paint",
-                sfSymbol: "theatermask.and.paintbrush",
-                preferredSize: .medium(fixed: false)
-            )
-            
-            case .settings: .init(
-                title: "Settings",
-                sfSymbol: "gearshape",
-                preferredSize: .medium(fixed: true)
-            )
+        case .calculator: .init(
+            title: "Calculator",
+            sfSymbol: "number",
+            preferredSize: .small(fixed: true),
+            contentType: CalculatorAppView.self
+        )
+        
+        case .browser: .init(
+            title: "Web Browser",
+            sfSymbol: "safari",
+            preferredSize: .large(fixed: false),
+            contentType: BrowserAppView.self
+        )
+        
+        case .paint: .init(
+            title: "Paint",
+            sfSymbol: "theatermask.and.paintbrush",
+            preferredSize: .medium(fixed: false),
+            contentType: PaintAppView.self
+        )
+        
+        case .settings: .init(
+            title: "Settings",
+            sfSymbol: "gearshape",
+            preferredSize: .medium(fixed: true),
+            contentType: SettingsAppView.self
+        )
         }
     }
     
