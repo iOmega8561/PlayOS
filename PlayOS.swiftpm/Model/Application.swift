@@ -14,7 +14,7 @@ enum Application: CaseIterable, Hashable {
         let title: String
         let sfSymbol: String
         let preferredSize: WindowSize
-        let contentType: any StatefulAppView.Type
+        let contentType: any Content.Type
     }
     
     case calculator

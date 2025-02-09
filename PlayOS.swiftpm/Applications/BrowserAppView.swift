@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct BrowserAppView: StatefulAppView {
+struct BrowserAppView: Application.Content {
 
-    final class Model: StatefulAppModel {
+    final class Model: Application.Model {
         init() {}
     }
     

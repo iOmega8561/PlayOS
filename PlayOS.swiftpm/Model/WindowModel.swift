@@ -19,7 +19,7 @@ struct WindowModel: Identifiable, Hashable {
     
     let id: UUID = UUID()
     let application: Application
-    var stateObject: (any StatefulAppModel)?
+    var stateObject: (any Application.Model)?
     var isMinimized: Bool = false
     
     var isResizable: Bool {

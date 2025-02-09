@@ -7,13 +7,15 @@
 
 import SwiftUI
 
-struct PaintAppView: StatefulAppView {
+struct PaintAppView: Application.Content {
     
-    final class Model: StatefulAppModel {
+    final class Model: Application.Model {
         init() {}
     }
     
-    init(windowModel: WindowModel, appModel: Model) {}
+    init(windowModel: WindowModel, appModel: Model) {
+        
+    }
     
     private struct Stroke: Identifiable {
         let id = UUID()

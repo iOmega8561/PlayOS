@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct CalculatorAppView: StatefulAppView {
+struct CalculatorAppView: Application.Content {
     
-    final class Model: StatefulAppModel {
+    final class Model: Application.Model {
         init() {}
     }
     

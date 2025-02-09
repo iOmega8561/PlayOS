@@ -53,7 +53,7 @@ extension WindowManager {
                         }
                 )
                 
-                ApplicationContainer(windowModel: $windowModel)
+                Content(windowModel: $windowModel)
                     .frame(width: windowModel.currentSize.width,
                            height: windowModel.currentSize.height - 40)
             }

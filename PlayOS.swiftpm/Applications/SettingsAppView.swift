@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct SettingsAppView: StatefulAppView {
+struct SettingsAppView: Application.Content {
     
-    final class Model: StatefulAppModel {
+    final class Model: Application.Model {
         init() {}
     }
     
