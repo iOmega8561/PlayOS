@@ -13,7 +13,7 @@ struct BrowserAppView: Application.Content {
         init() {}
     }
     
-    init(windowModel: WindowModel, appModel: Model) {
+    init(appModel: Model) {
         
     }
     

@@ -20,7 +20,7 @@ extension Application {
         
         associatedtype AppModel: Model
         
-        init(windowModel: WindowModel, appModel: AppModel)
+        init(appModel: AppModel)
     }
     
     // MARK: - Factory
@@ -31,7 +31,7 @@ extension Application {
             return .init(application.contentType)
         }
         
-        private let _build: (WindowModel, any Model) -> AnyView
+        private let _build: (any Model) -> AnyView
 
         let makeModel: () -> any Model
 
@@ -39,19 +39,18 @@ extension Application {
 
             self.makeModel = { Content.AppModel() }
             
-            _build = { windowModel, appModel in
+            _build = { appModel in
                 
                 guard let typedModel = appModel as? Content.AppModel else {
                     fatalError("Invalid appModel type provided for \(Content.self)")
                 }
                 
-                return AnyView(Content(windowModel: windowModel, appModel: typedModel))
+                return AnyView(Content(appModel: typedModel))
             }
         }
         
-        func build(windowModel: WindowModel, appModel: any Model) -> AnyView {
-            return _build(windowModel, appModel)
+        func build(appModel: any Model) -> AnyView {
+            return _build(appModel)
         }
     }
-
 }

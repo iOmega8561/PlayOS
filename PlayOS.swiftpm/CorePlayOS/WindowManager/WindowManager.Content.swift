@@ -24,7 +24,7 @@ extension WindowManager {
         var body: some View {
             
             appFactory.build(
-                windowModel: windowModel, appModel: stateObject
+                appModel: stateObject
             )
             .task(priority: .userInitiated) { @MainActor in
                 windowModel.stateObject = stateObject

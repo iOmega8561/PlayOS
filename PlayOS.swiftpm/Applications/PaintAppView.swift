@@ -9,25 +9,28 @@ import SwiftUI
 
 struct PaintAppView: Application.Content {
     
-    final class Model: Application.Model {
-        init() {}
-    }
-    
-    init(windowModel: WindowModel, appModel: Model) {
-        
-    }
-    
-    private struct Stroke: Identifiable {
+    fileprivate struct Stroke: Identifiable {
         let id = UUID()
         var points: [CGPoint] = []
         var color: Color = .black
     }
     
-    @State private var strokes: [Stroke] = []
+    final class Model: Application.Model {
+        
+        @Published fileprivate var strokes: [Stroke] = []
+        
+        @Published fileprivate var selectedColor: Color = .black
+        
+        init() {}
+    }
+    
+    init(appModel: Model) {
+        _appModel = .init(wrappedValue: appModel)
+    }
 
+    @StateObject private var appModel: Model
+    
     @State private var currentStroke = Stroke(points: [], color: .black)
-
-    @State private var selectedColor: Color = .black
     
     private let palette: [Color] = [.black, .red, .green, .blue, .yellow]
     
@@ -36,16 +39,17 @@ struct PaintAppView: Application.Content {
 
             HStack {
                 ForEach(palette, id: \.self) { color in
-                    Circle()
-                        .fill(color)
-                        .frame(width: 44, height: 44)
-                        .overlay(
-                            Circle()
-                                .stroke(Color.accentColor, lineWidth: color == selectedColor ? 4 : 0)
-                        )
-                        .onTapGesture {
-                            selectedColor = color
-                        }
+                    
+                    Button { appModel.selectedColor = color } label: {
+                        Circle()
+                            .fill(color)
+                            .frame(width: 44, height: 44)
+                            .overlay(
+                                Circle()
+                                    .stroke(Color.accentColor, lineWidth: color == appModel.selectedColor ? 4 : 0)
+                            )
+                    }
+                    .buttonStyle(.plain)
                 }
             }
             .padding()
@@ -58,7 +62,7 @@ struct PaintAppView: Application.Content {
                     Color.white
                         .ignoresSafeArea()
                     
-                    ForEach(strokes) { stroke in
+                    ForEach(appModel.strokes) { stroke in
                         Path { path in
                             guard let firstPoint = stroke.points.first else { return }
                             path.move(to: firstPoint)
@@ -76,7 +80,7 @@ struct PaintAppView: Application.Content {
                             path.addLine(to: point)
                         }
                     }
-                    .stroke(selectedColor, lineWidth: 3)
+                    .stroke(appModel.selectedColor, lineWidth: 3)
                 }
                 .gesture(
                     DragGesture(minimumDistance: 0.1)
@@ -85,12 +89,12 @@ struct PaintAppView: Application.Content {
                             if newPoint.x >= 0 && newPoint.x <= geometry.size.width &&
                                newPoint.y >= 0 && newPoint.y <= geometry.size.height {
                                 currentStroke.points.append(newPoint)
-                                currentStroke.color = selectedColor
+                                currentStroke.color = appModel.selectedColor
                             }
                         }
                         .onEnded { value in
-                            strokes.append(currentStroke)
-                            currentStroke = Stroke(points: [], color: selectedColor)
+                            appModel.strokes.append(currentStroke)
+                            currentStroke = Stroke(points: [], color: appModel.selectedColor)
                         }
                 )
             }
