@@ -17,6 +17,7 @@ enum Application: CaseIterable, Hashable {
         let contentType: any Content.Type
     }
     
+    case terminal
     case calculator
     case explore
     case paint
@@ -25,6 +26,12 @@ enum Application: CaseIterable, Hashable {
     
     private var metaData: MetaData {
         switch self {
+        case .terminal: .init(
+            title: "Terminal",
+            sfSymbol: "command",
+            preferredSize: .medium(fixed: false),
+            contentType: TerminalEmulatorAppView.self
+        )
         case .calculator: .init(
             title: "Calculator",
             sfSymbol: "plus.forwardslash.minus",

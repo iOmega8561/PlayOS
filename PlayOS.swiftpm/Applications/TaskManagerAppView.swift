@@ -96,7 +96,7 @@ struct TaskManagerAppView: Application.Content {
             
             ScrollView {
                 
-                ForEach(playOSModel.windowModels) { windowModel in
+                ForEach(playOSModel.windowModels.reversed()) { windowModel in
                     
                     HStack(alignment: .center, spacing: 16) {
                         
