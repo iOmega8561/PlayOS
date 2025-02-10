@@ -21,11 +21,7 @@ extension WindowManager {
             
             HStack(alignment: .center, spacing: 10) {
                 
-                Button {
-                    playOSModel.windowModels.removeAll(
-                        where: { $0.id == windowModel.id }
-                    )
-                } label: {
+                Button { playOSModel.destroyWindow(id: windowModel.id) } label: {
                     Circle()
                         .fill(Color.red)
                 }
@@ -54,7 +50,6 @@ extension WindowManager {
                 Spacer()
             }
             .buttonStyle(.plain)
-            .frame(width: 100)
         }
     }
 }

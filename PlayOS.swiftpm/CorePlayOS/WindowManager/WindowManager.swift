@@ -28,11 +28,7 @@ struct WindowManager: View {
                     )
                     .offset(windowModel.offset)
                     .onTapGesture {
-                        playOSModel.windowModels.move(
-                            fromOffsets: IndexSet(integer: index),
-                            toOffset: playOSModel.windowModels.count
-                        )
-                        playOSModel.openCloseMenu(false)
+                        playOSModel.windowToFront(windowAt: index)
                     }
                 }
             }

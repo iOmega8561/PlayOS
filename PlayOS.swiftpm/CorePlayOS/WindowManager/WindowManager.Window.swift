@@ -29,6 +29,7 @@ extension WindowManager {
                         desktopGeometry: desktopGeometry,
                         windowModel: $windowModel
                     )
+                    .frame(width: 100)
                     .padding(.leading)
                     
                     Spacer()

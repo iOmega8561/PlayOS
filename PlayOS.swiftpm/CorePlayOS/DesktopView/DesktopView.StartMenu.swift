@@ -31,10 +31,7 @@ extension DesktopView {
                 Spacer()
                 
                 ForEach(Application.allCases, id: \.self) { app in
-                    Button {
-                        playOSModel.windowModels.append(.init(application: app))
-                        playOSModel.openCloseMenu(false)
-                    } label: {
+                    Button { playOSModel.createWindow(for: app) } label: {
                         
                         HStack {
                             Image(systemName: app.sfSymbol)

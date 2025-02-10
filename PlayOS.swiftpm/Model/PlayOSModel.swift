@@ -28,10 +28,37 @@ import SwiftUI
     @Published private(set) var currentPhase: PlayOSPhase = .stopped
     
     func setPhase(_ mode: PlayOSPhase) {
-        withAnimation(.easeInOut) { currentPhase = mode }
+        withAnimation {
+            currentPhase = mode
+        }
     }
     
     func openCloseMenu(_ open: Bool? = nil) {
-        withAnimation { menuIsPresented = open ?? !menuIsPresented }
+        withAnimation {
+            menuIsPresented = open ?? !menuIsPresented
+        }
+    }
+    
+    func createWindow(for app: Application) {
+        windowModels.append(
+            .init(application: app)
+        )
+        
+        openCloseMenu(false)
+    }
+    
+    func destroyWindow(id uuid: UUID) {
+        windowModels.removeAll(
+            where: { $0.id == uuid }
+        )
+    }
+    
+    func windowToFront(windowAt index: Int) {
+        windowModels.move(
+            fromOffsets: IndexSet(integer: index),
+            toOffset: windowModels.count
+        )
+       
+        openCloseMenu(false)
     }
 }
