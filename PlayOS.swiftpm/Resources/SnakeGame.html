@@ -2,7 +2,7 @@
 <!--
 MIT License
 
-Copyright (c) 2025 Your Name
+Copyright (c) 2025 Giuseppe Rocco
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@ SOFTWARE.
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>SnakeGame</title>
   <style>
     /* Define CSS variables for dark (default) and light themes */
@@ -190,33 +190,6 @@ SOFTWARE.
     updateToggleButton();
 
     // ========= Touch and Keyboard Controls =========
-    let touchStartX = 0;
-    let touchStartY = 0;
-    const swipeThreshold = 30; // Minimum swipe distance in pixels
-
-    canvas.addEventListener("touchstart", (event) => {
-      const touch = event.touches[0];
-      touchStartX = touch.clientX;
-      touchStartY = touch.clientY;
-    }, false);
-
-    canvas.addEventListener("touchend", (event) => {
-      const touch = event.changedTouches[0];
-      const dx = touch.clientX - touchStartX;
-      const dy = touch.clientY - touchStartY;
-      if (Math.abs(dx) < swipeThreshold && Math.abs(dy) < swipeThreshold) return;
-      
-      if (Math.abs(dx) > Math.abs(dy)) {
-        // Horizontal swipe.
-        if (dx > 0 && direction !== "LEFT") direction = "RIGHT";
-        else if (dx < 0 && direction !== "RIGHT") direction = "LEFT";
-      } else {
-        // Vertical swipe.
-        if (dy > 0 && direction !== "UP") direction = "DOWN";
-        else if (dy < 0 && direction !== "DOWN") direction = "UP";
-      }
-      updateControlState();
-    });
 
     document.addEventListener("keydown", (event) => {
       const key = event.keyCode;
