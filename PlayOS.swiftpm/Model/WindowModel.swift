@@ -7,15 +7,7 @@
 
 import SwiftUI
 
-struct WindowModel: Identifiable, Hashable {
-    
-    static func == (lhs: WindowModel, rhs: WindowModel) -> Bool {
-        lhs.id == rhs.id
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
+struct WindowModel: Identifiable {
     
     let id: UUID = UUID()
     let application: Application
@@ -79,5 +71,16 @@ struct WindowModel: Identifiable, Hashable {
     init(application: Application) {
         self.application = application
         self.currentSize = application.preferredSize
+    }
+}
+
+extension WindowModel: Hashable {
+    
+    static func == (lhs: WindowModel, rhs: WindowModel) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
     }
 }

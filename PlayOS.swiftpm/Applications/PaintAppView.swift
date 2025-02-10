@@ -7,22 +7,7 @@
 
 import SwiftUI
 
-struct PaintAppView: Application.Content {
-    
-    fileprivate struct Stroke: Identifiable {
-        let id = UUID()
-        var points: [CGPoint] = []
-        var color: Color = .black
-    }
-    
-    final class Model: Application.Model {
-        
-        @Published fileprivate var strokes: [Stroke] = []
-        
-        @Published fileprivate var selectedColor: Color = .black
-        
-        init() {}
-    }
+struct PaintAppView: View {
 
     @StateObject private var appModel: Model
     
@@ -112,7 +97,61 @@ struct PaintAppView: Application.Content {
         }
     }
     
+}
+
+// MARK: - Supporting nested types
+
+extension PaintAppView {
+    
+    /// A struct representing a single drawn stroke on the canvas.
+    ///
+    /// This struct conforms to `Identifiable` to allow SwiftUI to differentiate between
+    /// individual strokes. It stores the unique identifier, the points that make up the stroke,
+    /// and the color used for drawing.
+    fileprivate struct Stroke: Identifiable {
+        /// A unique identifier for the stroke.
+        let id = UUID()
+        
+        /// An array of `CGPoint` values that form the stroke.
+        var points: [CGPoint] = []
+        
+        /// The color of the stroke.
+        var color: Color = .black
+    }
+    
+    /// The view model for the Paint application.
+    ///
+    /// This model manages the state of the painting interface, including the strokes drawn on the canvas
+    /// and the currently selected drawing color. It conforms to `ObservableObject` so that changes
+    /// are published to the SwiftUI view.
+    final class Model: ObservableObject {
+        
+        /// An array of strokes drawn on the canvas.
+        ///
+        /// This property is marked with `@Published` so that the view updates when new strokes are added
+        /// or existing strokes are modified.
+        @Published fileprivate var strokes: [Stroke] = []
+        
+        /// The currently selected color for drawing.
+        ///
+        /// Changes to this property are published to update the UI accordingly.
+        @Published fileprivate var selectedColor: Color = .black
+    }
+}
+
+// MARK: - Application Protocol Conformances
+
+/// Conformance of `PaintAppView.Model` to the `Application.Model` protocol.
+extension PaintAppView.Model: Application.Model {}
+
+/// Conformance of `PaintAppView` to the `Application.Content` protocol.
+extension PaintAppView: Application.Content {
+    
+    /// Initializes the Paint view with the provided model.
+    ///
+    /// - Parameter appModel: An instance of `PaintAppView.Model` that holds the state for the view.
     init(appModel: Model) {
         _appModel = .init(wrappedValue: appModel)
     }
 }
+

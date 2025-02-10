@@ -64,54 +64,94 @@ struct TerminalEmulatorAppView: View {
         }
         .background(Color.black.edgesIgnoringSafeArea(.all))
     }
-    
-    init(appModel: Model) {
-        _appModel = .init(wrappedValue: appModel)
-    }
 }
 
-extension TerminalEmulatorAppView: Application.Content {
+// MARK: - Supporting nested types
+
+extension TerminalEmulatorAppView {
     
+    /// A model representing a directory in the terminal's file system.
+    ///
+    /// The `Directory` class models a directory with a name, its child directories, and an optional parent.
+    /// It provides methods for adding children, searching for a child by name, and computing its full path.
     fileprivate final class Directory: Identifiable, ObservableObject {
         
+        /// The list of child directories.
         @Published var children: [Directory] = []
         
+        /// A unique identifier for the directory.
         let id = UUID()
+        
+        /// The name of the directory.
         let name: String
+        
+        /// A weak reference to the parent directory. `nil` if this is the root directory.
         weak var parent: Directory?
         
+        /// Creates a new directory with a given name and an optional parent.
+        ///
+        /// - Parameters:
+        ///   - name: The name of the directory.
+        ///   - parent: An optional parent directory. Defaults to `nil`.
         init(name: String, parent: Directory? = nil) {
             self.name = name
             self.parent = parent
         }
         
+        /// Adds a child directory to this directory.
+        ///
+        /// The child’s parent property is updated to reference this directory before being appended to the children list.
+        ///
+        /// - Parameter child: The directory to add as a child.
         func addChild(_ child: Directory) {
             child.parent = self
             children.append(child)
         }
         
+        /// Finds the first child directory with the specified name.
+        ///
+        /// - Parameter name: The name of the child directory to find.
+        /// - Returns: The child directory if found; otherwise, `nil`.
         func findChild(named name: String) -> Directory? {
             return children.first(where: { $0.name == name })
         }
         
+        /// Computes the full path of the directory.
+        ///
+        /// This method recursively builds the directory path by traversing up to the root.
+        /// It ensures that the root directory is represented by a single slash (`"/"`).
+        ///
+        /// - Returns: A string representing the full path of the directory.
         func path() -> String {
             if let parent = parent {
                 let parentPath = parent.path()
                 // Avoid double slash for the root.
                 return parentPath == "/" ? "/\(name)" : "\(parentPath)/\(name)"
-                
-            } else { return "/" } // This is the root directory.
+            } else {
+                return "/" // This is the root directory.
+            }
         }
     }
-
-    final class Model: Application.Model {
+    
+    /// The view model for the Terminal Emulator.
+    ///
+    /// The `Model` class manages the terminal session's state, including the command output and the current directory.
+    /// It provides functionality for processing terminal commands and updating the file system state.
+    final class Model: ObservableObject {
         
+        /// The list of output lines displayed in the terminal.
         @Published fileprivate var outputLines: [String] = []
         
+        /// The current directory in the terminal session.
         @Published fileprivate var currentDirectory: Directory
-            
+        
+        /// The root directory of the file system.
         private let rootDirectory: Directory
         
+        /// Initializes the terminal emulator model with a default file system structure and welcome message.
+        ///
+        /// The default structure includes root-level directories such as `home`, `usr`, `bin`, `etc`, and `var`,
+        /// with a nested `user` directory inside `home`.
         init() {
             let root = Directory(name: "/")
             let home = Directory(name: "home")
@@ -136,8 +176,24 @@ extension TerminalEmulatorAppView: Application.Content {
             outputLines.append("Type 'help' to see available commands.")
         }
         
+        /// Processes a command entered by the user.
+        ///
+        /// The method appends the command to the output (including the prompt) and executes the command,
+        /// updating the terminal output accordingly.
+        ///
+        /// Supported commands include:
+        /// - `help`: Displays a list of available commands.
+        /// - `ls`: Lists the contents of the current directory.
+        /// - `cd`: Changes the current directory.
+        /// - `pwd`: Displays the current directory path.
+        /// - `clear`: Clears the terminal output.
+        /// - `about`: Displays terminal information.
+        /// - `playfetch`: Displays a simulated system fetch with system details.
+        /// - Any other command results in an "Unknown command" message.
+        ///
+        /// - Parameter input: The raw command string entered by the user.
         fileprivate func processCommand(_ input: String) {
-
+            
             let prompt = "\(currentDirectory.path())$ \(input)"
             outputLines.append(prompt)
             
@@ -193,6 +249,11 @@ extension TerminalEmulatorAppView: Application.Content {
         }
         
         /// Changes the current directory based on a target path or directory name.
+        ///
+        /// This method supports absolute paths (starting with `/`), relative directory names, and the special case
+        /// of `".."` to navigate to the parent directory.
+        ///
+        /// - Parameter target: The target directory name or path.
         private func changeDirectory(to target: String) {
             if target.hasPrefix("/") {
                 // Handle absolute path.
@@ -208,18 +269,36 @@ extension TerminalEmulatorAppView: Application.Content {
                 }
                 currentDirectory = dir
             } else if target == ".." {
-
+                // Navigate to the parent directory, or remain at root if no parent exists.
                 if let parent = currentDirectory.parent {
                     currentDirectory = parent
-                    
-                } else { currentDirectory = rootDirectory }
+                } else {
+                    currentDirectory = rootDirectory
+                }
             } else {
-
+                // Handle relative directory name.
                 if let next = currentDirectory.findChild(named: target) {
                     currentDirectory = next
-                    
-                } else { outputLines.append("cd: no such file or directory: \(target)") }
+                } else {
+                    outputLines.append("cd: no such file or directory: \(target)")
+                }
             }
         }
+    }
+}
+
+// MARK: - Application Protocol Conformances
+
+/// Conformance of `TerminalEmulatorAppView.Model` to the `Application.Model` protocol.
+extension TerminalEmulatorAppView.Model: Application.Model { }
+
+/// Conformance of `TerminalEmulatorAppView` to the `Application.Content` protocol.
+extension TerminalEmulatorAppView: Application.Content {
+    
+    /// Initializes the Terminal Emulator view with the provided model.
+    ///
+    /// - Parameter appModel: An instance of the Terminal Emulator's model containing the app's logic.
+    init(appModel: Model) {
+        _appModel = .init(wrappedValue: appModel)
     }
 }
