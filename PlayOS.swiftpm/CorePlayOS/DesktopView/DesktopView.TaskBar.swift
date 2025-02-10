@@ -25,7 +25,11 @@ extension DesktopView {
                         
                         if let index, windowModel.isMinimized {
                             
-                            Button { playOSModel.windowModels[index].isMinimized = false } label: {
+                            Button {
+                                withAnimation {
+                                    playOSModel.windowModels[index].isMinimized.toggle()
+                                }
+                            } label: {
                                 
                                 HStack {
                                     Image(systemName: windowModel.application.sfSymbol)

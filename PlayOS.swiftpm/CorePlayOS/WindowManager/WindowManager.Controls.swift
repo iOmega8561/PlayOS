@@ -27,7 +27,11 @@ extension WindowManager {
                 }
                 .frame(width: 25, height: 25)
                 
-                Button { windowModel.isMinimized = true } label: {
+                Button {
+                    withAnimation {
+                        windowModel.isMinimized.toggle()
+                    }
+                } label: {
                     Circle()
                         .fill(Color.yellow)
                 }
@@ -36,10 +40,12 @@ extension WindowManager {
                 if windowModel.isResizable {
                     
                     Button {
-                        if windowModel.isExpanded {
-                            windowModel.expand()
-                            
-                        } else { windowModel.expand(in: desktopGeometry) }
+                        withAnimation {
+                            if windowModel.isExpanded {
+                                windowModel.expand()
+                                
+                            } else { windowModel.expand(in: desktopGeometry) }
+                        }
                     } label: {
                         Circle()
                             .fill(.green.opacity(windowModel.isExpanded ? 0.5:1))

@@ -30,6 +30,7 @@ struct WindowManager: View {
                     .onTapGesture {
                         playOSModel.windowToFront(windowAt: index)
                     }
+                    .transition(.opacity)
                 }
             }
         }
