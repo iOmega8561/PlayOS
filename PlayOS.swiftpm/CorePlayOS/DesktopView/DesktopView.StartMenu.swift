@@ -37,7 +37,7 @@ extension DesktopView {
                             Image(systemName: app.sfSymbol)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(height: 20)
+                                .frame(width: 20, height: 20)
                             
                             Text(app.title)
                             

@@ -20,6 +20,7 @@ enum Application: CaseIterable, Hashable {
     case calculator
     case explore
     case paint
+    case taskManager
     case settings
     
     private var metaData: MetaData {
@@ -40,11 +41,18 @@ enum Application: CaseIterable, Hashable {
         
         case .paint: .init(
             title: "Paint",
-            sfSymbol: "theatermask.and.paintbrush",
+            sfSymbol: "paintpalette",
             preferredSize: .medium(fixed: false),
             contentType: PaintAppView.self
         )
         
+        case .taskManager: .init(
+            title: "Task Manager",
+            sfSymbol: "macwindow.on.rectangle",
+            preferredSize: .medium(fixed: true),
+            contentType: TaskManagerAppView.self
+        )
+            
         case .settings: .init(
             title: "Settings",
             sfSymbol: "gearshape",
