@@ -11,6 +11,8 @@ struct DesktopView: View {
         
     @EnvironmentObject private var playOSModel: PlayOSModel
         
+    @State private var calendarPopoverIsShown: Bool = false
+    
     var body: some View {
         
         GeometryReader { containerGeometry in
@@ -49,11 +51,20 @@ struct DesktopView: View {
                     
                     Spacer()
                     
-                    Text(Date.now.formatted(date: .abbreviated, time: .shortened))
-                        .padding(10)
-                        .background(.thickMaterial)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .padding(.trailing)
+                    Button { calendarPopoverIsShown.toggle() } label: {
+                        Text(Date.now.formatted(date: .abbreviated, time: .shortened))
+                            .padding(10)
+                            .background(.thickMaterial)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .padding(.trailing)
+                    }
+                    .buttonStyle(.plain)
+                    .popover(isPresented: $calendarPopoverIsShown) {
+                        DatePicker("Calendar", selection: .constant(.now), displayedComponents: .date)
+                            .datePickerStyle(.graphical)
+                            .frame(width: 350)
+                            .padding(.horizontal)
+                    }
                 }
                 .frame(width: containerGeometry.size.width, height: 60)
                 .background(.ultraThinMaterial)
