@@ -18,30 +18,32 @@ struct DesktopView: View {
             Image(playOSModel.backgroundImage.description)
                 .resizable()
                 .scaledToFill()
-                .onTapGesture { playOSModel.menuIsPresented = false }
+                .onTapGesture { playOSModel.openCloseMenu(false) }
             
             VStack(alignment: .leading, spacing: 0) {
                 
                 GeometryReader { desktopGeometry in
                     WindowManager(desktopGeometry: desktopGeometry)
-                        .onTapGesture { playOSModel.menuIsPresented = false }
+                        .onTapGesture { playOSModel.openCloseMenu(false) }
                 }
                 .frame(width: containerGeometry.size.width,
                        height: containerGeometry.size.height - 60)
                 
                 HStack {
-                    Toggle("Menu", systemImage: "cursorarrow.rays", isOn: $playOSModel.menuIsPresented)
-                        .toggleStyle(.button)
-                        .fontWeight(.bold)
-                        .buttonStyle(.borderedProminent)
-                        .padding(.horizontal)
-                        .overlay {
-                            if playOSModel.menuIsPresented {
-                                StartMenu()
-                                    .offset(x: 75, y: -245)
-                                    .onTapGesture { }
-                            }
+                    Button("Menu", systemImage: "cursorarrow.rays") {
+                        playOSModel.openCloseMenu()
+                    }
+                    .fontWeight(.bold)
+                    .buttonStyle(.borderedProminent)
+                    .padding(.horizontal)
+                    .overlay {
+                        if playOSModel.menuIsPresented {
+                            StartMenu()
+                                .offset(x: 75, y: -245)
+                                .onTapGesture { }
+                                .transition(.move(edge: .bottom))
                         }
+                    }
                     
                     TaskBar()
                     
@@ -55,7 +57,7 @@ struct DesktopView: View {
                 }
                 .frame(width: containerGeometry.size.width, height: 60)
                 .background(.ultraThinMaterial)
-                .onTapGesture { playOSModel.menuIsPresented = false }
+                .onTapGesture { playOSModel.openCloseMenu(false) }
             }
             .frame(width: containerGeometry.size.width,
                    height: containerGeometry.size.height)

@@ -33,7 +33,7 @@ extension DesktopView {
                 ForEach(Application.allCases, id: \.self) { app in
                     Button {
                         playOSModel.windowModels.append(.init(application: app))
-                        playOSModel.menuIsPresented = false
+                        playOSModel.openCloseMenu(false)
                     } label: {
                         
                         HStack {

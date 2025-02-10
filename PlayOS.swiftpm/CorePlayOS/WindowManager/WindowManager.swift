@@ -32,7 +32,7 @@ struct WindowManager: View {
                             fromOffsets: IndexSet(integer: index),
                             toOffset: playOSModel.windowModels.count
                         )
-                        playOSModel.menuIsPresented = false
+                        playOSModel.openCloseMenu(false)
                     }
                 }
             }

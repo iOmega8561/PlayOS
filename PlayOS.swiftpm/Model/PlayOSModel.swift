@@ -23,11 +23,15 @@ import SwiftUI
     
     @Published var windowModels: [WindowModel] = []
     
-    @Published var menuIsPresented: Bool = false
+    @Published private(set) var menuIsPresented: Bool = false
     
     @Published private(set) var currentPhase: PlayOSPhase = .stopped
     
     func setPhase(_ mode: PlayOSPhase) {
         withAnimation(.easeInOut) { currentPhase = mode }
+    }
+    
+    func openCloseMenu(_ open: Bool? = nil) {
+        withAnimation { menuIsPresented = open ?? !menuIsPresented }
     }
 }
