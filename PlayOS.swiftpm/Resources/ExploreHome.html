@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<!--
+MIT License
+
+Copyright (c) 2025 Giuseppe Rocco
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Explore Homepage</title>
+  <style>
+    /* Set up CSS variables for dark and light themes */
+    :root {
+      --bg-color: #111;
+      --text-color: #fff;
+      --particle-color: #f19a37;
+      /* For connecting lines, we store just the RGB components */
+      --line-color: 241, 154, 55;
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg-color: #fff;
+        --text-color: #111;
+        --particle-color: #f19a37;
+        --line-color: 241, 154, 55;
+      }
+    }
+
+    /* Define custom fonts – these assume the SF Pro fonts are installed locally */
+    @font-face {
+      font-family: 'SFProRegular';
+      src: local("SF Pro Regular"), local("SFPro-Regular");
+    }
+    @font-face {
+      font-family: 'SFProExpandedBold';
+      src: local("SF Pro Expanded Bold"), local("SFPro-ExpandedBold");
+    }
+    
+    /* Basic Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    /* Background canvas styling */
+    #bg-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: var(--bg-color);
+    }
+
+    /* Body text styling */
+    body {
+      font-family: 'SFProRegular', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text-color);
+      background: var(--bg-color);
+    }
+
+    /* Centered content container */
+    .content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      text-align: center;
+      padding: 20px;
+    }
+
+    /* Explore title using SFPro Expanded Bold */
+    .project-title {
+      font-family: 'SFProExpandedBold', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Additional styling for any tagline or paragraph */
+    .tagline {
+      font-size: 1.25rem;
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <!-- Fullscreen canvas for the animated background -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Main content -->
+  <div class="content">
+    <h1 class="project-title">Explore</h1>
+    <p class="tagline">
+      Step into a world of discovery and unleash your potential.
+    </p>
+    <p class="tagline">
+      Select an activity from the top right menu.
+    </p>
+  </div>
+
+  <!-- JavaScript for background animation -->
+  <script>
+    // Get the canvas and its drawing context
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+
+    // Ensure the canvas always fills the window
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // Object to store theme colors from CSS variables
+    let themeColors = {
+      particleColor: '#fff',
+      lineColor: '255, 255, 255'
+    };
+
+    // Read the current values of our CSS variables
+    function updateThemeColors() {
+      const styles = getComputedStyle(document.documentElement);
+      themeColors.particleColor = styles.getPropertyValue('--particle-color').trim();
+      themeColors.lineColor = styles.getPropertyValue('--line-color').trim();
+    }
+    // Initialize theme colors
+    updateThemeColors();
+
+    // Listen for system color scheme changes and update themeColors accordingly
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateThemeColors);
+    window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', updateThemeColors);
+
+    // Particle class definition
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        // Random velocities for a subtle drift
+        this.vx = (Math.random() - 0.5) * 0.5;
+        this.vy = (Math.random() - 0.5) * 0.5;
+        this.radius = Math.random() * 2 + 1;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        // Wrap around the canvas edges
+        if (this.x < 0) this.x = canvas.width;
+        if (this.x > canvas.width) this.x = 0;
+        if (this.y < 0) this.y = canvas.height;
+        if (this.y > canvas.height) this.y = 0;
+      }
+      draw(ctx) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        // Use the theme-dependent particle color
+        ctx.fillStyle = themeColors.particleColor;
+        ctx.fill();
+      }
+    }
+
+    // Create a collection of particles
+    const particles = [];
+    const numParticles = 100;
+    for (let i = 0; i < numParticles; i++) {
+      particles.push(new Particle());
+    }
+
+    // Animation loop
+    function animate() {
+      // Clear the canvas each frame
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Update and draw each particle
+      particles.forEach(particle => {
+        particle.update();
+        particle.draw(ctx);
+      });
+
+      // Optionally: draw connecting lines between particles that are close
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.hypot(dx, dy);
+          if (dist < 100) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            // Use the current theme's line color with an alpha that fades with distance
+            ctx.strokeStyle = `rgba(${themeColors.lineColor}, ${1 - dist / 100})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
+</body>
+</html>

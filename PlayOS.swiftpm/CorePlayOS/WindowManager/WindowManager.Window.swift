@@ -57,6 +57,8 @@ extension WindowManager {
                 Content(windowModel: $windowModel)
                     .frame(width: windowModel.currentSize.width,
                            height: windowModel.currentSize.height - 40)
+                    .background(Color(UIColor.secondarySystemBackground))
+                    .contentShape(Rectangle())
             }
             .background(.background)
             .clipShape(RoundedRectangle(cornerRadius: 10))

@@ -9,13 +9,7 @@ import SwiftUI
 
 struct SettingsAppView: Application.Content {
     
-    final class Model: Application.Model {
-        init() {}
-    }
-    
-    init(appModel: Model) {
-        
-    }
+    final class Model: Application.Model { init() {} }
     
     @EnvironmentObject private var playOSModel: PlayOSModel
         
@@ -53,7 +47,7 @@ struct SettingsAppView: Application.Content {
             }
             .padding()
         }
-        .contentShape(Rectangle())
-        .background(.thinMaterial)
     }
+    
+    init(appModel: Model) {}
 }

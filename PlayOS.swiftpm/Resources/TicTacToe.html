@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<!--
+MIT License
+
+Copyright (c) 2025 Giuseppe Rocco
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tic Tac Toe</title>
+  <style>
+    /* Light mode styles */
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 50px;
+      background-color: #ffffff;
+      color: #000000;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    /* Flex container for status and reset button */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 320px;
+      margin: 0 auto 20px auto;
+    }
+    #status {
+      font-size: 1.5em;
+      text-align: left;
+    }
+    button#reset {
+      font-size: 1em;
+      padding: 10px 20px;
+      cursor: pointer;
+      background: #fff;
+      border: 1px solid #333;
+      color: #000;
+    }
+    .board {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-gap: 5px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .cell {
+      width: 100px;
+      height: 100px;
+      background: #f2f2f2;
+      border: 2px solid #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2em;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .cell:hover {
+      background: #e2e2e2;
+    }
+    /* Dark mode styles using system preferences */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #121212;
+        color: #ffffff;
+      }
+      .cell {
+        background: #333;
+        border: 2px solid #ccc;
+      }
+      .cell:hover {
+        background: #444;
+      }
+      button#reset {
+        background: #333;
+        color: #fff;
+        border: 1px solid #fff;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Tic Tac Toe</h1>
+  <div class="header">
+    <div id="status">Your turn</div>
+    <button id="reset">Reset Game</button>
+  </div>
+  <div class="board" id="board">
+    <div class="cell" data-index="0"></div>
+    <div class="cell" data-index="1"></div>
+    <div class="cell" data-index="2"></div>
+    <div class="cell" data-index="3"></div>
+    <div class="cell" data-index="4"></div>
+    <div class="cell" data-index="5"></div>
+    <div class="cell" data-index="6"></div>
+    <div class="cell" data-index="7"></div>
+    <div class="cell" data-index="8"></div>
+  </div>
+  <script>
+    // DOM element selections
+    const boardElement = document.getElementById('board');
+    const statusDisplay = document.getElementById('status');
+    const resetButton = document.getElementById('reset');
+
+    // Game state variables
+    let gameState = ["", "", "", "", "", "", "", "", ""];
+    let gameActive = true;
+    let isHumanTurn = true; // Human always starts
+    const humanPlayer = "X";
+    const computerPlayer = "O";
+
+    // Winning combinations
+    const winningConditions = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6]
+    ];
+
+    // Handle human player's click on a cell
+    function handleCellClick(event) {
+      if (!gameActive || !isHumanTurn) return;
+
+      const clickedCell = event.target;
+      const cellIndex = parseInt(clickedCell.getAttribute('data-index'));
+      
+      // Ignore click if cell is already filled
+      if (gameState[cellIndex] !== "") return;
+
+      // Human move
+      gameState[cellIndex] = humanPlayer;
+      clickedCell.textContent = humanPlayer;
+
+      // Check for win or draw
+      if (checkWin(humanPlayer)) {
+        statusDisplay.textContent = "You win!";
+        gameActive = false;
+        return;
+      }
+      if (gameState.every(cell => cell !== "")) {
+        statusDisplay.textContent = "It's a draw!";
+        gameActive = false;
+        return;
+      }
+
+      // End human turn and start computer's move
+      isHumanTurn = false;
+      statusDisplay.textContent = "Computer's turn";
+      setTimeout(computerMove, 500); // Delay for a more natural feel
+    }
+
+    // Computer move: chooses a random available cell
+    function computerMove() {
+      if (!gameActive) return;
+
+      // Gather indices of empty cells
+      const availableCells = gameState.reduce((acc, cell, index) => {
+        if (cell === "") acc.push(index);
+        return acc;
+      }, []);
+
+      // Choose a random cell from the available ones
+      if (availableCells.length === 0) return;
+      const randomIndex = availableCells[Math.floor(Math.random() * availableCells.length)];
+
+      // Update the game state and UI for computer move
+      gameState[randomIndex] = computerPlayer;
+      const cellElement = document.querySelector(`.cell[data-index='${randomIndex}']`);
+      cellElement.textContent = computerPlayer;
+
+      // Check for win or draw
+      if (checkWin(computerPlayer)) {
+        statusDisplay.textContent = "Computer wins!";
+        gameActive = false;
+        return;
+      }
+      if (gameState.every(cell => cell !== "")) {
+        statusDisplay.textContent = "It's a draw!";
+        gameActive = false;
+        return;
+      }
+
+      // Return turn to human player
+      isHumanTurn = true;
+      statusDisplay.textContent = "Your turn";
+    }
+
+    // Check if the specified player has met any winning condition
+    function checkWin(player) {
+      return winningConditions.some(condition => {
+        return condition.every(index => gameState[index] === player);
+      });
+    }
+
+    // Reset the game to the initial state
+    function resetGame() {
+      gameState = ["", "", "", "", "", "", "", "", ""];
+      gameActive = true;
+      isHumanTurn = true;
+      statusDisplay.textContent = "Your turn";
+      document.querySelectorAll('.cell').forEach(cell => cell.textContent = "");
+    }
+
+    // Event listeners
+    boardElement.addEventListener('click', handleCellClick);
+    resetButton.addEventListener('click', resetGame);
+  </script>
+</body>
+</html>

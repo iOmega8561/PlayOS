@@ -28,6 +28,7 @@ SOFTWARE.
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Interactive Coding Challenges</title>
   <style>
+    /* Default (light mode) styles */
     body {
       background-color: #f4f4f4;
       font-family: Arial, sans-serif;
@@ -61,6 +62,8 @@ SOFTWARE.
       resize: vertical;
       display: block;
       margin-bottom: 10px;
+      background-color: #fff;
+      color: #333;
     }
     #runButton {
       font-size: 16px;
@@ -83,6 +86,40 @@ SOFTWARE.
       font-family: Consolas, monospace;
       white-space: pre-wrap;
       min-height: 100px;
+    }
+
+    /* Dark mode styles */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #121212;
+        color: #e0e0e0;
+      }
+      #challengeSelect {
+        background-color: #1e1e1e;
+        color: #e0e0e0;
+        border: 1px solid #333;
+      }
+      #challengeDescription {
+        background-color: #1e1e1e;
+        border-color: #333;
+        color: #e0e0e0;
+      }
+      #codeEditor {
+        background-color: #1e1e1e;
+        border-color: #333;
+        color: #e0e0e0;
+      }
+      #runButton {
+        background-color: #1a73e8;
+      }
+      #runButton:hover {
+        background-color: #1558b0;
+      }
+      /* For the output area, we retain the dark background and green text */
+      #output {
+        background-color: #000;
+        color: #0f0;
+      }
     }
   </style>
 </head>

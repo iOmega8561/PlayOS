@@ -28,8 +28,33 @@ SOFTWARE.
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SnakeGame</title>
   <style>
+    /* Define CSS variables for dark (default) and light themes */
+    :root {
+      --body-bg: #000;
+      --canvas-bg: #111;
+      --canvas-border: #fff;
+      --control-bg: #333;
+      --control-color: #fff;
+      --control-disabled-bg: #555;
+      --gameover-overlay: rgba(0, 0, 0, 0.5);
+      --gameover-text: #fff;
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --body-bg: #fff;
+        --canvas-bg: #eee;
+        --canvas-border: #000;
+        --control-bg: #ddd;
+        --control-color: #000;
+        --control-disabled-bg: #aaa;
+        --gameover-overlay: rgba(255, 255, 255, 0.5);
+        --gameover-text: #000;
+      }
+    }
+
+    /* Global Styles */
     body {
-      background-color: #000;
+      background-color: var(--body-bg);
       margin: 0;
       /* Arrange content in a column */
       display: flex;
@@ -48,8 +73,8 @@ SOFTWARE.
       padding: 8px 12px;
       border: none;
       border-radius: 5px;
-      background-color: #333;
-      color: #fff;
+      background-color: var(--control-bg);
+      color: var(--control-color);
     }
     /* Game container holds the controls and arena */
     .game-container {
@@ -60,8 +85,8 @@ SOFTWARE.
       width: auto;
     }
     canvas {
-      background-color: #111;
-      border: 2px solid #fff;
+      background-color: var(--canvas-bg);
+      border: 2px solid var(--canvas-border);
     }
     /* D-pad control panel arranged in a grid */
     .controls {
@@ -75,13 +100,13 @@ SOFTWARE.
       width: 60px;
       height: 60px;
       border-radius: 10px;
-      background-color: #333;
-      color: #fff;
+      background-color: var(--control-bg);
+      color: var(--control-color);
       border: none;
     }
     /* Disabled buttons appear differently */
     .controls button:disabled {
-      background-color: #555;
+      background-color: var(--control-disabled-bg);
       opacity: 0.5;
     }
     /* Empty cells for grid layout */
@@ -277,7 +302,7 @@ SOFTWARE.
 
     // Render the game state.
     function renderGame() {
-      ctx.fillStyle = "#111";
+      ctx.fillStyle = varOrDefault("--canvas-bg", "#111"); // fallback value
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       
       snake.forEach((segment, index) => {
@@ -289,6 +314,14 @@ SOFTWARE.
       ctx.fillRect(food.x, food.y, box, box);
     }
 
+    // Utility: get CSS variable with fallback
+    function varOrDefault(variable, fallback) {
+      const value = getComputedStyle(document.documentElement)
+                      .getPropertyValue(variable)
+                      .trim();
+      return value || fallback;
+    }
+
     // Check for collision with self.
     function collision(newHead, snakeArray) {
       return snakeArray.some(segment => newHead.x === segment.x && newHead.y === segment.y);
@@ -297,10 +330,15 @@ SOFTWARE.
     // ========= Game Over and Restart =========
     function gameOver() {
       gameRunning = false;
+      // Use CSS variables for the overlay and game over text
+      const styles = getComputedStyle(document.documentElement);
+      const overlayColor = styles.getPropertyValue('--gameover-overlay').trim();
+      const gameoverTextColor = styles.getPropertyValue('--gameover-text').trim();
+      
       // Render a translucent overlay and game over text.
-      ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+      ctx.fillStyle = overlayColor;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "#fff";
+      ctx.fillStyle = gameoverTextColor;
       ctx.font = "40px Arial";
       ctx.textAlign = "center";
       ctx.fillText("Game Over", canvas.width / 2, canvas.height / 2);

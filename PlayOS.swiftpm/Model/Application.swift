@@ -18,7 +18,7 @@ enum Application: CaseIterable, Hashable {
     }
     
     case calculator
-    case browser
+    case explore
     case paint
     case settings
     
@@ -26,16 +26,16 @@ enum Application: CaseIterable, Hashable {
         switch self {
         case .calculator: .init(
             title: "Calculator",
-            sfSymbol: "number",
+            sfSymbol: "plus.forwardslash.minus",
             preferredSize: .small(fixed: true),
             contentType: CalculatorAppView.self
         )
         
-        case .browser: .init(
-            title: "Web Browser",
+        case .explore: .init(
+            title: "Explore",
             sfSymbol: "safari",
             preferredSize: .large(fixed: false),
-            contentType: BrowserAppView.self
+            contentType: ExploreAppView.self
         )
         
         case .paint: .init(
