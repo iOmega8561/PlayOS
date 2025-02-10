@@ -40,7 +40,9 @@ extension WindowManager {
                     
                     Spacer()
                     
-                    Spacer().frame(width: 100)
+                    Spacer()
+                        .frame(width: 100)
+                        .padding(.trailing)
                 }
                 .contentShape(Rectangle())
                 .frame(width: windowModel.currentSize.width, height: 40)

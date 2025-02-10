@@ -23,10 +23,6 @@ struct PaintAppView: Application.Content {
         
         init() {}
     }
-    
-    init(appModel: Model) {
-        _appModel = .init(wrappedValue: appModel)
-    }
 
     @StateObject private var appModel: Model
     
@@ -38,6 +34,17 @@ struct PaintAppView: Application.Content {
         VStack(spacing: 0) {
 
             HStack {
+                
+                Button { appModel.strokes.removeAll() } label: {
+                    Image(systemName: "trash")
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundColor(.red)
+                        .frame(width: 40, height: 40)
+                }
+            
+                Spacer()
+                
                 ForEach(palette, id: \.self) { color in
                     
                     Button { appModel.selectedColor = color } label: {
@@ -51,9 +58,12 @@ struct PaintAppView: Application.Content {
                     }
                     .buttonStyle(.plain)
                 }
+                
+                Spacer()
+                
+                Spacer().frame(width: 44, height: 44)
             }
             .padding()
-            .background(Color(UIColor.secondarySystemBackground))
             
             Divider()
             
@@ -100,5 +110,9 @@ struct PaintAppView: Application.Content {
             }
             .background(Color.gray.opacity(0.2))
         }
+    }
+    
+    init(appModel: Model) {
+        _appModel = .init(wrappedValue: appModel)
     }
 }
