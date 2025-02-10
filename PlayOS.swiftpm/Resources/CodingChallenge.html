@@ -64,7 +64,9 @@ SOFTWARE.
       margin-bottom: 10px;
       background-color: #fff;
       color: #333;
+      -webkit-user-modify: read-write-plaintext-only;
     }
+
     #runButton {
       font-size: 16px;
       padding: 10px 20px;
@@ -137,7 +139,7 @@ SOFTWARE.
   
   <div id="challengeDescription"></div>
   
-  <textarea id="codeEditor"></textarea>
+  <textarea id="codeEditor" autocapitalize="off" autocorrect="off" spellcheck="false"></textarea>
   <br>
   <button id="runButton">Run Code</button>
   
