@@ -13,68 +13,48 @@ struct ExploreAppView: View {
     
     @StateObject private var appModel: Model
 
+    @Environment(\.exploreDefaultApp) private var exploreDefaultApp
+    
     var body: some View {
         
         VStack(spacing: 0) {
-            HStack {
-
-                Button("app-explore-homepage", systemImage: "house.fill") {
-                    appModel.currentApp = .homePage
-                }
-                .labelStyle(.iconOnly)
-                .imageScale(.large)
-                .padding(.leading)
+            
+            if exploreDefaultApp == .homePage {
                 
-                Spacer()
-            
-                Picker(selection: $appModel.currentApp) {
-                    ForEach(Application.WebApp.allCases, id: \.self) { webApp in
-                        Text(webApp.displayName)
-                            .tag(webApp)
+                HStack {
+                    
+                    Button("app-explore-homepage", systemImage: "house.fill") {
+                        appModel.currentApp = .homePage
                     }
-                } label: {}
+                    .labelStyle(.iconOnly)
+                    .imageScale(.large)
+                    .padding(.leading)
+                    
+                    Spacer()
+                    
+                    Picker(selection: $appModel.currentApp) {
+                        ForEach(WebApp.allCases, id: \.self) { webApp in
+                            Text(webApp.displayName)
+                                .tag(webApp)
+                        }
+                    } label: {}
+                }
+                .padding(.vertical, 4)
+                
+                Divider()
+                
             }
-            .padding(.vertical, 4)
-            
-            Divider()
             
             WebView(appModel: appModel)
                 .edgesIgnoringSafeArea(.bottom)
         }
+        .onAppear { appModel.currentApp = exploreDefaultApp }
     }
 }
 
 // MARK: - Supporting nested types
 
 extension ExploreAppView {
-    
-    /// The model that manages the state for the Explore view.
-    ///
-    /// This model is responsible for tracking the currently selected web application page
-    /// and providing the corresponding URL from the app bundle. It also holds a reference to a
-    /// `WKWebView` instance for displaying web content.
-    final class Model: ObservableObject {
-        
-        /// The current web application page.
-        ///
-        /// This property determines which HTML resource is loaded from the bundle.
-        @Published var currentApp: Application.WebApp = .homePage
-        
-        /// The WKWebView instance used to display web content.
-        ///
-        /// This view may be set externally. If not set, a new instance will be created.
-        var webView: WKWebView?
-        
-        /// A computed property that returns the URL for the current web page.
-        ///
-        /// It looks up an HTML resource in the main bundle using the raw value of `currentApp`.
-        var currentURL: URL? {
-            Bundle.main.url(
-                forResource: currentApp.rawValue,
-                withExtension: "html"
-            )
-        }
-    }
     
     /// A SwiftUI wrapper for WKWebView that loads web content based on the model's state.
     ///
@@ -119,6 +99,66 @@ extension ExploreAppView {
         /// - Returns: A new coordinator object.
         func makeCoordinator() -> NSObject { .init() }
     }
+    
+    /// Supported web applications for the Explore view.
+    enum WebApp: String, CaseIterable {
+        
+        /// An environment key for injecting the default web application.
+        struct EnvKey: EnvironmentKey {
+            
+            static let defaultValue: WebApp = .homePage
+        }
+        
+        /// The home page of the Explore web application.
+        case homePage = "ExploreHome"
+        /// A web-based snake game.
+        case snakeGame = "SnakeGame"
+        /// A tic-tac-toe game.
+        case ticTacToe = "TicTacToe"
+        /// A coding challenge interface.
+        case codingChallenge = "CodingChallenge"
+        /// A computer quiz interface.
+        case computerQuiz = "ComputerQuiz"
+        
+        /// A localized display name for the web application.
+        var displayName: String {
+            switch self {
+            case .homePage: .init(localized: "app-webapp-homepage")
+            case .snakeGame: .init(localized: "app-webapp-snakegame")
+            case .ticTacToe: .init(localized: "app-webapp-tictactoe")
+            case .codingChallenge: .init(localized: "app-webapp-learncoding")
+            case .computerQuiz: .init(localized: "app-webapp-computerquiz")
+            }
+        }
+    }
+    
+    /// The model that manages the state for the Explore view.
+    ///
+    /// This model is responsible for tracking the currently selected web application page
+    /// and providing the corresponding URL from the app bundle. It also holds a reference to a
+    /// `WKWebView` instance for displaying web content.
+    final class Model: ObservableObject {
+        
+        /// The current web application page.
+        ///
+        /// This property determines which HTML resource is loaded from the bundle.
+        @Published fileprivate var currentApp: WebApp = .homePage
+        
+        /// The WKWebView instance used to display web content.
+        ///
+        /// This view may be set externally. If not set, a new instance will be created.
+        fileprivate var webView: WKWebView?
+        
+        /// A computed property that returns the URL for the current web page.
+        ///
+        /// It looks up an HTML resource in the main bundle using the raw value of `currentApp`.
+        fileprivate var currentURL: URL? {
+            Bundle.main.url(
+                forResource: currentApp.rawValue,
+                withExtension: "html"
+            )
+        }
+    }
 }
 
 // MARK: - Application Protocol Conformances
@@ -134,5 +174,19 @@ extension ExploreAppView: Application.Content {
     /// - Parameter appModel: An instance of `ExploreAppView.Model` containing the view's state.
     init(appModel: Model) {
         _appModel = .init(wrappedValue: appModel)
+    }
+}
+
+// MARK: - Environemnt value
+
+extension EnvironmentValues {
+    
+    /// The default web application to be used in the Explore view.
+    ///
+    /// This property provides a convenient way to access or override the default web application
+    /// via the SwiftUI environment.
+    var exploreDefaultApp: ExploreAppView.WebApp {
+        get { self[ExploreAppView.WebApp.EnvKey.self] }
+        set { self[ExploreAppView.WebApp.EnvKey.self] = newValue }
     }
 }
