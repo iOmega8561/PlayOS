@@ -199,6 +199,17 @@
         }
       }
     },
+    "app-webapp-computerquiz" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Learn Computers"
+          }
+        }
+      }
+    },
     "app-webapp-homepage" : {
       "extractionState" : "manual",
       "localizations" : {

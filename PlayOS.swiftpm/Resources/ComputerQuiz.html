@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<!--
+MIT License
+
+Copyright (c) 2025 Giuseppe Rocco
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ComputerQuiz</title>
+  <style>
+    /* Base styling for the quiz app */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .container {
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    }
+    h1 {
+      text-align: center;
+      color: #4CAF50;
+    }
+    .question {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+    }
+    ul.options {
+      list-style: none;
+      padding: 0;
+    }
+    ul.options li {
+      margin-bottom: 20px;
+    }
+    ul.options li label {
+      display: block;
+      padding: 12px;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      font-size: 1.1em;
+      transition: border 0.2s, background-color 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    ul.options li label:hover,
+    ul.options li label:active {
+      border-color: #4CAF50;
+      background-color: #e8f5e9;
+    }
+    /* Enlarge radio inputs for easier touch selection */
+    input[type="radio"] {
+      transform: scale(1.5);
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+    button {
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      padding: 12px 24px;
+      font-size: 1.1em;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .result {
+      text-align: center;
+    }
+    .result h2 {
+      font-size: 2em;
+      color: #4CAF50;
+    }
+    .result p {
+      font-size: 1.2em;
+    }
+
+    /* Dark mode styles */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #121212;
+        color: #e0e0e0;
+      }
+      .container {
+        background-color: #1e1e1e;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+      }
+      h1 {
+        color: #80cbc4;
+      }
+      ul.options li label:hover,
+      ul.options li label:active {
+        background-color: #004d40;
+        border-color: #80cbc4;
+      }
+      button {
+        background-color: #80cbc4;
+        color: #121212;
+      }
+      button:hover {
+        background-color: #4db6ac;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>ComputerQuiz</h1>
+    <div id="quiz">
+      <!-- Quiz content will be injected here -->
+    </div>
+  </div>
+  
+  <script>
+    // Utility function to shuffle an array (Fisher-Yates algorithm)
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    // Expanded pool of questions on operating systems, computer basics, and kid-friendly topics.
+    const questionsPool = [
+      // Advanced computer/OS and general questions
+      {
+        question: "What is an operating system?",
+        options: [
+          "Software that manages computer hardware and software resources",
+          "A type of application software",
+          "A programming language",
+          "A hardware component"
+        ],
+        answer: 0
+      },
+      {
+        question: "Which of the following is a Unix-like operating system?",
+        options: [
+          "Windows 10",
+          "Linux",
+          "MS-DOS",
+          "None of the above"
+        ],
+        answer: 1
+      },
+      {
+        question: "What does the kernel do in an operating system?",
+        options: [
+          "Manages system resources and facilitates communication between hardware and software",
+          "Provides a graphical user interface",
+          "Compiles code",
+          "Manages user accounts only"
+        ],
+        answer: 0
+      },
+      {
+        question: "What is multitasking?",
+        options: [
+          "Running multiple applications simultaneously",
+          "Running multiple operating systems at the same time",
+          "Running a single application in fast-forward",
+          "Switching between hardware components"
+        ],
+        answer: 0
+      },
+      {
+        question: "Which file system is commonly used by Linux?",
+        options: [
+          "NTFS",
+          "FAT32",
+          "ext4",
+          "HFS+"
+        ],
+        answer: 2
+      },
+      {
+        question: "What does 'open source' mean?",
+        options: [
+          "Software that is free to use and modify",
+          "Software available only to experts",
+          "Software that is not maintained",
+          "Software that requires a paid license"
+        ],
+        answer: 0
+      },
+      {
+        question: "What is virtualization in the context of operating systems?",
+        options: [
+          "Creating virtual memory",
+          "Running multiple OS instances on a single physical machine",
+          "Using cloud storage",
+          "Accelerating hardware performance"
+        ],
+        answer: 1
+      },
+      {
+        question: "Which component is responsible for managing memory?",
+        options: [
+          "Memory management unit (MMU)",
+          "Graphics Processing Unit (GPU)",
+          "Central Processing Unit (CPU)",
+          "Random Access Memory (RAM)"
+        ],
+        answer: 0
+      },
+      {
+        question: "What does BIOS stand for?",
+        options: [
+          "Basic Input/Output System",
+          "Binary Input/Output System",
+          "Basic Integrated Operating System",
+          "Built-In Operating Software"
+        ],
+        answer: 0
+      },
+      {
+        question: "What is the primary purpose of a device driver?",
+        options: [
+          "To enable communication between the operating system and hardware",
+          "To protect the operating system from viruses",
+          "To create a graphical user interface",
+          "To optimize CPU speed"
+        ],
+        answer: 0
+      },
+      {
+        question: "Which of the following is an example of a command-line interface?",
+        options: [
+          "Terminal",
+          "Windows Explorer",
+          "File Manager",
+          "Chrome Browser"
+        ],
+        answer: 0
+      },
+      {
+        question: "What does GUI stand for?",
+        options: [
+          "Graphical User Interface",
+          "General User Interaction",
+          "Graphical Unique Identifier",
+          "Global User Interface"
+        ],
+        answer: 0
+      },
+      {
+        question: "Which of these is considered a programming language?",
+        options: [
+          "Python",
+          "JavaScript",
+          "C",
+          "All of these answers"
+        ],
+        answer: 3
+      },
+      {
+        question: "What does CPU stand for?",
+        options: [
+          "Central Processing Unit",
+          "Computer Personal Unit",
+          "Central Peripheral Unit",
+          "Control Processing Unit"
+        ],
+        answer: 0
+      },
+      {
+        question: "Which component acts as the 'brain' of the computer?",
+        options: [
+          "CPU",
+          "RAM",
+          "Hard Drive",
+          "Motherboard"
+        ],
+        answer: 0
+      },
+      // Kid-friendly computer basics questions (ages 10-16)
+      {
+        question: "What is a computer?",
+        options: [
+          "A machine that processes information",
+          "A type of animal",
+          "A kind of toy",
+          "A type of food"
+        ],
+        answer: 0
+      },
+      {
+        question: "Which of these is an input device?",
+        options: [
+          "Keyboard",
+          "Monitor",
+          "Printer",
+          "Speaker"
+        ],
+        answer: 0
+      },
+      {
+        question: "Which device is used to point and click on icons?",
+        options: [
+          "Mouse",
+          "Keyboard",
+          "Monitor",
+          "Printer"
+        ],
+        answer: 0
+      },
+      {
+        question: "What is software?",
+        options: [
+          "Programs and applications",
+          "Physical parts of a computer",
+          "A type of computer",
+          "A kind of battery"
+        ],
+        answer: 0
+      },
+      {
+        question: "What is hardware?",
+        options: [
+          "The physical components of a computer",
+          "A kind of software",
+          "A brand of phone",
+          "A type of internet connection"
+        ],
+        answer: 0
+      },
+      {
+        question: "Which device shows the images and videos on a computer?",
+        options: [
+          "Monitor",
+          "Keyboard",
+          "Mouse",
+          "Printer"
+        ],
+        answer: 0
+      },
+      {
+        question: "What is the internet?",
+        options: [
+          "A network of computers around the world",
+          "A kind of computer",
+          "A type of software",
+          "A computer virus"
+        ],
+        answer: 0
+      },
+      {
+        question: "Which programming language is commonly used for web development?",
+        options: [
+          "HTML",
+          "C++",
+          "Java",
+          "Python"
+        ],
+        answer: 0
+      },
+      {
+        question: "What does RAM stand for?",
+        options: [
+          "Random Access Memory",
+          "Readily Available Memory",
+          "Rapid Action Memory",
+          "Real-time Array Memory"
+        ],
+        answer: 0
+      },
+      {
+        question: "Which of these is used to display text on a computer screen?",
+        options: [
+          "Monitor",
+          "Keyboard",
+          "Mouse",
+          "Printer"
+        ],
+        answer: 0
+      },
+      {
+        question: "Which of these is an output device?",
+        options: [
+          "Printer",
+          "Keyboard",
+          "Microphone",
+          "Scanner"
+        ],
+        answer: 0
+      },
+      {
+        question: "What does 'booting' a computer mean?",
+        options: [
+          "Starting the computer",
+          "Shutting down the computer",
+          "Restarting the computer",
+          "Cleaning the computer"
+        ],
+        answer: 0
+      },
+      // 10 Additional simple questions about UNIX-like operating systems
+      {
+        question: "What symbol is commonly used to represent the root directory in Unix-like systems?",
+        options: [
+          "!",
+          "/",
+          "#",
+          "$"
+        ],
+        answer: 1
+      },
+      {
+        question: "Which command is used to list files in Unix-like systems?",
+        options: [
+          "list",
+          "ls",
+          "dir",
+          "show"
+        ],
+        answer: 1
+      },
+      {
+        question: "Which command is used to change directories in Unix-like systems?",
+        options: [
+          "chdir",
+          "cd",
+          "move",
+          "dir"
+        ],
+        answer: 1
+      },
+      {
+        question: "What does the 'pwd' command do in Unix-like systems?",
+        options: [
+          "Prints the working directory",
+          "Prints the password",
+          "Pauses the system",
+          "Prints window details"
+        ],
+        answer: 0
+      },
+      {
+        question: "Which symbol is used to denote a comment in a Unix shell script?",
+        options: [
+          "//",
+          "#",
+          "/*",
+          "--"
+        ],
+        answer: 1
+      },
+      {
+        question: "Which command is used to remove a file in Unix-like systems?",
+        options: [
+          "delete",
+          "rm",
+          "del",
+          "erase"
+        ],
+        answer: 1
+      },
+      {
+        question: "Which command is used to display the contents of a file in Unix-like systems?",
+        options: [
+          "show",
+          "cat",
+          "open",
+          "read"
+        ],
+        answer: 1
+      },
+      {
+        question: "Which of these is a common Unix-like operating system?",
+        options: [
+          "Linux",
+          "Android",
+          "Windows",
+          "iOS"
+        ],
+        answer: 0
+      },
+      {
+        question: "What does the command 'mkdir' do in Unix-like systems?",
+        options: [
+          "Creates a new directory",
+          "Deletes a file",
+          "Moves a file",
+          "Displays disk usage"
+        ],
+        answer: 0
+      },
+      {
+        question: "Which command is used to move or rename files in Unix-like systems?",
+        options: [
+          "mv",
+          "cp",
+          "rm",
+          "ls"
+        ],
+        answer: 0
+      }
+    ];
+
+    // Settings for the quiz
+    const totalQuestions = 5; // Number of questions per quiz attempt
+
+    let questions = [];          // Selected questions for the current quiz
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    // Randomly select questions from the pool
+    function selectRandomQuestions() {
+      // Shuffle the pool randomly
+      let shuffled = questionsPool.sort(() => 0.5 - Math.random());
+      // Select the first 'totalQuestions' elements from the shuffled pool
+      questions = shuffled.slice(0, totalQuestions);
+    }
+
+    // Display the current question with its scrambled options
+    function showQuestion() {
+      const quizDiv = document.getElementById('quiz');
+      
+      // If all questions have been answered, show the result
+      if (currentQuestionIndex >= questions.length) {
+        showResult();
+        return;
+      }
+      
+      const currentQuestion = questions[currentQuestionIndex];
+      // Create an array of option objects containing text and whether it is correct
+      let options = currentQuestion.options.map((option, index) => {
+        return { text: option, isCorrect: index === currentQuestion.answer };
+      });
+      // Shuffle the options array
+      options = shuffle(options);
+      
+      let html = `<div class="question">${currentQuestion.question}</div>`;
+      html += `<ul class="options">`;
+      options.forEach((option, index) => {
+        html += `<li>
+                   <label>
+                     <input type="radio" name="option" data-is-correct="${option.isCorrect}">
+                     ${option.text}
+                   </label>
+                 </li>`;
+      });
+      html += `</ul>`;
+      html += `<button onclick="submitAnswer()">Submit Answer</button>`;
+      
+      quizDiv.innerHTML = html;
+    }
+
+    // Process the answer submitted by the user
+    function submitAnswer() {
+      const optionInputs = document.getElementsByName('option');
+      let isCorrect = false;
+      for (const option of optionInputs) {
+        if (option.checked) {
+          if (option.getAttribute('data-is-correct') === "true") {
+            isCorrect = true;
+          }
+          break;
+        }
+      }
+      
+      // Ensure an option has been selected
+      if (![...optionInputs].some(opt => opt.checked)) {
+        alert("Please select an answer before submitting!");
+        return;
+      }
+      
+      if (isCorrect) {
+        score++;
+      }
+      
+      currentQuestionIndex++;
+      showQuestion();
+    }
+
+    // Calculate the score, display an accuracy percentage and engagement message
+    function showResult() {
+      const quizDiv = document.getElementById('quiz');
+      const percentage = Math.round((score / questions.length) * 100);
+      let message = "";
+      
+      if (percentage >= 80) {
+        message = "Excellent work! You really know your computer and Unix basics.";
+      } else if (percentage >= 50) {
+        message = "Good job! There's room for improvement, so keep learning and exploring.";
+      } else {
+        message = "Don't worry, every expert was once a beginner. Keep practicing and you'll get there!";
+      }
+      
+      let html = `<div class="result">
+                    <h2>Your Score: ${percentage}%</h2>
+                    <p>${message}</p>
+                    <button onclick="restartQuiz()">Restart Quiz</button>
+                  </div>`;
+      quizDiv.innerHTML = html;
+    }
+
+    // Restart the quiz by resetting variables and selecting new questions
+    function restartQuiz() {
+      currentQuestionIndex = 0;
+      score = 0;
+      selectRandomQuestions();
+      showQuestion();
+    }
+
+    // Initialize the quiz when the page loads
+    window.onload = function() {
+      selectRandomQuestions();
+      showQuestion();
+    }
+  </script>
+</body>
+</html>

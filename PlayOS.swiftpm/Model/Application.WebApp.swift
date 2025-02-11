@@ -13,6 +13,7 @@ extension Application {
         case snakeGame = "SnakeGame"
         case ticTacToe = "TicTacToe"
         case codingChallenge = "CodingChallenge"
+        case computerQuiz = "ComputerQuiz"
         
         var displayName: String {
             switch self {
@@ -20,6 +21,7 @@ extension Application {
             case .snakeGame: .init(localized: "app-webapp-snakegame")
             case .ticTacToe: .init(localized: "app-webapp-tictactoe")
             case .codingChallenge: .init(localized: "app-webapp-learncoding")
+            case .computerQuiz: .init(localized: "app-webapp-computerquiz")
             }
         }
     }
