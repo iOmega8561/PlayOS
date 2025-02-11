@@ -27,13 +27,12 @@ struct ExploreAppView: View {
                 
                 Spacer()
             
-                Picker("blank-label", systemImage: "cursorarrow.rays", selection: $appModel.currentApp) {
-                    
+                Picker(selection: $appModel.currentApp) {
                     ForEach(Application.WebApp.allCases, id: \.self) { webApp in
                         Text(webApp.displayName)
                             .tag(webApp)
                     }
-                }
+                } label: {}
             }
             .padding(.vertical, 4)
             

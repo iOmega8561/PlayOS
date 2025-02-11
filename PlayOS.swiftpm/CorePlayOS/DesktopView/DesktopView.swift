@@ -60,7 +60,7 @@ struct DesktopView: View {
                     }
                     .buttonStyle(.plain)
                     .popover(isPresented: $calendarPopoverIsShown) {
-                        DatePicker("blank-label", selection: .constant(.now), displayedComponents: .date)
+                        DatePicker(selection: .constant(.now), displayedComponents: .date) {}
                             .datePickerStyle(.graphical)
                             .frame(width: 350)
                             .padding(.horizontal)

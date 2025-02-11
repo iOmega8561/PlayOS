@@ -254,10 +254,6 @@
         }
       }
     },
-    "blank-label" : {
-      "extractionState" : "manual",
-      "shouldTranslate" : false
-    },
     "default-user" : {
       "extractionState" : "manual",
       "localizations" : {

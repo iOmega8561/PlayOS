@@ -21,16 +21,18 @@ struct TerminalEmulatorAppView: View {
                 Text("user@playos:\(appModel.currentDirectory.path())$")
                     .font(.system(.body, design: .monospaced))
                     .foregroundColor(.green)
-                TextField("", text: $inputText, onCommit: {
-                    appModel.processCommand(inputText)
-                })
-                .onSubmit { inputText = "" }
-                .textInputAutocapitalization(.never)
-                .autocorrectionDisabled(true)
-                .font(.system(.body, design: .monospaced))
-                .foregroundColor(.green)
-                .accentColor(.green)
-                .textFieldStyle(.plain)
+                
+                TextField(text: $inputText, label: {})
+                    .onSubmit {
+                        appModel.processCommand(inputText)
+                        inputText = ""
+                    }
+                    .textInputAutocapitalization(.never)
+                    .autocorrectionDisabled(true)
+                    .font(.system(.body, design: .monospaced))
+                    .foregroundColor(.green)
+                    .accentColor(.green)
+                    .textFieldStyle(.plain)
             }
             .padding(8)
             .background(Color.black)
@@ -382,11 +384,11 @@ extension TerminalEmulatorAppView {
                 \\_|   |_|\\__,_|\\__, |\\___/\\____/ 
                                 __/ |            
                                |___/
-                "Kernel: 5.10.42-play"
-                "Uptime: 3 days, 4 hours, 12 minutes"
-                "Window Manager: PlayWM"
-                "Packages: 13"
-                "Shell: Plash"
+                Kernel: 5.10.42-play
+                Uptime: 3 days, 4 hours, 12 minutes
+                Window Manager: PlayWM
+                Packages: 13
+                Shell: Plash
                 """)
             }
         )
