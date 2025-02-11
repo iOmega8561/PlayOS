@@ -161,7 +161,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "CPU ysage"
+            "value" : "CPU usage"
           }
         }
       }
