@@ -11,6 +11,8 @@ struct GreeterView: View {
         
     @EnvironmentObject private var playOSModel: PlayOSModel
     
+    @State private var tutorialIsPresented: Bool = true
+    
     var body: some View {
         
         GeometryReader { proxy in
@@ -55,6 +57,14 @@ struct GreeterView: View {
                 .fontWeight(.bold)
             }
             .frame(width: proxy.size.width, height: proxy.size.height)
+            .overlay {
+                if tutorialIsPresented {
+                    Tutorial(isPresented: $tutorialIsPresented)
+                        .frame(width: proxy.size.width,
+                               height: proxy.size.height)
+                        .transition(.opacity)
+                }
+            }
         }
     }
 }
