@@ -32,21 +32,21 @@ struct GreeterView: View {
                     .shadow(radius: 5.0)
                 
                 HStack {
-                    Text("PlayOS")
+                    Text(verbatim: "PlayOS")
                         .fontWeight(.bold)
                         .fontWidth(.expanded)
                     
-                    Text("User")
+                    Text("default-user")
                 }
                 .font(.title)
                 .foregroundStyle(.white)
                 
                 HStack {
-                    Button("Shutdown") {
+                    Button("action-shutdown") {
                         playOSModel.setPhase(.poweringOff)
                     }
                     
-                    Button("Log In") {
+                    Button("action-login") {
                         playOSModel.setPhase(.desktop)
                     }
                 }

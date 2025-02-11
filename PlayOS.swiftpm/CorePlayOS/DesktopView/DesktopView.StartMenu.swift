@@ -18,11 +18,11 @@ extension DesktopView {
             VStack(alignment: .center) {
                 
                 HStack {
-                    Text("PlayOS")
+                    Text(verbatim: "PlayOS")
                         .fontWeight(.bold)
                         .fontWidth(.expanded)
                     
-                    Text("Menu")
+                    Text("action-menu")
                 }
                 .font(.title)
                 
@@ -56,11 +56,11 @@ extension DesktopView {
                 Divider()
                 
                 HStack {
-                    Button("Shutdown") {
+                    Button("action-shutdown") {
                         playOSModel.setPhase(.poweringOff)
                     }
                     
-                    Button("Log Out") {
+                    Button("action-logout") {
                         playOSModel.setPhase(.login)
                     }
                 }

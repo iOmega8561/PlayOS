@@ -18,7 +18,7 @@ struct ExploreAppView: View {
         VStack(spacing: 0) {
             HStack {
 
-                Button("Homepage", systemImage: "house.fill") {
+                Button("app-explore-homepage", systemImage: "house.fill") {
                     appModel.currentApp = .homePage
                 }
                 .labelStyle(.iconOnly)
@@ -27,7 +27,7 @@ struct ExploreAppView: View {
                 
                 Spacer()
             
-                Picker("Applications", systemImage: "cursorarrow.rays", selection: $appModel.currentApp) {
+                Picker("blank-label", systemImage: "cursorarrow.rays", selection: $appModel.currentApp) {
                     
                     ForEach(Application.WebApp.allCases, id: \.self) { webApp in
                         Text(webApp.displayName)

@@ -17,15 +17,15 @@ struct StoppedView: View {
             
             VStack {
                 HStack {
-                    Text("Welcome to")
+                    Text("stopped-greeting")
                     
-                    Text("PlayOS")
+                    Text(verbatim: "PlayOS")
                         .fontWeight(.bold)
                         .fontWidth(.expanded)
                 }
                 .font(.largeTitle)
                 
-                Text("Press the power button to start the system up!")
+                Text("stopped-hint")
                     .font(.headline)
             }
             

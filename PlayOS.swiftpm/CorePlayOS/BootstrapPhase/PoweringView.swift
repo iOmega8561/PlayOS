@@ -44,11 +44,11 @@ struct PoweringView: View {
             
             VStack {
                 HStack {
-                    Text("PlayOS")
+                    Text(verbatim: "PlayOS")
                         .fontWeight(.bold)
                         .fontWidth(.expanded)
                     
-                    Text(isPoweringOff ? "is shutting down...":"is booting up...")
+                    Text(isPoweringOff ? "powering-down":"powering-up")
                 }
                 .font(.largeTitle)
                 .foregroundStyle(.white)

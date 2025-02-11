@@ -18,7 +18,7 @@ struct SettingsAppView: View {
                 
                 VStack(spacing: 5) {
                     HStack {
-                        Text("Wallpaper")
+                        Text("app-settings-wallpaper")
                             .font(.headline)
                         
                         Spacer()
@@ -29,7 +29,7 @@ struct SettingsAppView: View {
                 
                 VStack(spacing: 5) {
                     HStack {
-                        Text("User picture")
+                        Text("app-settings-userpic")
                             .font(.headline)
                         
                         Spacer()

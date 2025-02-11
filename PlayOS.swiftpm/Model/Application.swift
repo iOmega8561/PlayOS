@@ -27,41 +27,37 @@ enum Application: CaseIterable, Hashable {
     private var metaData: MetaData {
         switch self {
         case .terminal: .init(
-            title: "Terminal",
+            title: .init(localized: "app-terminal"),
             sfSymbol: "command",
             preferredSize: .medium(fixed: false),
             contentType: TerminalEmulatorAppView.self
         )
         case .calculator: .init(
-            title: "Calculator",
+            title: .init(localized: "app-calculator"),
             sfSymbol: "plus.forwardslash.minus",
             preferredSize: .small(fixed: true),
             contentType: CalculatorAppView.self
         )
-        
         case .explore: .init(
-            title: "Explore",
+            title: .init(localized: "app-explore"),
             sfSymbol: "safari",
             preferredSize: .large(fixed: false),
             contentType: ExploreAppView.self
         )
-        
         case .paint: .init(
-            title: "Paint",
+            title: .init(localized: "app-paint"),
             sfSymbol: "paintpalette",
             preferredSize: .medium(fixed: false),
             contentType: PaintAppView.self
         )
-        
         case .taskManager: .init(
-            title: "Task Manager",
+            title: .init(localized: "app-taskmanager"),
             sfSymbol: "macwindow.on.rectangle",
             preferredSize: .medium(fixed: true),
             contentType: TaskManagerAppView.self
         )
-            
         case .settings: .init(
-            title: "Settings",
+            title: .init(localized: "app-settings"),
             sfSymbol: "gearshape",
             preferredSize: .medium(fixed: true),
             contentType: SettingsAppView.self

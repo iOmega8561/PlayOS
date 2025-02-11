@@ -27,7 +27,7 @@ struct CalculatorAppView: View {
             HStack {
                 Spacer()
                 
-                Text(appModel.display)
+                Text(verbatim: appModel.display)
                     .font(.system(size: 64))
                     .lineLimit(1)
                     .padding()
@@ -170,7 +170,7 @@ extension CalculatorAppView {
         
         var body: some View {
             Button(action: action) {
-                Text(label)
+                Text(verbatim: label)
                     .font(.system(size: 48))
                     .frame(width: 75)
                     .foregroundColor(.white)

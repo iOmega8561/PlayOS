@@ -25,13 +25,13 @@ struct TaskManagerAppView: View {
         
             HStack(spacing: 16) {
                 UsageGraphView(
-                    title: "CPU Usage",
+                    title: .init(localized: "app-taskmanager-cputitle"),
                     sfSymbol: "cpu",
                     usage: cpuUsage,
                     color: .blue
                 )
                 UsageGraphView(
-                    title: "Memory Usage",
+                    title: .init(localized: "app-taskmanager-ramtitle"),
                     sfSymbol: "memorychip",
                     usage: memoryUsage,
                     color: .pink
@@ -40,10 +40,10 @@ struct TaskManagerAppView: View {
             
             HStack(alignment: .center, spacing: 16) {
                 
-                Text("Name")
+                Text("app-taskmanager-appname")
                     .frame(width: 130, alignment: .leading)
                 
-                Text("Identifier")
+                Text("app-taskmanager-appuuid")
                 
                 Spacer()
             }
@@ -66,7 +66,7 @@ struct TaskManagerAppView: View {
                         
                         Spacer()
                         
-                        Button("Terminate", systemImage: "xmark") {
+                        Button("app-taskmanager-terminate", systemImage: "xmark") {
                             playOSModel.destroyWindow(id: windowModel.id)
                         }
                         .labelStyle(.iconOnly)

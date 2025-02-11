@@ -16,10 +16,10 @@ extension Application {
         
         var displayName: String {
             switch self {
-            case .homePage: "Homepage"
-            case .snakeGame: "Snake"
-            case .ticTacToe: "Tic Tac Toe"
-            case .codingChallenge: "Learn Coding"
+            case .homePage: .init(localized: "app-webapp-homepage")
+            case .snakeGame: .init(localized: "app-webapp-snakegame")
+            case .ticTacToe: .init(localized: "app-webapp-tictactoe")
+            case .codingChallenge: .init(localized: "app-webapp-learncoding")
             }
         }
     }

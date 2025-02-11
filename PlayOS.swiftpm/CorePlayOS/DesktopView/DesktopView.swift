@@ -32,7 +32,7 @@ struct DesktopView: View {
                        height: containerGeometry.size.height - 60)
                 
                 HStack {
-                    Button("Menu", systemImage: "cursorarrow.rays") {
+                    Button("action-menu", systemImage: "cursorarrow.rays") {
                         playOSModel.openCloseMenu()
                     }
                     .fontWeight(.bold)
@@ -60,7 +60,7 @@ struct DesktopView: View {
                     }
                     .buttonStyle(.plain)
                     .popover(isPresented: $calendarPopoverIsShown) {
-                        DatePicker("Calendar", selection: .constant(.now), displayedComponents: .date)
+                        DatePicker("blank-label", selection: .constant(.now), displayedComponents: .date)
                             .datePickerStyle(.graphical)
                             .frame(width: 350)
                             .padding(.horizontal)
