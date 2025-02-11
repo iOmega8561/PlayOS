@@ -42,11 +42,12 @@ struct GreeterView: View {
                 .foregroundStyle(.white)
                 
                 HStack {
-                    Button("action-shutdown") {
+                    Button("action-halt", systemImage: "power") {
                         playOSModel.setPhase(.poweringOff)
                     }
+                    .tint(.red.opacity(0.9))
                     
-                    Button("action-login") {
+                    Button("action-unlock", systemImage: "lock.open.fill") {
                         playOSModel.setPhase(.desktop)
                     }
                 }

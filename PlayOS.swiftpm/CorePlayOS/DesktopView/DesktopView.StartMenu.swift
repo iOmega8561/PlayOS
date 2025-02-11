@@ -56,16 +56,20 @@ extension DesktopView {
                 Divider()
                 
                 HStack {
-                    Button("action-shutdown") {
+                    Button("action-halt", systemImage: "power") {
                         playOSModel.setPhase(.poweringOff)
                     }
+                    .tint(.red.opacity(0.9))
+
+                    Spacer()
                     
-                    Button("action-logout") {
+                    Button("action-lock", systemImage: "lock.fill") {
                         playOSModel.setPhase(.login)
                     }
                 }
                 .buttonStyle(.borderedProminent)
                 .fontWeight(.bold)
+                .frame(width: 205, height: 40)
             }
             .frame(width: 210, height: 400)
             .padding(10)

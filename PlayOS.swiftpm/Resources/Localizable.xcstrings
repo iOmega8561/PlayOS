@@ -1,24 +1,24 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "action-login" : {
+    "action-halt" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Log In"
+            "value" : "Halt"
           }
         }
       }
     },
-    "action-logout" : {
+    "action-lock" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Log Out"
+            "value" : "Lock"
           }
         }
       }
@@ -34,13 +34,13 @@
         }
       }
     },
-    "action-shutdown" : {
+    "action-unlock" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Shutdown"
+            "value" : "Unlock"
           }
         }
       }

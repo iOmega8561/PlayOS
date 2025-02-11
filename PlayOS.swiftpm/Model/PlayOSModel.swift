@@ -30,6 +30,11 @@ import SwiftUI
     func setPhase(_ mode: PlayOSPhase) {
         withAnimation {
             currentPhase = mode
+            
+            if mode == .poweringOff {
+                windowModels = []
+                menuIsPresented = false
+            }
         }
     }
     
@@ -58,7 +63,6 @@ import SwiftUI
             fromOffsets: IndexSet(integer: index),
             toOffset: windowModels.count
         )
-       
         openCloseMenu(false)
     }
 }
