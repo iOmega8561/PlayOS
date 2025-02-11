@@ -45,7 +45,7 @@ SOFTWARE.
       border-radius: 8px;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     }
-    h1 {
+    h1, h3 {
       text-align: center;
       color: #4CAF50;
     }
@@ -61,13 +61,18 @@ SOFTWARE.
       margin-bottom: 20px;
     }
     ul.options li label {
-      display: block;
+      display: flex;
+      align-items: center;
       padding: 12px;
       border: 2px solid transparent;
       border-radius: 8px;
       font-size: 1.1em;
       transition: border 0.2s, background-color 0.2s;
       -webkit-tap-highlight-color: transparent;
+    }
+    /* Optional: add a little spacing between the radio and the text */
+    ul.options li label span {
+      margin-left: 10px;
     }
     ul.options li label:hover,
     ul.options li label:active {
@@ -114,7 +119,7 @@ SOFTWARE.
         background-color: #1e1e1e;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
       }
-      h1 {
+      h1, h3 {
         color: #80cbc4;
       }
       ul.options li label:hover,
@@ -134,7 +139,8 @@ SOFTWARE.
 </head>
 <body>
   <div class="container">
-    <h1>ComputerQuiz</h1>
+    <h1>Computers Quiz</h1>
+    <h3>Test your technological knowledge!</h3>
     <div id="quiz">
       <!-- Quiz content will be injected here -->
     </div>
@@ -566,7 +572,7 @@ SOFTWARE.
         html += `<li>
                    <label>
                      <input type="radio" name="option" data-is-correct="${option.isCorrect}">
-                     ${option.text}
+                     <span>${option.text}</span>
                    </label>
                  </li>`;
       });
