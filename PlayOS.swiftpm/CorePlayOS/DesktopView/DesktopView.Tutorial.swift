@@ -90,18 +90,17 @@ extension DesktopView {
                             .stroke(Color.accentColor, lineWidth: 3)
                     }
                     .clipShape(RoundedRectangle(cornerRadius: 8))
-                    
-                    Button("All clear, let's get going!") {
-                        withAnimation {
-                            isPresented = false
+                    .overlay {
+                        Button("All clear, let's get going!") {
+                            withAnimation {
+                                isPresented = false
+                            }
                         }
+                        .tint(.green)
+                        .fontWeight(.bold)
+                        .buttonStyle(.borderedProminent)
+                        .offset(y: 250)
                     }
-                    .tint(.green)
-                    .fontWeight(.bold)
-                    .buttonStyle(.borderedProminent)
-                    .padding([.bottom], 172)
-                    .frame(height: geometry.size.height,
-                           alignment: .bottomTrailing)
                 }
                 .frame(width: geometry.size.width,
                        height: geometry.size.height)
