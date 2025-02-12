@@ -20,18 +20,17 @@ let package = Package(
             teamIdentifier: "T8HX5554JX",
             displayVersion: "1.0",
             bundleVersion: "1",
-            appIcon: .placeholder(icon: .beachball),
+            appIcon: .asset("AppIcon"),
             accentColor: .presetColor(.orange),
             supportedDeviceFamilies: [
                 .pad,
                 .phone
             ],
             supportedInterfaceOrientations: [
-                .portraitUp,
-                .portraitDown,
                 .landscapeRight,
                 .landscapeLeft
-            ]
+            ],
+            appCategory: .education
         )
     ],
     targets: [
@@ -42,6 +41,5 @@ let package = Package(
                 .process("Resources")
             ]
         )
-        
     ]
 )
