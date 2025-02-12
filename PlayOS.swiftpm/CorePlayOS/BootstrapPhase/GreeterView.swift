@@ -10,9 +10,7 @@ import SwiftUI
 struct GreeterView: View {
         
     @EnvironmentObject private var playOSModel: PlayOSModel
-    
-    @State private var tutorialIsPresented: Bool = true
-    
+        
     var body: some View {
         
         GeometryReader { proxy in
@@ -58,8 +56,8 @@ struct GreeterView: View {
             }
             .frame(width: proxy.size.width, height: proxy.size.height)
             .overlay {
-                if tutorialIsPresented {
-                    Tutorial(isPresented: $tutorialIsPresented)
+                if playOSModel.greeterTutorial {
+                    Tutorial(isPresented: $playOSModel.greeterTutorial)
                         .frame(width: proxy.size.width,
                                height: proxy.size.height)
                         .transition(.opacity)

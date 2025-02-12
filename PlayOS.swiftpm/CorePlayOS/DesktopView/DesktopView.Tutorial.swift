@@ -1,5 +1,5 @@
 //
-//  GreeterView.Tutorial.swift
+//  Desktop.Tutorial.swift
 //  PlayOS
 //
 //  Created by Giuseppe Rocco on 11/02/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension GreeterView {
+extension DesktopView {
     
     struct Tutorial: View {
         
@@ -29,19 +29,21 @@ extension GreeterView {
                             Text(verbatim: "PlayOS")
                                 .fontWeight(.bold)
                                 .fontWidth(.expanded)
+                            
+                            Text("desktop")
                         }
                         .font(.title2)
                         
-                        Text("You are in the lock screen")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .padding(.vertical)
+                        Text("Here you can explore different apps, learn about how operating systems work and challenge youself on your knowledge about computers. Have fun!")
+                            .font(.headline)
+                            .multilineTextAlignment(.center)
+                            .padding()
                         
                         HStack {
-                            Text("Start using the system by tapping")
+                            Text("Explore the available apps by tapping")
                                 .font(.title3)
                             
-                            Label("Unlock", systemImage: "lock.open.fill")
+                            Label("Menu", systemImage: "cursorarrow.rays")
                                 .foregroundStyle(.white)
                                 .font(.body)
                                 .fontWeight(.bold)
@@ -50,20 +52,38 @@ extension GreeterView {
                                 .clipShape(RoundedRectangle(cornerRadius: 5))
                         }
                         
-                        HStack {
-                            Text("Get back to the first screen by tapping")
+                        HStack(spacing: -10) {
+                            Text("Or start quickly by tapping an icon on the desktop")
                                 .font(.title3)
                             
-                            Label("Halt", systemImage: "power")
-                                .foregroundStyle(.white)
-                                .font(.body)
-                                .fontWeight(.bold)
-                                .padding(7)
-                                .background(Color.red.opacity(0.9))
-                                .clipShape(RoundedRectangle(cornerRadius: 5))
+                            VStack(alignment: .center, spacing: 3) {
+                                Image(systemName: "chevron.left.slash.chevron.right")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 64, height: 64)
+                                    
+                                Text("Learn Coding")
+                                    .multilineTextAlignment(.center)
+                            }
+                            .frame(width: 140)
+                            .padding(3)
+                            .background(.thickMaterial)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .overlay(alignment: .bottomTrailing) {
+                                Image(systemName: "link")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .foregroundStyle(.white)
+                                    .frame(width: 24, height: 24)
+                                    .padding(3)
+                                    .background(Color.blue)
+                                    .clipShape(Circle())
+                                    .padding([.bottom, .trailing], 24)
+                            }
+                            .scaleEffect(0.75)
                         }
                     }
-                    .frame(width: 500, height: 300)
+                    .frame(width: 650, height: 350)
                     .background(.regularMaterial)
                     .overlay {
                         RoundedRectangle(cornerRadius: 8)

@@ -9,6 +9,10 @@ import SwiftUI
 
 @MainActor final class PlayOSModel: ObservableObject {
     
+    @Published var desktopTutorial: Bool = true
+    
+    @Published var greeterTutorial: Bool = true
+    
     @Published var profilePicture: SettingKey<Int> = .init(
         namespace: "ProfilePics",
         default: 1,

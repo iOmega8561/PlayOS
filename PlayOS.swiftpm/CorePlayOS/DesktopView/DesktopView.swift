@@ -13,6 +13,8 @@ struct DesktopView: View {
         
     @State private var calendarPopoverIsShown: Bool = false
     
+    @State private var exploreDefaultApp: ExploreAppView.WebApp = .homePage
+    
     var body: some View {
         
         GeometryReader { containerGeometry in
@@ -22,11 +24,17 @@ struct DesktopView: View {
                 .scaledToFill()
                 .onTapGesture { playOSModel.openCloseMenu(false) }
             
+            Icons(exploreDefaultApp: $exploreDefaultApp)
+                .frame(width: containerGeometry.size.width,
+                       height: containerGeometry.size.height - 60,
+                       alignment: .topLeading)
+            
             VStack(alignment: .leading, spacing: 0) {
                 
                 GeometryReader { desktopGeometry in
                     WindowManager(desktopGeometry: desktopGeometry)
                         .onTapGesture { playOSModel.openCloseMenu(false) }
+                        .environment(\.exploreDefaultApp, exploreDefaultApp)
                 }
                 .frame(width: containerGeometry.size.width,
                        height: containerGeometry.size.height - 60)
@@ -72,6 +80,15 @@ struct DesktopView: View {
             }
             .frame(width: containerGeometry.size.width,
                    height: containerGeometry.size.height)
+            .overlay {
+                if playOSModel.desktopTutorial {
+                    Tutorial(isPresented: $playOSModel.desktopTutorial)
+                        .frame(width: containerGeometry.size.width,
+                               height: containerGeometry.size.height)
+                        .transition(.opacity)
+                }
+            }
+            
         }
     }
 }
