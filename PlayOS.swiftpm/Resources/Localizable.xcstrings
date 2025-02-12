@@ -308,6 +308,17 @@
           }
         }
       }
+    },
+    "stopped-notcompatible" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This Playground has been developed targeting iPadOS and is best viewed on a larger screen. Please try again using an iPad or another compatible device."
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

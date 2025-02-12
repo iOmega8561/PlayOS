@@ -25,22 +25,33 @@ struct StoppedView: View {
                 }
                 .font(.largeTitle)
                 
-                Text("stopped-hint")
-                    .font(.headline)
+                if UIDevice.current.userInterfaceIdiom != .phone {
+                    Text("stopped-hint")
+                        .font(.headline)
+                    
+                } else {
+                    Text("stopped-notcompatible")
+                        .font(.headline)
+                        .multilineTextAlignment(.center)
+                        .padding(32)
+                }
             }
             
-            Button { playOSModel.setPhase(.poweringOn) } label: {
-                VStack {
-                    RoundedRectangle(cornerRadius: 10.0)
-                        .fill(Color.red)
-                        .overlay {
-                            Image(systemName: "power.circle")
-                                .resizable()
-                                .scaledToFill()
-                                .padding()
-                                .foregroundStyle(.white)
-                        }
-                        .frame(width: 100, height: 100)
+            if UIDevice.current.userInterfaceIdiom != .phone {
+                
+                Button { playOSModel.setPhase(.poweringOn) } label: {
+                    VStack {
+                        RoundedRectangle(cornerRadius: 10.0)
+                            .fill(Color.red)
+                            .overlay {
+                                Image(systemName: "power.circle")
+                                    .resizable()
+                                    .scaledToFill()
+                                    .padding()
+                                    .foregroundStyle(.white)
+                            }
+                            .frame(width: 100, height: 100)
+                    }
                 }
             }
         }
