@@ -34,10 +34,12 @@ extension DesktopView {
                         }
                         .font(.title2)
                         
-                        Text("Here you can explore different apps, learn about how operating systems work and challenge youself on your knowledge about computers. Have fun!")
+                        Text("Here you can explore different apps, learn about how operating systems work and challenge yourself on your knowledge about computers. Have fun!")
                             .font(.headline)
                             .multilineTextAlignment(.center)
                             .padding()
+                        
+                        Divider()
                         
                         HStack {
                             Text("Explore the available apps by tapping")
@@ -51,6 +53,8 @@ extension DesktopView {
                                 .background(Color.accentColor)
                                 .clipShape(RoundedRectangle(cornerRadius: 5))
                         }
+                        
+                        Divider()
                         
                         HStack(spacing: -10) {
                             Text("Or start quickly by tapping an icon on the desktop")
@@ -82,8 +86,60 @@ extension DesktopView {
                             }
                             .scaleEffect(0.75)
                         }
+                        
+                        Divider()
+                        
+                        VStack(spacing: 0) {
+                            Text("Drag windows around by tapping and holding on their title bar.")
+                                .font(.title3)
+                                .multilineTextAlignment(.center)
+                            
+                            HStack(alignment: .center) {
+                                HStack(alignment: .center, spacing: 10) {
+                                    Circle()
+                                        .fill(Color.red)
+                                        .frame(width: 25, height: 25)
+                                    
+                                    Circle()
+                                        .fill(Color.yellow)
+                                        .frame(width: 25, height: 25)
+                                    
+                                    Circle()
+                                        .fill(Color.green)
+                                        .frame(width: 25, height: 25)
+                                }
+                                .frame(width: 100)
+                                .padding(.leading)
+                                
+                                Spacer()
+                                
+                                Text("Awesome application")
+                                    .font(.headline)
+                                    .fontWeight(.bold)
+                                
+                                Spacer()
+                                
+                                Spacer()
+                                    .frame(width: 100)
+                                    .padding(.trailing)
+                            }
+                            .frame(height: 40)
+                            .background(.background)
+                            .clipShape(UnevenRoundedRectangle(topLeadingRadius: 10, topTrailingRadius: 10))
+                            .padding(.horizontal)
+                            .scaleEffect(0.75)
+                            .overlay {
+                                Image(systemName: "hand.tap")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 100)
+                                    .offset(x: 120, y: 10)
+                            }
+                            
+                        }
+                        
                     }
-                    .frame(width: 650, height: 350)
+                    .frame(width: 650, height: 420)
                     .background(.regularMaterial)
                     .overlay {
                         RoundedRectangle(cornerRadius: 8)
