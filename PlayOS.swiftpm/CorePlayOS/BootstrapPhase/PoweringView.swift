@@ -72,12 +72,11 @@ struct PoweringView: View {
             
             while self.progress < 1.0 {
                 withAnimation(.default) {
-                    progress = min((0.1 + progress * 1.2), 1.0)
+                    progress = min((0.1 + progress * 1.5), 1.0)
                 }
                 try? await Task.sleep(for: .seconds(1))
             }
             
-            try? await Task.sleep(for: .seconds(1))
             playOSModel.setPhase(isPoweringOff ? .stopped:.login)
         }
     }
