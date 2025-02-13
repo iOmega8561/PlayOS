@@ -27,37 +27,37 @@ enum Application: CaseIterable, Hashable {
     private var metaData: MetaData {
         switch self {
         case .terminal: .init(
-            displayName: .init(localized: "app-terminal"),
+            displayName: .init(localized: "terminal-title"),
             sfSymbol: "command",
             preferredSize: .medium(fixed: false),
             contentType: TerminalEmulatorAppView.self
         )
         case .calculator: .init(
-            displayName: .init(localized: "app-calculator"),
+            displayName: .init(localized: "calculator-title"),
             sfSymbol: "plus.forwardslash.minus",
             preferredSize: .small(fixed: true),
             contentType: CalculatorAppView.self
         )
         case .explore: .init(
-            displayName: .init(localized: "app-explore"),
+            displayName: .init(localized: "explore-title"),
             sfSymbol: "safari",
             preferredSize: .large(fixed: false),
             contentType: ExploreAppView.self
         )
         case .paint: .init(
-            displayName: .init(localized: "app-paint"),
+            displayName: .init(localized: "paint-title"),
             sfSymbol: "paintpalette",
             preferredSize: .medium(fixed: false),
             contentType: PaintAppView.self
         )
         case .taskManager: .init(
-            displayName: .init(localized: "app-taskmanager"),
+            displayName: .init(localized: "taskmanager-title"),
             sfSymbol: "macwindow.on.rectangle",
             preferredSize: .medium(fixed: true),
             contentType: TaskManagerAppView.self
         )
         case .settings: .init(
-            displayName: .init(localized: "app-settings"),
+            displayName: .init(localized: "settings-title"),
             sfSymbol: "gearshape",
             preferredSize: .medium(fixed: true),
             contentType: SettingsAppView.self

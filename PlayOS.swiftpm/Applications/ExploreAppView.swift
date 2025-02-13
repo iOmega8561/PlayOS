@@ -18,7 +18,7 @@ struct ExploreAppView: View {
         VStack(spacing: 0) {
           
             HStack {
-                Button("app-explore-homepage", systemImage: "house.fill") {
+                Button("explore-homepage", systemImage: "house.fill") {
                     appModel.currentApp = .homePage
                 }
                 .labelStyle(.iconOnly)
@@ -109,11 +109,11 @@ extension ExploreAppView {
         /// A localized display name for the web application.
         var displayName: String {
             switch self {
-            case .homePage: .init(localized: "app-webapp-homepage")
-            case .snakeGame: .init(localized: "app-webapp-snakegame")
-            case .ticTacToe: .init(localized: "app-webapp-tictactoe")
-            case .codingChallenge: .init(localized: "app-webapp-learncoding")
-            case .computerQuiz: .init(localized: "app-webapp-computerquiz")
+            case .homePage: .init(localized: "webapp-homepage")
+            case .snakeGame: .init(localized: "webapp-snakegame")
+            case .ticTacToe: .init(localized: "webapp-tictactoe")
+            case .codingChallenge: .init(localized: "webapp-learncoding")
+            case .computerQuiz: .init(localized: "webapp-computerquiz")
             }
         }
     }
