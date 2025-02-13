@@ -384,11 +384,13 @@ extension TerminalEmulatorAppView {
                 \\_|   |_|\\__,_|\\__, |\\___/\\____/ 
                                 __/ |            
                                |___/
-                Kernel: 5.10.42-play
-                Uptime: 3 days, 4 hours, 12 minutes
-                Window Manager: PlayWM
-                Packages: 13
-                Shell: Plash
+                OS:            PlayOS 1.0 arm64
+                Shell:         PlayOS Shell Interpreter
+                Packages:      6 (apps), 4 (explore apps)
+                DE:            PlayOS Desktop Environment
+                WM:            PlayOS Window Manager
+                Terminal:      PlayOS Terminal Emulator
+                Terminal Font: San Francisco Monospaced
                 """)
             }
         )
