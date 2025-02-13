@@ -48,12 +48,18 @@ import SwiftUI
         }
     }
     
-    func createWindow(for app: Application) {
+    func createWindow(using windowModel: WindowModel) {
         windowModels.append(
-            .init(application: app)
+            windowModel
         )
         
         openCloseMenu(false)
+    }
+    
+    func createWindow(for application: Application) {
+        createWindow(
+            using: .init(for: application)
+        )
     }
     
     func destroyWindow(id uuid: UUID) {

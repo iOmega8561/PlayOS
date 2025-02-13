@@ -78,6 +78,28 @@
         }
       }
     },
+    "app-icon-learncoding" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Learn Coding"
+          }
+        }
+      }
+    },
+    "app-icon-learncomputers" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Learn Computers"
+          }
+        }
+      }
+    },
     "app-paint" : {
       "extractionState" : "manual",
       "localizations" : {

@@ -12,9 +12,7 @@ struct DesktopView: View {
     @EnvironmentObject private var playOSModel: PlayOSModel
         
     @State private var calendarPopoverIsShown: Bool = false
-    
-    @State private var exploreDefaultApp: ExploreAppView.WebApp = .homePage
-    
+        
     var body: some View {
         
         GeometryReader { containerGeometry in
@@ -24,17 +22,17 @@ struct DesktopView: View {
                 .scaledToFill()
                 .onTapGesture { playOSModel.openCloseMenu(false) }
             
-            Icons(exploreDefaultApp: $exploreDefaultApp)
-                .frame(width: containerGeometry.size.width,
-                       height: containerGeometry.size.height - 60,
-                       alignment: .topLeading)
-            
             VStack(alignment: .leading, spacing: 0) {
                 
                 GeometryReader { desktopGeometry in
-                    WindowManager(desktopGeometry: desktopGeometry)
-                        .onTapGesture { playOSModel.openCloseMenu(false) }
-                        .environment(\.exploreDefaultApp, exploreDefaultApp)
+                    
+                    ZStack {
+                        Icons(desktopGeometry: desktopGeometry)
+                        
+                        WindowManager(desktopGeometry: desktopGeometry)
+                    }
+                    .frame(width: desktopGeometry.size.width,
+                           height: desktopGeometry.size.height)
                 }
                 .frame(width: containerGeometry.size.width,
                        height: containerGeometry.size.height - 60)
@@ -76,10 +74,10 @@ struct DesktopView: View {
                 }
                 .frame(width: containerGeometry.size.width, height: 60)
                 .background(.ultraThinMaterial)
-                .onTapGesture { playOSModel.openCloseMenu(false) }
             }
             .frame(width: containerGeometry.size.width,
                    height: containerGeometry.size.height)
+            .onTapGesture { playOSModel.openCloseMenu(false) }
             .overlay {
                 if playOSModel.desktopTutorial {
                     Tutorial(isPresented: $playOSModel.desktopTutorial)

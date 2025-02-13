@@ -68,9 +68,20 @@ struct WindowModel: Identifiable {
                        height: clampedOriginY - initialOrigin.y)
     }
     
-    init(application: Application) {
+    init(
+        for application: Application,
+        expandIn geometry: GeometryProxy? = nil,
+        withInitialState stateObject: (any Application.Model)? = nil
+    ) {
         self.application = application
-        self.currentSize = application.preferredSize
+        
+        if let geometry = geometry {
+            self.currentSize = .custom(size: geometry.size, fixed: false)
+            self.isExpanded = true
+            
+        } else { self.currentSize = application.preferredSize }
+        
+        self.stateObject = stateObject
     }
 }
 

@@ -12,43 +12,35 @@ import WebKit
 struct ExploreAppView: View {
     
     @StateObject private var appModel: Model
-
-    @Environment(\.exploreDefaultApp) private var exploreDefaultApp
     
     var body: some View {
         
         VStack(spacing: 0) {
-            
-            if exploreDefaultApp == .homePage {
-                
-                HStack {
-                    
-                    Button("app-explore-homepage", systemImage: "house.fill") {
-                        appModel.currentApp = .homePage
-                    }
-                    .labelStyle(.iconOnly)
-                    .imageScale(.large)
-                    .padding(.leading)
-                    
-                    Spacer()
-                    
-                    Picker(selection: $appModel.currentApp) {
-                        ForEach(WebApp.allCases, id: \.self) { webApp in
-                            Text(webApp.displayName)
-                                .tag(webApp)
-                        }
-                    } label: {}
+          
+            HStack {
+                Button("app-explore-homepage", systemImage: "house.fill") {
+                    appModel.currentApp = .homePage
                 }
-                .padding(.vertical, 4)
+                .labelStyle(.iconOnly)
+                .imageScale(.large)
+                .padding(.leading)
                 
-                Divider()
+                Spacer()
                 
+                Picker(selection: $appModel.currentApp) {
+                    ForEach(WebApp.allCases, id: \.self) { webApp in
+                        Text(webApp.displayName)
+                            .tag(webApp)
+                    }
+                } label: {}
             }
+            .padding(.vertical, 4)
+            
+            Divider()
             
             WebView(appModel: appModel)
                 .edgesIgnoringSafeArea(.bottom)
         }
-        .onAppear { appModel.currentApp = exploreDefaultApp }
     }
 }
 
@@ -103,12 +95,6 @@ extension ExploreAppView {
     /// Supported web applications for the Explore view.
     enum WebApp: String, CaseIterable {
         
-        /// An environment key for injecting the default web application.
-        struct EnvKey: EnvironmentKey {
-            
-            static let defaultValue: WebApp = .homePage
-        }
-        
         /// The home page of the Explore web application.
         case homePage = "ExploreHome"
         /// A web-based snake game.
@@ -158,6 +144,15 @@ extension ExploreAppView {
                 withExtension: "html"
             )
         }
+        
+        /// A convenience initializer that allows to set currentApp directly before
+        /// initializing the view.
+        /// 
+        /// - Parameter currentApp: A case from the `ExploreAppView.WebApp` enum
+        convenience init(currentApp: WebApp) {
+            self.init()
+            self.currentApp = currentApp
+        }
     }
 }
 
@@ -174,19 +169,5 @@ extension ExploreAppView: Application.Content {
     /// - Parameter appModel: An instance of `ExploreAppView.Model` containing the view's state.
     init(appModel: Model) {
         _appModel = .init(wrappedValue: appModel)
-    }
-}
-
-// MARK: - Environemnt value
-
-extension EnvironmentValues {
-    
-    /// The default web application to be used in the Explore view.
-    ///
-    /// This property provides a convenient way to access or override the default web application
-    /// via the SwiftUI environment.
-    var exploreDefaultApp: ExploreAppView.WebApp {
-        get { self[ExploreAppView.WebApp.EnvKey.self] }
-        set { self[ExploreAppView.WebApp.EnvKey.self] = newValue }
     }
 }
