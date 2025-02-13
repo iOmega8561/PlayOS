@@ -37,6 +37,8 @@ extension GreeterView {
                             .fontWeight(.bold)
                             .padding(.vertical)
                         
+                        Divider().padding(.bottom)
+                        
                         HStack {
                             Text("Start using the system by tapping")
                                 .font(.title3)
@@ -49,6 +51,8 @@ extension GreeterView {
                                 .background(Color.accentColor)
                                 .clipShape(RoundedRectangle(cornerRadius: 5))
                         }
+                        
+                        Divider().padding(.vertical)
                         
                         HStack {
                             Text("Get back to the first screen by tapping")
