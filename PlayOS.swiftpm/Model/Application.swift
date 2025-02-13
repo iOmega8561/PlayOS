@@ -11,7 +11,7 @@ import SwiftUI
 enum Application: CaseIterable, Hashable {
     
     struct MetaData {
-        let title: String
+        let displayName: String
         let sfSymbol: String
         let preferredSize: WindowSize
         let contentType: any Content.Type
@@ -27,37 +27,37 @@ enum Application: CaseIterable, Hashable {
     private var metaData: MetaData {
         switch self {
         case .terminal: .init(
-            title: .init(localized: "app-terminal"),
+            displayName: .init(localized: "app-terminal"),
             sfSymbol: "command",
             preferredSize: .medium(fixed: false),
             contentType: TerminalEmulatorAppView.self
         )
         case .calculator: .init(
-            title: .init(localized: "app-calculator"),
+            displayName: .init(localized: "app-calculator"),
             sfSymbol: "plus.forwardslash.minus",
             preferredSize: .small(fixed: true),
             contentType: CalculatorAppView.self
         )
         case .explore: .init(
-            title: .init(localized: "app-explore"),
+            displayName: .init(localized: "app-explore"),
             sfSymbol: "safari",
             preferredSize: .large(fixed: false),
             contentType: ExploreAppView.self
         )
         case .paint: .init(
-            title: .init(localized: "app-paint"),
+            displayName: .init(localized: "app-paint"),
             sfSymbol: "paintpalette",
             preferredSize: .medium(fixed: false),
             contentType: PaintAppView.self
         )
         case .taskManager: .init(
-            title: .init(localized: "app-taskmanager"),
+            displayName: .init(localized: "app-taskmanager"),
             sfSymbol: "macwindow.on.rectangle",
             preferredSize: .medium(fixed: true),
             contentType: TaskManagerAppView.self
         )
         case .settings: .init(
-            title: .init(localized: "app-settings"),
+            displayName: .init(localized: "app-settings"),
             sfSymbol: "gearshape",
             preferredSize: .medium(fixed: true),
             contentType: SettingsAppView.self

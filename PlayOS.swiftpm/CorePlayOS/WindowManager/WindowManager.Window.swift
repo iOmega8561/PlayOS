@@ -34,7 +34,7 @@ extension WindowManager {
                     
                     Spacer()
                     
-                    Text(windowModel.application.title)
+                    Text(windowModel.application.displayName)
                         .font(.headline)
                         .fontWeight(.bold)
                     

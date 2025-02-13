@@ -37,7 +37,7 @@ extension DesktopView {
                                         .scaledToFit()
                                         .frame(height: 20)
                                     
-                                    Text(windowModel.application.title)
+                                    Text(windowModel.application.displayName)
                                     
                                     Spacer()
                                 }

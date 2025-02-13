@@ -25,13 +25,13 @@ struct TaskManagerAppView: View {
         
             HStack(spacing: 16) {
                 UsageGraphView(
-                    title: .init(localized: "app-taskmanager-cputitle"),
+                    displayName: .init(localized: "app-taskmanager-cputitle"),
                     sfSymbol: "cpu",
                     usage: cpuUsage,
                     color: .blue
                 )
                 UsageGraphView(
-                    title: .init(localized: "app-taskmanager-ramtitle"),
+                    displayName: .init(localized: "app-taskmanager-ramtitle"),
                     sfSymbol: "memorychip",
                     usage: memoryUsage,
                     color: .pink
@@ -55,7 +55,7 @@ struct TaskManagerAppView: View {
                     
                     HStack(alignment: .center, spacing: 16) {
                         
-                       Text(windowModel.application.title)
+                       Text(windowModel.application.displayName)
                            .fontWeight(.semibold)
                            .lineLimit(1)
                            .frame(width: 130, alignment: .leading)
@@ -95,7 +95,7 @@ private extension TaskManagerAppView {
     struct UsageGraphView: View {
         
         /// The title text displayed above the usage bar.
-        let title: String
+        let displayName: String
         
         /// The SF Symbol name used as an icon alongside the title.
         let sfSymbol: String
@@ -115,7 +115,7 @@ private extension TaskManagerAppView {
         var body: some View {
             VStack(alignment: .leading, spacing: 8) {
                 
-                Label(title, systemImage: sfSymbol)
+                Label(displayName, systemImage: sfSymbol)
                     .font(.headline)
                     .foregroundColor(color)
                 

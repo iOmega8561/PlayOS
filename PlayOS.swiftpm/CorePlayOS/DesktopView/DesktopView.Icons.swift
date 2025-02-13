@@ -19,22 +19,22 @@ extension DesktopView {
             
             VStack(alignment: .leading, spacing: 25) {
                 
-                ForEach(Application.DesktopIcon.allCases, id: \.self) { desktopIcon in
+                ForEach(DesktopLink.allCases, id: \.self) { desktopLink in
                     
                     Button {
                         playOSModel.createWindow(using: .init(
-                            for: desktopIcon.application,
+                            for: desktopLink.application,
                             expandIn: desktopGeometry,
-                            withInitialState: desktopIcon.initialState
+                            withInitialState: desktopLink.initialState
                         ))
                     } label: {
                         VStack(alignment: .center, spacing: 3) {
-                            Image(systemName: desktopIcon.sfSymbol)
+                            Image(systemName: desktopLink.sfSymbol)
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 64, height: 64)
                                 
-                            Text(desktopIcon.title)
+                            Text(desktopLink.displayName)
                                 .multilineTextAlignment(.center)
                         }
                         .frame(width: 140)
