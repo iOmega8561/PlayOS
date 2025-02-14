@@ -20,6 +20,9 @@ struct DesktopView: View {
             Image(playOSModel.backgroundImage.description)
                 .resizable()
                 .scaledToFill()
+                .frame(width: containerGeometry.size.width,
+                       height: containerGeometry.size.height)
+                .clipped()
                 .onTapGesture { playOSModel.openCloseMenu(false) }
             
             VStack(alignment: .leading, spacing: 0) {

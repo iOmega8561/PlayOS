@@ -36,5 +36,6 @@ struct WindowManager: View {
         }
         .frame(width: desktopGeometry.size.width,
                height: desktopGeometry.size.height)
+        .clipped()
     }
 }

@@ -13,14 +13,16 @@ struct GreeterView: View {
         
     var body: some View {
         
-        GeometryReader { proxy in
+        GeometryReader { containerGeometry in
             
             Image(playOSModel.backgroundImage.description)
                 .resizable()
                 .scaledToFill()
-                .frame(width: proxy.size.width, height: proxy.size.height)
                 .blur(radius: 25, opaque: true)
                 .opacity(0.8)
+                .frame(width: containerGeometry.size.width,
+                       height: containerGeometry.size.height)
+                .clipped()
             
             VStack {
                 
@@ -54,12 +56,13 @@ struct GreeterView: View {
                 .buttonStyle(.borderedProminent)
                 .fontWeight(.bold)
             }
-            .frame(width: proxy.size.width, height: proxy.size.height)
+            .frame(width: containerGeometry.size.width,
+                   height: containerGeometry.size.height)
             .overlay {
                 if playOSModel.greeterTutorial {
                     Tutorial(isPresented: $playOSModel.greeterTutorial)
-                        .frame(width: proxy.size.width,
-                               height: proxy.size.height)
+                        .frame(width: containerGeometry.size.width,
+                               height: containerGeometry.size.height)
                         .transition(.opacity)
                 }
             }
