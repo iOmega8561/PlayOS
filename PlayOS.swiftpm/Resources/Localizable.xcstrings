@@ -287,6 +287,94 @@
         }
       }
     },
+    "tutorial-desktop-hint1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explore the available apps by tapping"
+          }
+        }
+      }
+    },
+    "tutorial-desktop-hint2" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Or start quickly by tapping an icon on the desktop"
+          }
+        }
+      }
+    },
+    "tutorial-desktop-hint3" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Drag windows around by tapping and holding on their title bar"
+          }
+        }
+      }
+    },
+    "tutorial-desktop-message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Here you can explore different apps, learn about how operating systems work and challenge yourself on your knowledge about computers. Have fun!"
+          }
+        }
+      }
+    },
+    "tutorial-dismiss" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All clear, let's get going!"
+          }
+        }
+      }
+    },
+    "tutorial-login-hint1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start using the system by tapping"
+          }
+        }
+      }
+    },
+    "tutorial-login-hint2" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Get back to the first screen by tapping"
+          }
+        }
+      }
+    },
+    "tutorial-login-message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are at the lock screen"
+          }
+        }
+      }
+    },
     "webapp-computerquiz" : {
       "extractionState" : "manual",
       "localizations" : {

@@ -30,11 +30,11 @@ extension DesktopView {
                                 .fontWeight(.bold)
                                 .fontWidth(.expanded)
                             
-                            Text("desktop")
+                            Text(verbatim: "desktop")
                         }
                         .font(.title2)
                         
-                        Text("Here you can explore different apps, learn about how operating systems work and challenge yourself on your knowledge about computers. Have fun!")
+                        Text("tutorial-desktop-message")
                             .font(.headline)
                             .multilineTextAlignment(.center)
                             .padding()
@@ -42,10 +42,10 @@ extension DesktopView {
                         Divider()
                         
                         HStack {
-                            Text("Explore the available apps by tapping")
+                            Text("tutorial-desktop-hint1")
                                 .font(.title3)
                             
-                            Label("Menu", systemImage: "cursorarrow.rays")
+                            Label("action-menu", systemImage: "cursorarrow.rays")
                                 .foregroundStyle(.white)
                                 .font(.body)
                                 .fontWeight(.bold)
@@ -57,16 +57,16 @@ extension DesktopView {
                         Divider()
                         
                         HStack(spacing: -10) {
-                            Text("Or start quickly by tapping an icon on the desktop")
+                            Text("tutorial-desktop-hint2")
                                 .font(.title3)
                             
                             VStack(alignment: .center, spacing: 3) {
-                                Image(systemName: "chevron.left.slash.chevron.right")
+                                Image(systemName: DesktopLink.learnCoding.sfSymbol)
                                     .resizable()
                                     .scaledToFit()
                                     .frame(width: 64, height: 64)
                                     
-                                Text("Learn Coding")
+                                Text(DesktopLink.learnCoding.displayName)
                                     .multilineTextAlignment(.center)
                             }
                             .frame(width: 140)
@@ -90,7 +90,7 @@ extension DesktopView {
                         Divider()
                         
                         VStack(spacing: 0) {
-                            Text("Drag windows around by tapping and holding on their title bar.")
+                            Text("tutorial-desktop-hint3")
                                 .font(.title3)
                                 .multilineTextAlignment(.center)
                             
@@ -113,7 +113,7 @@ extension DesktopView {
                                 
                                 Spacer()
                                 
-                                Text("Awesome application")
+                                Text(verbatim: Application.calculator.displayName)
                                     .font(.headline)
                                     .fontWeight(.bold)
                                 
@@ -147,7 +147,7 @@ extension DesktopView {
                     }
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                     .overlay {
-                        Button("All clear, let's get going!") {
+                        Button("tutorial-dismiss") {
                             withAnimation {
                                 isPresented = false
                             }

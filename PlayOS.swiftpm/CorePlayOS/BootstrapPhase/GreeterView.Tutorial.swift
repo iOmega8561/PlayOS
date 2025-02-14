@@ -32,7 +32,7 @@ extension GreeterView {
                         }
                         .font(.title2)
                         
-                        Text("You are in the lock screen")
+                        Text("tutorial-login-message")
                             .font(.title2)
                             .fontWeight(.bold)
                             .padding(.vertical)
@@ -40,10 +40,10 @@ extension GreeterView {
                         Divider().padding(.bottom)
                         
                         HStack {
-                            Text("Start using the system by tapping")
+                            Text("tutorial-login-hint1")
                                 .font(.title3)
                             
-                            Label("Unlock", systemImage: "lock.open.fill")
+                            Label("action-unlock", systemImage: "lock.open.fill")
                                 .foregroundStyle(.white)
                                 .font(.body)
                                 .fontWeight(.bold)
@@ -55,10 +55,10 @@ extension GreeterView {
                         Divider().padding(.vertical)
                         
                         HStack {
-                            Text("Get back to the first screen by tapping")
+                            Text("tutorial-login-hint2")
                                 .font(.title3)
                             
-                            Label("Halt", systemImage: "power")
+                            Label("action-halt", systemImage: "power")
                                 .foregroundStyle(.white)
                                 .font(.body)
                                 .fontWeight(.bold)
@@ -75,7 +75,7 @@ extension GreeterView {
                     }
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                     .overlay {
-                        Button("All clear, let's get going!") {
+                        Button("tutorial-dismiss") {
                             withAnimation {
                                 isPresented = false
                             }
