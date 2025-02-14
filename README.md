@@ -1,9 +1,9 @@
 # PlayOS
 
 <div align="center">
-  <img src="PlayOS.swiftpm/Resources/Assets.xcassets/AppIcon.appiconset/playos.png" width="200" height="200" style="border-radius: 100px;" />
-
   <p>Welcome to the official repository for <strong>PlayOS</strong><br>Your interactive SwiftUI desktop simulation for learning essential computing concepts.</p>
+
+  <img src="Demo.png" width="800" />
 </div>
 
 ## About PlayOS
