@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%lld%%" : {
+
+    },
     "action-halt" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -374,6 +377,9 @@
           }
         }
       }
+    },
+    "user@playos:%@$" : {
+
     },
     "webapp-computerquiz" : {
       "extractionState" : "manual",
