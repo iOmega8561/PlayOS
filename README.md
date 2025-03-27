@@ -47,13 +47,8 @@ While PlayOS mimics a traditional multi-window desktop, it is also carefully opt
 
 ## Offline Web Integration
 
-By leveraging **WebKit**, PlayOS incorporates an offline browsing experience for the bundled apps. This design choice preserves the sense of “discovering and exploring” different apps—just like on a real desktop—while maintaining the sandboxed nature of Swift Playgrounds. Users can experiment, learn, and play entirely offline, ensuring a safe environment for educational purposes.
+By leveraging **WebKit**, PlayOS incorporates an offline browsing experience for the bundled apps. This design choice preserves the sense of “discovering and exploring” different apps—just like on a real desktop. Users can experiment, learn, and play entirely offline, ensuring a safe environment for educational purposes.
 
-## Minimum Requirements
+## Privacy
 
-> [!WARNING]
-> **Recommended Setup**:
-> - **Device**: iPad (or Mac) capable of running Swift Playgrounds  
-> - **Operating System**: iPadOS or macOS with Swift Playgrounds installed
-
-PlayOS is primarily tested on iPads to ensure the best touch-based interaction experience.
+PlayOS respects your privacy and does not collect, store, or transmit any personal information or user data. The application operates fully offline in a sandboxed environment, ensuring a secure, private learning experience.
