@@ -1,4 +1,9 @@
 //
+//  Copyright (c) 2025 Giuseppe Rocco
+//  Licensed under the MIT License. See the LICENSE file for details.
+//
+//  -----------------------------------------------------------------
+//
 //  Application.swift
 //  PlayOS
 //
@@ -6,7 +11,6 @@
 //
 
 import SwiftUI
-
 
 /// An enumeration representing the different applications available in the system.
 ///

@@ -1,4 +1,9 @@
 //
+//  Copyright (c) 2025 Giuseppe Rocco
+//  Licensed under the MIT License. See the LICENSE file for details.
+//
+//  -----------------------------------------------------------------
+//
 //  TaskManagerAppView.swift
 //  PlayOS
 //
